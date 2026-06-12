@@ -54,6 +54,11 @@ ol {
   list-style: none;
 }
 
+/* the [hidden] attribute must win over any component display rule */
+[hidden] {
+  display: none !important;
+}
+
 ::selection {
   background: var(--accent);
   color: var(--c-bone);
