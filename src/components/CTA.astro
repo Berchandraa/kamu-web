@@ -1,0 +1,157 @@
+---
+/**
+ * CTA — the site's closing gesture, shared by every page that ends
+ * in an invitation. An editorial staircase: a quiet Lora italic line
+ * steps down into a display-scale action line with a drawn rule-arrow
+ * that extends on hover. One designed moment, used consistently.
+ */
+interface Props {
+  pre?: string;
+  action?: string;
+  href?: string;
+}
+
+const {
+  pre = 'begin with',
+  action = 'a conversation',
+  href = '/contact/',
+} = Astro.props;
+---
+
+<section class="cta">
+  <div class="grid-12 cta-grid">
+    <p class="label cta-eyebrow" data-reveal>
+      <span class="duo">
+        <span>New Project</span>
+        <span class="duo-sub">KAMU Concepts</span>
+      </span>
+    </p>
+
+    <a href={href} class="cta-link" data-reveal="line">
+      <span class="cta-pre">{pre}</span>
+      <span class="cta-action">
+        {action}<span class="cta-arrow" aria-hidden="true"></span>
+      </span>
+    </a>
+
+    <p class="caption cta-mail" data-reveal data-reveal-delay="0.2">
+      <a href="mailto:hello@kamuconcepts.com">hello@kamuconcepts.com</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .cta {
+    padding-block: var(--space-2xl) var(--space-xl);
+  }
+
+  .cta-grid {
+    row-gap: var(--space-l);
+  }
+
+  /* hairline opener across the full grid */
+  .cta-grid::before {
+    content: '';
+    grid-column: 1 / -1;
+    border-top: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+  }
+
+  .cta-eyebrow {
+    grid-column: 1 / 5;
+  }
+
+  /* ----- the staircase ----- */
+  .cta-link {
+    grid-column: 1 / 13;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  .cta-pre {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(1.375rem, 2.6vw, 2.25rem);
+    line-height: 1.2;
+    color: var(--ink-soft);
+    transition: color var(--dur-base) var(--ease-out);
+  }
+
+  .cta-action {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: var(--fs-display);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-tight);
+    text-transform: uppercase;
+    margin-left: clamp(2.5rem, 8vw, 8rem);
+    transition: color var(--dur-base) var(--ease-out);
+  }
+
+  /* drawn rule-arrow that extends on hover */
+  .cta-arrow {
+    display: inline-block;
+    position: relative;
+    width: 0.85em;
+    height: 0.045em;
+    background: currentColor;
+    margin-left: 0.3em;
+    vertical-align: 0.22em;
+    transition: width var(--dur-slow) var(--ease-out);
+  }
+
+  .cta-arrow::after {
+    content: '';
+    position: absolute;
+    right: 0.01em;
+    top: 50%;
+    width: 0.22em;
+    height: 0.22em;
+    border-top: 0.045em solid currentColor;
+    border-right: 0.045em solid currentColor;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .cta-link:hover .cta-action {
+    color: var(--accent);
+  }
+
+  .cta-link:hover .cta-pre {
+    color: var(--ink);
+  }
+
+  .cta-link:hover .cta-arrow {
+    width: 1.6em;
+  }
+
+  /* email counterweight, right-aligned */
+  .cta-mail {
+    grid-column: 9 / 13;
+    justify-self: end;
+  }
+
+  .cta-mail a {
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .cta-mail a:hover {
+    color: var(--accent);
+  }
+
+  @media (max-width: 56rem) {
+    .cta-eyebrow,
+    .cta-link {
+      grid-column: 1 / -1;
+    }
+
+    .cta-action {
+      margin-left: clamp(1.5rem, 10vw, 4rem);
+    }
+
+    .cta-mail {
+      grid-column: 1 / -1;
+      justify-self: start;
+    }
+  }
+</style>

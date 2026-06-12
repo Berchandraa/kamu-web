@@ -8,17 +8,20 @@ import Base from '../../layouts/Base.astro';
 const roles = [
   {
     title: 'Interior Designer',
-    meta: 'Full-time · Umalas, Bali',
+    kind: 'Full-time',
+    place: 'Umalas, Bali',
     text: 'You turn briefs into atmospheres. 3+ years in residential or hospitality interiors, fluent in materials and detail drawings, comfortable walking a site and a client through the same decision. Portfolio over CV.',
   },
   {
     title: 'Project Manager',
-    meta: 'Full-time · Umalas, Bali',
+    kind: 'Full-time',
+    place: 'Umalas, Bali',
     text: 'You keep calm projects calm. You coordinate makers, suppliers and site teams across Bali, protect timelines without drama, and know that the last 5% takes 50% of the care.',
   },
   {
     title: '3D Visualizer',
-    meta: 'Full-time / Freelance · Remote-friendly',
+    kind: 'Full-time / Freelance',
+    place: 'Remote-friendly',
     text: 'You make unbuilt rooms feel inhabited. Strong with natural light, honest materials and warm muted tones — our renders should feel like our photography: calm, never glossy.',
   },
 ];
@@ -41,7 +44,7 @@ const roles = [
   <!-- ============ OPEN ROLES ============ -->
   <section class="cr-roles grid-12">
     <p class="label cr-roles-label" data-reveal>
-      Open Roles — {String(roles.length).padStart(2, '0')}
+      <span class="duo"><span>Open Roles</span><span class="duo-num">{String(roles.length).padStart(2, '0')}</span></span>
     </p>
     <div class="cr-list" data-reveal data-reveal-delay="0.1">
       {
@@ -49,7 +52,7 @@ const roles = [
           <details class="cr-role">
             <summary class="cr-role-head">
               <span class="cr-role-title">{r.title}</span>
-              <span class="label cr-role-meta">{r.meta}</span>
+              <span class="label cr-role-meta duo"><span>{r.kind}</span><span class="duo-sub">{r.place}</span></span>
               <span class="cr-role-icon" aria-hidden="true">+</span>
             </summary>
             <div class="cr-role-body">

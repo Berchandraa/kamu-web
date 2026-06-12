@@ -183,6 +183,23 @@ ol {
   transform: scaleX(0.4);
 }
 
+/* Two-part small labels — tone contrast + gap instead of "—" / "·".
+   <span class="duo"><span>Kamu Concepts</span><span class="duo-sub">Portfolio</span></span> */
+.duo {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1.5em;
+  white-space: nowrap;
+}
+
+.duo-sub {
+  color: color-mix(in srgb, currentColor 50%, transparent);
+}
+
+.duo-num {
+  color: var(--accent);
+}
+
 /* ----- Scroll-reveal primitives (animated by GSAP) -----
    Elements with [data-reveal] start hidden and are revealed
    on scroll. If JS fails, a no-js fallback keeps them visible. */

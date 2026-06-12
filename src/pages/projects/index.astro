@@ -11,6 +11,7 @@
 import Base from '../../layouts/Base.astro';
 import Placeholder from '../../components/Placeholder.astro';
 import { projects } from '../../data/projects';
+import CTA from '../../components/CTA.astro';
 
 const [p1, p2, p3, p4, p5, p6, p7] = projects;
 ---
@@ -21,14 +22,16 @@ const [p1, p2, p3, p4, p5, p6, p7] = projects;
 >
   <!-- ============ HEADER ============ -->
   <header class="ph-head grid-12">
-    <p class="label ph-eyebrow" data-reveal>KAMU Concepts — Portfolio</p>
+    <p class="label ph-eyebrow" data-reveal>
+      <span class="duo"><span>KAMU Concepts</span><span class="duo-sub">Portfolio</span></span>
+    </p>
     <h1 class="display ph-title" data-reveal="line">Projects</h1>
     <p class="ph-intro" data-reveal data-reveal-delay="0.15">
       Hospitality, residential and workspace interiors across Bali. Each
       project begins with how a space should feel — the rest follows.
     </p>
     <p class="label ph-count" data-reveal data-reveal-delay="0.2">
-      Selected — {String(projects.length).padStart(2, '0')}
+      <span class="duo"><span>Selected</span><span class="duo-num">{String(projects.length).padStart(2, '0')}</span></span>
     </p>
   </header>
 
@@ -43,7 +46,7 @@ const [p1, p2, p3, p4, p5, p6, p7] = projects;
     <div class="feature-caption">
       <p class="label feature-n">{p1.n}</p>
       <h2 class="h2">{p1.name}</h2>
-      <p class="label feature-meta">{p1.meta}</p>
+      <p class="label feature-meta duo"><span>{p1.location}</span><span class="duo-sub">{p1.type}</span></p>
     </div>
   </a>
 
@@ -54,7 +57,7 @@ const [p1, p2, p3, p4, p5, p6, p7] = projects;
       <div class="item-caption">
         <span class="label item-n">{p2.n}</span>
         <h2 class="h2 item-name">{p2.name}</h2>
-        <p class="label item-meta">{p2.meta}</p>
+        <p class="label item-meta duo"><span>{p2.location}</span><span class="duo-sub">{p2.type}</span></p>
       </div>
     </a>
 
@@ -68,7 +71,7 @@ const [p1, p2, p3, p4, p5, p6, p7] = projects;
       <div class="item-caption">
         <span class="label item-n">{p3.n}</span>
         <h2 class="h2 item-name">{p3.name}</h2>
-        <p class="label item-meta">{p3.meta}</p>
+        <p class="label item-meta duo"><span>{p3.location}</span><span class="duo-sub">{p3.type}</span></p>
       </div>
     </a>
   </div>
@@ -80,7 +83,7 @@ const [p1, p2, p3, p4, p5, p6, p7] = projects;
       <div class="item-caption">
         <span class="label item-n">{p4.n}</span>
         <h2 class="h2 item-name">{p4.name}</h2>
-        <p class="label item-meta">{p4.meta}</p>
+        <p class="label item-meta duo"><span>{p4.location}</span><span class="duo-sub">{p4.type}</span></p>
       </div>
     </a>
   </div>
@@ -96,7 +99,7 @@ const [p1, p2, p3, p4, p5, p6, p7] = projects;
       <div class="item-caption">
         <span class="label item-n">{p5.n}</span>
         <h2 class="h2 item-name">{p5.name}</h2>
-        <p class="label item-meta">{p5.meta}</p>
+        <p class="label item-meta duo"><span>{p5.location}</span><span class="duo-sub">{p5.type}</span></p>
       </div>
     </a>
 
@@ -110,7 +113,7 @@ const [p1, p2, p3, p4, p5, p6, p7] = projects;
       <div class="item-caption">
         <span class="label item-n">{p6.n}</span>
         <h2 class="h2 item-name">{p6.name}</h2>
-        <p class="label item-meta">{p6.meta}</p>
+        <p class="label item-meta duo"><span>{p6.location}</span><span class="duo-sub">{p6.type}</span></p>
       </div>
     </a>
   </div>
@@ -122,20 +125,12 @@ const [p1, p2, p3, p4, p5, p6, p7] = projects;
       <div class="item-caption">
         <span class="label item-n">{p7.n}</span>
         <h2 class="h2 item-name">{p7.name}</h2>
-        <p class="label item-meta">{p7.meta}</p>
+        <p class="label item-meta duo"><span>{p7.location}</span><span class="duo-sub">{p7.type}</span></p>
       </div>
     </a>
   </div>
 
-  <!-- ============ OUTRO ============ -->
-  <div class="ph-outro grid-12">
-    <p class="quote ph-outro-quote" data-reveal="line">
-      Every project starts with a conversation.
-    </p>
-    <a href="/contact/" class="text-link label ph-outro-link" data-reveal data-reveal-delay="0.15">
-      Start a project
-    </a>
-  </div>
+  <CTA />
 </Base>
 
 <style>
@@ -333,24 +328,4 @@ const [p1, p2, p3, p4, p5, p6, p7] = projects;
     }
   }
 
-  /* ================= OUTRO ================= */
-  .ph-outro {
-    margin-top: var(--space-2xl);
-    row-gap: var(--space-m);
-  }
-
-  .ph-outro-quote {
-    grid-column: 2 / 10;
-  }
-
-  .ph-outro-link {
-    grid-column: 2 / 6;
-  }
-
-  @media (max-width: 56rem) {
-    .ph-outro-quote,
-    .ph-outro-link {
-      grid-column: 1 / -1;
-    }
-  }
 </style>

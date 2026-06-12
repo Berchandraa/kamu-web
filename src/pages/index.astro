@@ -11,6 +11,7 @@
 import Base from '../layouts/Base.astro';
 import Preloader from '../components/Preloader.astro';
 import Placeholder from '../components/Placeholder.astro';
+import CTA from '../components/CTA.astro';
 
 const u = (id: string, w = 1800) =>
   `https://images.unsplash.com/photo-${id}?q=80&w=${w}&auto=format&fit=crop`;
@@ -18,25 +19,29 @@ const u = (id: string, w = 1800) =>
 const projects = [
   {
     name: 'Mira Hotel',
-    meta: 'Bingin, Bali — Hospitality',
+    loc: 'Bingin, Bali',
+    type: 'Hospitality',
     file: 'project-01.jpg',
     demo: u('1600210492486-724fe5c67fb0', 2400),
   },
   {
     name: 'Villa Tanah',
-    meta: 'Uluwatu, Bali — Residential',
+    loc: 'Uluwatu, Bali',
+    type: 'Residential',
     file: 'project-02.jpg',
     demo: u('1586023492125-27b2c045efd7'),
   },
   {
     name: 'Casa Loka',
-    meta: 'Canggu, Bali — Residential',
+    loc: 'Canggu, Bali',
+    type: 'Residential',
     file: 'project-03.jpg',
     demo: u('1583847268964-b28dc8f51f92', 1200),
   },
   {
     name: 'Studio Residence',
-    meta: 'Seminyak, Bali — Workspace',
+    loc: 'Seminyak, Bali',
+    type: 'Workspace',
     file: 'project-04.jpg',
     demo: u('1554995207-c18c203602cb'),
   },
@@ -96,7 +101,9 @@ const pieces = [
     <div class="hero-scrim" aria-hidden="true"></div>
 
     <div class="hero-text">
-      <p class="hero-eyebrow label hero-el">Interior Design Studio — Bali</p>
+      <p class="hero-eyebrow label hero-el">
+        <span class="duo"><span>Interior Design Studio</span><span class="duo-sub">Bali</span></span>
+      </p>
       <h1 class="display hero-headline">
         <span class="hero-line"><span class="hero-el">We design houses</span></span>
         <span class="hero-line"><span class="hero-el">we want to live in</span></span>
@@ -131,7 +138,9 @@ const pieces = [
   <section class="work">
     <header class="work-head grid-12">
       <h2 class="display work-title" data-reveal="line">Selected<br />Work</h2>
-      <p class="label work-count" data-reveal>Projects — 04</p>
+      <p class="label work-count" data-reveal>
+        <span class="duo"><span>Projects</span><span class="duo-num">04</span></span>
+      </p>
     </header>
 
     <!-- Feature: edge to edge -->
@@ -144,7 +153,9 @@ const pieces = [
       <span class="ph-note label" aria-hidden="true">{projects[0].file}</span>
       <div class="feature-caption">
         <h3 class="h2">{projects[0].name}</h3>
-        <p class="label feature-meta">{projects[0].meta}</p>
+        <p class="label feature-meta duo">
+          <span>{projects[0].loc}</span><span class="duo-sub">{projects[0].type}</span>
+        </p>
       </div>
     </a>
 
@@ -160,7 +171,7 @@ const pieces = [
         />
         <div class="work-item-caption">
           <h3 class="h2">{projects[1].name}</h3>
-          <p class="label work-item-meta">{projects[1].meta}</p>
+          <p class="label work-item-meta duo"><span>{projects[1].loc}</span><span class="duo-sub">{projects[1].type}</span></p>
         </div>
       </a>
 
@@ -174,7 +185,7 @@ const pieces = [
         />
         <div class="work-item-caption">
           <h3 class="h2">{projects[2].name}</h3>
-          <p class="label work-item-meta">{projects[2].meta}</p>
+          <p class="label work-item-meta duo"><span>{projects[2].loc}</span><span class="duo-sub">{projects[2].type}</span></p>
         </div>
       </a>
     </div>
@@ -191,7 +202,7 @@ const pieces = [
         />
         <div class="work-item-caption">
           <h3 class="h2">{projects[3].name}</h3>
-          <p class="label work-item-meta">{projects[3].meta}</p>
+          <p class="label work-item-meta duo"><span>{projects[3].loc}</span><span class="duo-sub">{projects[3].type}</span></p>
         </div>
       </a>
     </div>
@@ -218,7 +229,9 @@ const pieces = [
   <!-- ============ COLLECTION — Sawdust: clean e-comm row ============ -->
   <section class="collection">
     <header class="collection-head">
-      <p class="label collection-eyebrow" data-reveal>by KAMU — Explore Our Pieces</p>
+      <p class="label collection-eyebrow" data-reveal>
+        <span class="duo"><span>by KAMU</span><span class="duo-sub">Explore Our Pieces</span></span>
+      </p>
       <h2 class="collection-title" data-reveal="line">
         High-Quality Furniture<br /><em>for Bespoke Homes</em>
       </h2>
@@ -249,19 +262,7 @@ const pieces = [
     </div>
   </section>
 
-  <!-- ============ CTA ============ -->
-  <section class="cta">
-    <div class="grid-12">
-      <p class="label cta-eyebrow" data-reveal>New project?</p>
-      <a href="/contact/" class="cta-link" data-reveal="line">
-        <span class="display">Let&rsquo;s talk</span>
-        <span class="cta-circle" aria-hidden="true">→</span>
-      </a>
-      <p class="caption cta-mail" data-reveal data-reveal-delay="0.2">
-        hello@kamuconcepts.com
-      </p>
-    </div>
-  </section>
+  <CTA />
 </Base>
 
 <style>
@@ -722,60 +723,6 @@ const pieces = [
     }
   }
 
-  /* ================= CTA ================= */
-  .cta {
-    padding-block: var(--space-2xl) var(--space-xl);
-  }
-
-  .cta-eyebrow {
-    grid-column: 1 / 3;
-    color: var(--accent);
-    padding-top: 1rem;
-  }
-
-  .cta-link {
-    grid-column: 3 / 13;
-    display: flex;
-    align-items: center;
-    gap: clamp(1.5rem, 4vw, 3rem);
-    width: fit-content;
-    text-transform: uppercase;
-  }
-
-  .cta-circle {
-    display: grid;
-    place-items: center;
-    width: clamp(3.5rem, 6vw, 5.5rem);
-    height: clamp(3.5rem, 6vw, 5.5rem);
-    border: 1px solid var(--ink);
-    border-radius: 999px;
-    font-size: clamp(1.25rem, 2vw, 1.75rem);
-    transition:
-      background-color var(--dur-base) var(--ease-out),
-      border-color var(--dur-base) var(--ease-out),
-      color var(--dur-base) var(--ease-out),
-      transform var(--dur-base) var(--ease-out);
-  }
-
-  .cta-link:hover .cta-circle {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--c-bone);
-    transform: translateX(0.5rem);
-  }
-
-  .cta-mail {
-    grid-column: 3 / 8;
-    margin-top: var(--space-m);
-  }
-
-  @media (max-width: 56rem) {
-    .cta-eyebrow,
-    .cta-link,
-    .cta-mail {
-      grid-column: 1 / -1;
-    }
-  }
 </style>
 
 <script>

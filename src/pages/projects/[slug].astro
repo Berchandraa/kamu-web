@@ -35,9 +35,11 @@ const detail = (i: number) => `${p.file.replace('.jpg', '')}-detail-0${i}.jpg`;
     <div class="hero-scrim" aria-hidden="true"></div>
     <span class="ph-note label" aria-hidden="true">{p.file}</span>
     <div class="hero-caption">
-      <p class="label hero-n">Project — {p.n}</p>
+      <p class="label hero-n">
+        <span class="duo"><span>Project</span><span class="duo-num">{p.n}</span></span>
+      </p>
       <h1 class="h1 hero-name">{p.name}</h1>
-      <p class="label hero-meta">{p.meta}</p>
+      <p class="label hero-meta duo"><span>{p.location}</span><span class="duo-sub">{p.type}</span></p>
     </div>
   </section>
 
@@ -125,7 +127,9 @@ const detail = (i: number) => `${p.file.replace('.jpg', '')}-detail-0${i}.jpg`;
       <p class="display next-name" data-reveal="line">
         {next.name}&nbsp;<span class="next-arrow">→</span>
       </p>
-      <p class="label next-meta" data-reveal data-reveal-delay="0.15">{next.meta}</p>
+      <p class="label next-meta duo" data-reveal data-reveal-delay="0.15">
+        <span>{next.location}</span><span class="duo-sub">{next.type}</span>
+      </p>
     </div>
   </a>
 </Base>
