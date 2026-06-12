@@ -1,14 +1,19 @@
 ---
 /**
  * Shop — product catalog.
- * Sawdust model: clean, orderly, scannable. Uniform grid (the
- * deliberate counterpoint to the asymmetric Projects page),
- * plain bone backdrops, generous whitespace, quiet hovers.
- * Category filters per the brand PDF web spec.
+ * Sawdust-clean but contemporary: pill filters with counts,
+ * live result counter, ruled caption rows, quiet hover states.
+ * Uniform grid stays (the orderly counterpoint to Projects).
  */
 import Base from '../../layouts/Base.astro';
 import Placeholder from '../../components/Placeholder.astro';
 import { products, categories } from '../../data/products';
+
+const countFor = (slug: string) =>
+  products.filter((p) => p.category === slug).length;
+
+const labelFor = (slug: string) =>
+  categories.find((c) => c.slug === slug)?.label ?? '';
 ---
 
 <Base
@@ -28,18 +33,26 @@ import { products, categories } from '../../data/products';
   </header>
 
   <!-- ============ FILTERS ============ -->
-  <nav class="sh-filters" aria-label="Product categories" data-reveal>
-    <button class="sh-filter is-active" data-filter="all" aria-pressed="true">
-      All
-    </button>
-    {
-      categories.map((c) => (
-        <button class="sh-filter" data-filter={c.slug} aria-pressed="false">
-          {c.label}
-        </button>
-      ))
-    }
-  </nav>
+  <div class="sh-bar" data-reveal>
+    <nav class="sh-filters" aria-label="Product categories">
+      <button class="sh-filter is-active" data-filter="all" aria-pressed="true">
+        All<span class="sh-filter-n">{products.length}</span>
+      </button>
+      {
+        categories.map((c) => (
+          <button class="sh-filter" data-filter={c.slug} aria-pressed="false">
+            {c.label}<span class="sh-filter-n">{countFor(c.slug)}</span>
+          </button>
+        ))
+      }
+    </nav>
+    <p class="label sh-showing">
+      <span class="duo">
+        <span>Showing</span>
+        <span class="duo-num" id="sh-count">{products.length}</span>
+      </span>
+    </p>
+  </div>
 
   <!-- ============ GRID ============ -->
   <section class="sh-grid" id="sh-grid">
@@ -52,20 +65,21 @@ import { products, categories } from '../../data/products';
           data-reveal
           data-reveal-delay={String((i % 3) * 0.1)}
         >
-          <Placeholder name={p.file} ratio="3x4" demo={p.demo} alt={p.name} />
+          <div class="sh-media">
+            <Placeholder name={p.file} ratio="3x4" demo={p.demo} alt={p.name} />
+            <span class="sh-view label" aria-hidden="true">View Piece</span>
+          </div>
           <div class="sh-caption">
-            <h2 class="sh-name">{p.name}</h2>
-            <p class="caption sh-price">{p.price}</p>
+            <div class="sh-caption-main">
+              <h2 class="sh-name">{p.name}</h2>
+              <p class="label sh-cat">{labelFor(p.category)}</p>
+            </div>
+            <p class="sh-price">{p.price}</p>
           </div>
         </a>
       ))
     }
   </section>
-
-  <!-- ============ FULFILMENT NOTE ============ -->
-  <p class="caption sh-note" data-reveal>
-    Orders are currently fulfilled through Tokopedia and Shopee.
-  </p>
 </Base>
 
 <style>
@@ -92,7 +106,8 @@ import { products, categories } from '../../data/products';
     grid-column: 9 / 13;
     grid-row: 2;
     align-self: end;
-    color: var(--ink-soft);
+    color: var(--ink);
+    opacity: 0.78;
     max-width: 24rem;
   }
 
@@ -109,55 +124,73 @@ import { products, categories } from '../../data/products';
     }
   }
 
-  /* ================= FILTERS ================= */
-  .sh-filters {
+  /* ================= FILTER BAR ================= */
+  .sh-bar {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
     gap: var(--space-m);
     padding-inline: var(--gutter);
     padding-block: var(--space-s) var(--space-l);
-    border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
-    margin-bottom: var(--space-l);
   }
 
+  .sh-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+  }
+
+  /* pill chips — fully legible, active state unmistakable */
   .sh-filter {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.625em;
     font-family: var(--font-sans);
-    font-weight: 400;
+    font-weight: 500;
     font-size: 0.6875rem;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--ink-soft);
-    padding-bottom: 0.5rem;
-    position: relative;
-    transition: color var(--dur-fast) var(--ease-out);
+    color: var(--ink);
+    padding: 0.8em 1.5em;
+    border: 1px solid color-mix(in srgb, var(--ink) 35%, transparent);
+    border-radius: 999px;
+    transition:
+      background-color var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out);
   }
 
-  .sh-filter::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background: var(--ink);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform var(--dur-base) var(--ease-out);
+  .sh-filter-n {
+    font-family: var(--font-serif);
+    font-size: 0.85em;
+    letter-spacing: 0;
+    opacity: 0.55;
   }
 
   .sh-filter:hover {
-    color: var(--ink);
+    border-color: var(--ink);
   }
 
   .sh-filter.is-active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--c-bone);
+  }
+
+  .sh-showing {
     color: var(--ink);
+    white-space: nowrap;
   }
 
-  .sh-filter.is-active::after {
-    transform: scaleX(1);
+  @media (max-width: 56rem) {
+    .sh-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-s);
+    }
   }
 
-  /* ================= GRID — uniform, calm ================= */
+  /* ================= GRID ================= */
   .sh-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -168,6 +201,10 @@ import { products, categories } from '../../data/products';
 
   .sh-card[hidden] {
     display: none;
+  }
+
+  .sh-media {
+    position: relative;
   }
 
   .sh-card :global(.media) {
@@ -182,21 +219,63 @@ import { products, categories } from '../../data/products';
     transform: scale(1.04);
   }
 
+  /* hover affordance — quiet pill rises in the frame */
+  .sh-view {
+    position: absolute;
+    right: 0.875rem;
+    bottom: 0.875rem;
+    z-index: 2;
+    padding: 0.7em 1.3em;
+    background: var(--c-bone);
+    color: var(--ink);
+    border-radius: 999px;
+    opacity: 0;
+    transform: translateY(0.5rem);
+    transition:
+      opacity var(--dur-base) var(--ease-out),
+      transform var(--dur-base) var(--ease-out);
+    pointer-events: none;
+  }
+
+  .sh-card:hover .sh-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ruled caption row: name + category left, price right */
   .sh-caption {
-    text-align: center;
-    padding-top: var(--space-s);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-s);
+    border-top: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
+    margin-top: 1rem;
+    padding-top: 0.875rem;
   }
 
   .sh-name {
     font-family: var(--font-sans);
     font-weight: 500;
-    font-size: 0.8125rem;
-    letter-spacing: 0.12em;
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .sh-card:hover .sh-name {
+    color: var(--accent);
+  }
+
+  .sh-cat {
+    margin-top: 0.5rem;
+    color: color-mix(in srgb, var(--ink) 55%, transparent);
   }
 
   .sh-price {
-    margin-top: 0.4rem;
+    font-family: var(--font-serif);
+    font-size: 0.9375rem;
+    color: var(--ink);
+    white-space: nowrap;
   }
 
   @media (max-width: 64rem) {
@@ -211,21 +290,15 @@ import { products, categories } from '../../data/products';
       row-gap: var(--space-l);
     }
   }
-
-  /* ================= NOTE ================= */
-  .sh-note {
-    text-align: center;
-    padding-block: var(--space-xl) 0;
-  }
 </style>
 
 <script>
   import { gsap } from 'gsap';
 
-  // Category filter — calm fade out, re-stagger in
-  const grid = document.getElementById('sh-grid');
+  // Category filter — calm fade out, re-stagger in, live count
   const filters = document.querySelectorAll<HTMLButtonElement>('.sh-filter');
   const cards = document.querySelectorAll<HTMLElement>('.sh-card');
+  const count = document.getElementById('sh-count');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   filters.forEach((btn) => {
@@ -245,6 +318,7 @@ import { products, categories } from '../../data/products';
           card.hidden = !show;
           if (show) shown.push(card);
         });
+        if (count) count.textContent = String(shown.length);
         if (!reduced) {
           gsap.fromTo(
             shown,
@@ -256,7 +330,7 @@ import { products, categories } from '../../data/products';
         }
       };
 
-      if (!reduced && grid) {
+      if (!reduced) {
         gsap.to(cards, {
           opacity: 0,
           duration: 0.3,
