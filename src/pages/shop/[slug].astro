@@ -9,7 +9,7 @@
  */
 import Base from '../../layouts/Base.astro';
 import Placeholder from '../../components/Placeholder.astro';
-import { products, categories, marketplaces } from '../../data/products';
+import { products, categories } from '../../data/products';
 
 export function getStaticPaths() {
   return products.map((product) => {
@@ -30,6 +30,36 @@ const shots = [
   { file: p.file, demo: p.demo },
   { file: `${base}-alt-01.jpg`, demo: p.alts[0] },
   { file: `${base}-alt-02.jpg`, demo: p.alts[1] },
+];
+
+// short intro = first sentence; full desc lives in the accordion
+const firstSentence = p.desc.split(/(?<=\.)\s/)[0];
+
+const care: Record<string, string> = {
+  'dining-table':
+    'Wipe with a soft, damp cloth and dry immediately. Re-oil the surface once a year with a natural hard-wax oil. Keep out of prolonged direct sun; use trivets under hot dishes.',
+  'dining-chair':
+    'Dust with a dry cloth. Tighten joinery gently once a year. For woven seats, vacuum on low; for upholstery, blot spills immediately with an absorbent cloth.',
+  'lounge-chair':
+    'Vacuum upholstery on low monthly and blot spills immediately. Rotate loose cushions regularly. Keep woven and timber parts out of prolonged direct sun.',
+  cabinets:
+    'Wipe with a soft, damp cloth along the grain. Re-oil annually. Brass hardware will patina naturally — polish only if you prefer it bright.',
+  pendants:
+    'Dust with a dry cloth with the power off. Maximum 8W LED (E27). Have installation carried out by a qualified electrician.',
+};
+
+const accordion = [
+  {
+    key: 'Description',
+    body: `${p.desc} Made to order in our Bali workshop and finished by hand — small variations in grain and weave are part of the piece.`,
+  },
+  { key: 'Dimensions', body: p.dims },
+  { key: 'Materials', body: p.materials },
+  {
+    key: 'Designers',
+    body: 'Designed by the KAMU studio in Umalas, Bali, and produced in partnership with family workshops across the island.',
+  },
+  { key: 'Product Care', body: care[p.category] },
 ];
 ---
 
@@ -79,49 +109,41 @@ const shots = [
         <span class="duo-sub">{catLabel}</span>
       </nav>
 
-      <h1 class="h1 pd-name" data-reveal="line">{p.name}</h1>
-      <p class="sub pd-price" data-reveal data-reveal-delay="0.1">{p.price}</p>
+      <h1 class="pd-name" data-reveal="line">{p.name}</h1>
+      <p class="pd-price" data-reveal data-reveal-delay="0.1">{p.price}</p>
 
-      <p class="pd-desc" data-reveal data-reveal-delay="0.15">{p.desc}</p>
+      <p class="pd-desc" data-reveal data-reveal-delay="0.15">{firstSentence}</p>
 
-      <dl class="pd-details" data-reveal data-reveal-delay="0.2">
-        <div class="pd-detail">
-          <dt class="label">Materials</dt>
-          <dd>{p.materials}</dd>
-        </div>
-        <div class="pd-detail">
-          <dt class="label">Dimensions</dt>
-          <dd>{p.dims}</dd>
-        </div>
-        <div class="pd-detail">
-          <dt class="label">Lead time</dt>
-          <dd>4–6 weeks, made to order in Bali</dd>
-        </div>
-      </dl>
+      <button
+        class="pd-add"
+        id="pd-add"
+        data-id={p.slug}
+        data-name={p.name}
+        data-amount={p.amount}
+        data-image={`/assets/${p.file}`}
+        data-fallback={p.demo}
+        data-reveal
+        data-reveal-delay="0.2"
+      >
+        <span class="pd-add-label">Add to Bag</span>
+        <span class="pd-add-added" aria-hidden="true">Added</span>
+      </button>
 
-      <div class="pd-buy" data-reveal data-reveal-delay="0.25">
-        <a
-          href={marketplaces.tokopedia}
-          target="_blank"
-          rel="noopener"
-          class="pd-btn pd-btn-fill"
-        >
-          Buy on Tokopedia
-        </a>
-        <a
-          href={marketplaces.shopee}
-          target="_blank"
-          rel="noopener"
-          class="pd-btn"
-        >
-          Buy on Shopee
-        </a>
+      <div class="pd-acc" data-reveal data-reveal-delay="0.25">
+        {
+          accordion.map((a) => (
+            <details class="pd-acc-item">
+              <summary class="pd-acc-head">
+                <span class="pd-acc-key">{a.key}</span>
+                <span class="pd-acc-icon" aria-hidden="true">+</span>
+              </summary>
+              <div class="pd-acc-body">
+                <p>{a.body}</p>
+              </div>
+            </details>
+          ))
+        }
       </div>
-
-      <p class="caption pd-note" data-reveal data-reveal-delay="0.3">
-        Checkout is handled by the marketplace. Questions first?
-        <a href="/contact/" class="pd-note-link">Talk to the studio.</a>
-      </p>
     </div>
   </section>
 
@@ -232,12 +254,19 @@ const shots = [
     color: var(--accent);
   }
 
+  /* product name in Lora serif, large */
   .pd-name {
-    font-size: clamp(1.75rem, 3vw, 2.75rem);
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(2rem, 3.4vw, 3.25rem);
+    line-height: 1.1;
+    letter-spacing: 0;
   }
 
   .pd-price {
-    color: var(--accent);
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    color: var(--ink);
   }
 
   .pd-desc {
@@ -245,68 +274,97 @@ const shots = [
     max-width: 30rem;
   }
 
-  .pd-details {
-    margin-top: var(--space-2xs);
-  }
-
-  .pd-detail {
-    display: grid;
-    grid-template-columns: 7rem 1fr;
-    gap: var(--space-s);
-    padding-block: 0.875rem;
-    border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
-  }
-
-  .pd-detail dt {
-    color: var(--ink-soft);
-    padding-top: 0.2em;
-  }
-
-  .pd-detail dd {
-    font-size: 0.9375rem;
-  }
-
-  /* ----- buy buttons ----- */
-  .pd-buy {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: var(--space-2xs);
-  }
-
-  .pd-btn {
+  /* ----- add to bag ----- */
+  .pd-add {
+    position: relative;
+    width: 100%;
     font-family: var(--font-sans);
-    font-weight: 400;
+    font-weight: 500;
     font-size: 0.6875rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    padding: 1em 2em;
-    border: 1px solid var(--ink);
-    border-radius: 999px;
-    transition:
-      background-color var(--dur-base) var(--ease-out),
-      border-color var(--dur-base) var(--ease-out),
-      color var(--dur-base) var(--ease-out);
-  }
-
-  .pd-btn:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--c-bone);
-  }
-
-  .pd-btn-fill {
+    padding: 1.3em;
     background: var(--ink);
     color: var(--c-bone);
+    margin-top: var(--space-2xs);
+    transition: background-color var(--dur-base) var(--ease-out);
   }
 
-  .pd-note {
-    max-width: 24rem;
+  .pd-add:hover {
+    background: var(--accent);
   }
 
-  .pd-note-link {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+  .pd-add-added {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity var(--dur-fast) var(--ease-out);
+  }
+
+  .pd-add.is-added .pd-add-added {
+    opacity: 1;
+  }
+
+  /* ----- accordion ----- */
+  .pd-acc {
+    margin-top: var(--space-s);
+  }
+
+  .pd-acc-item {
+    border-top: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  }
+
+  .pd-acc-item:last-child {
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  }
+
+  .pd-acc-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-s);
+    padding-block: 1.1rem;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .pd-acc-head::-webkit-details-marker {
+    display: none;
+  }
+
+  .pd-acc-key {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .pd-acc-head:hover .pd-acc-key {
+    color: var(--accent);
+  }
+
+  .pd-acc-icon {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: 1.125rem;
+    line-height: 1;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .pd-acc-item[open] .pd-acc-icon {
+    transform: rotate(45deg);
+  }
+
+  .pd-acc-body {
+    padding-bottom: var(--space-s);
+    color: var(--ink-soft);
+    font-size: 0.9375rem;
+    max-width: 30rem;
   }
 
   @media (max-width: 64rem) {
@@ -400,6 +458,25 @@ const shots = [
 
 <script>
   import { gsap } from 'gsap';
+  import { cart, openCart } from '../../scripts/cart';
+
+  // Add to bag → cart state + drawer
+  const addBtn = document.getElementById('pd-add');
+  addBtn?.addEventListener('click', () => {
+    const d = addBtn.dataset;
+    cart.add({
+      id: d.id!,
+      name: d.name!,
+      amount: Number(d.amount),
+      image: d.image!,
+      fallback: d.fallback!,
+    });
+    addBtn.classList.add('is-added');
+    setTimeout(() => {
+      addBtn.classList.remove('is-added');
+      openCart();
+    }, 650);
+  });
 
   // Thumbnail → main image swap, gentle crossfade
   const main = document.getElementById('pd-main-img') as HTMLImageElement | null;

@@ -5,17 +5,12 @@
  * Categories per the brand PDF web spec: dining table, dining chair,
  * lounge chair, cabinets, lamp pendants.
  *
- * First launch: no cart — product pages link out to Tokopedia/Shopee
- * (per the PDF). Payment gateway arrives in launch two.
+ * Commerce: frontend cart state now; Shopify Storefront API later.
+ * `slug` doubles as the cart line id; `amount` is the numeric price.
  */
 
 const u = (id: string, w = 1200) =>
   `https://images.unsplash.com/photo-${id}?q=80&w=${w}&auto=format&fit=crop`;
-
-export const marketplaces = {
-  tokopedia: 'https://www.tokopedia.com/kamuconcepts',
-  shopee: 'https://shopee.co.id/kamuconcepts',
-};
 
 export const categories = [
   { slug: 'dining-table', label: 'Dining Tables' },
@@ -30,6 +25,8 @@ export interface Product {
   name: string;
   category: (typeof categories)[number]['slug'];
   price: string;
+  /** numeric IDR amount — maps to Shopify price.amount later */
+  amount: number;
   file: string;
   demo: string;
   desc: string;
@@ -60,6 +57,7 @@ export const products: Product[] = [
     name: 'Victoria Dining Table',
     category: 'dining-table',
     price: 'Rp 14.500.000',
+    amount: 14500000,
     file: 'product-01.jpg',
     demo: u('1519710164239-da123dc03ef4'),
     desc: 'Our signature table. A solid teak top with softened edges on a sculptural pedestal base — seats six without crowding, ages without complaint.',
@@ -72,6 +70,7 @@ export const products: Product[] = [
     name: 'Tana Dining Table',
     category: 'dining-table',
     price: 'Rp 11.200.000',
+    amount: 11200000,
     file: 'product-02.jpg',
     demo: u('1604061986761-d9d0cc41b0d1'),
     desc: 'A rounder, smaller sibling to the Victoria. Made for slow breakfasts and long dinners in compact rooms.',
@@ -84,6 +83,7 @@ export const products: Product[] = [
     name: 'Bold Dining Chair',
     category: 'dining-chair',
     price: 'Rp 3.400.000',
+    amount: 3400000,
     file: 'product-03.jpg',
     demo: u('1503602642458-232111445657'),
     desc: 'Geometric where it can be, soft where it must be. A confident chair that disappears into daily use.',
@@ -96,6 +96,7 @@ export const products: Product[] = [
     name: 'Mira Dining Chair',
     category: 'dining-chair',
     price: 'Rp 2.900.000',
+    amount: 2900000,
     file: 'product-04.jpg',
     demo: u('1577140917170-285929fb55b7'),
     desc: 'Designed for the Mira Hotel, kept in the collection by request. Curved back, generous seat.',
@@ -108,6 +109,7 @@ export const products: Product[] = [
     name: 'Arc Lounge Chair',
     category: 'lounge-chair',
     price: 'Rp 6.800.000',
+    amount: 6800000,
     file: 'product-05.jpg',
     demo: u('1592078615290-033ee584e267'),
     desc: 'A low, deep lounge chair built around one continuous curve. The afternoon happens here.',
@@ -120,6 +122,7 @@ export const products: Product[] = [
     name: 'Kelana Lounge Chair',
     category: 'lounge-chair',
     price: 'Rp 5.400.000',
+    amount: 5400000,
     file: 'product-06.jpg',
     demo: u('1532372320572-cda25653a26d'),
     desc: 'An open-frame lounger with a woven seat — light enough to follow the shade around the terrace.',
@@ -132,6 +135,7 @@ export const products: Product[] = [
     name: 'Tana Cabinet',
     category: 'cabinets',
     price: 'Rp 9.600.000',
+    amount: 9600000,
     file: 'product-07.jpg',
     demo: u('1549497538-303791108f95'),
     desc: 'Quiet storage. Full-height doors on brass pivots, interior shelving in pale wood.',
@@ -144,6 +148,7 @@ export const products: Product[] = [
     name: 'Bingin Sideboard',
     category: 'cabinets',
     price: 'Rp 12.800.000',
+    amount: 12800000,
     file: 'product-08.jpg',
     demo: u('1586158291800-2665f07bba79'),
     desc: 'A long, low sideboard with fluted doors — built to anchor a dining room without shouting.',
@@ -156,6 +161,7 @@ export const products: Product[] = [
     name: 'Neo Steel Pendant',
     category: 'pendants',
     price: 'Rp 2.400.000',
+    amount: 2400000,
     file: 'product-09.jpg',
     demo: u('1507473885765-e6ed057f782c'),
     desc: 'A spun-steel pendant with a warm powder-coat interior. Direct light, soft edges.',
@@ -168,6 +174,7 @@ export const products: Product[] = [
     name: 'Uma Rattan Pendant',
     category: 'pendants',
     price: 'Rp 1.900.000',
+    amount: 1900000,
     file: 'product-10.jpg',
     demo: u('1513506003901-1e6a229e2d15'),
     desc: 'Hand-woven rattan shade that throws patterned light across the ceiling at dusk.',

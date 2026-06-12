@@ -18,6 +18,7 @@ import '../styles/global.css';
 
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import CartDrawer from '../components/CartDrawer.astro';
 
 interface Props {
   title: string;
@@ -48,6 +49,7 @@ const {
       <slot />
     </main>
     <Footer />
+    <CartDrawer />
 
     <style is:global>
       html.is-locked {

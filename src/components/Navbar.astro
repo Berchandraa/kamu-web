@@ -55,20 +55,28 @@ const current = Astro.url.pathname;
           </a>
         ))
       }
+      <button class="nav-bag" aria-label="Open shopping bag">
+        Bag<sup class="nav-bag-n">0</sup>
+      </button>
       <a href="/contact/" class="nav-cta">
         Let&rsquo;s Talk <span class="nav-cta-plus" aria-hidden="true">+</span>
       </a>
     </div>
 
-    <button
-      class="nav-toggle"
-      id="nav-toggle"
-      aria-expanded="false"
-      aria-controls="nav-overlay"
-    >
-      <span class="nav-toggle-open">Menu</span>
-      <span class="nav-toggle-close">Close</span>
-    </button>
+    <div class="nav-compact">
+      <button class="nav-bag" aria-label="Open shopping bag">
+        Bag<sup class="nav-bag-n">0</sup>
+      </button>
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-expanded="false"
+        aria-controls="nav-overlay"
+      >
+        <span class="nav-toggle-open">Menu</span>
+        <span class="nav-toggle-close">Close</span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -252,11 +260,40 @@ const current = Astro.url.pathname;
     transform: rotate(90deg);
   }
 
-  /* ----- Mobile toggle ----- */
-  .nav-toggle {
+  /* ----- Bag ----- */
+  .nav-bag {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 0.6875rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding-block: 0.375rem;
+    opacity: 0.92;
+    transition: opacity var(--dur-fast) var(--ease-out);
+  }
+
+  .nav-bag:hover {
+    opacity: 1;
+  }
+
+  .nav-bag sup {
+    font-family: var(--font-serif);
+    font-size: 0.8em;
+    letter-spacing: 0;
+    margin-left: 0.35em;
+    color: var(--accent);
+  }
+
+  /* ----- Compact cluster (bag + menu on small screens) ----- */
+  .nav-compact {
     display: none;
     grid-column: 3;
     justify-self: end;
+    align-items: center;
+    gap: var(--space-s);
+  }
+
+  .nav-toggle {
     position: relative;
     z-index: 95;
     padding: 0.5rem 0;
@@ -353,7 +390,8 @@ const current = Astro.url.pathname;
   }
 
   .nav-brand,
-  .nav-toggle {
+  .nav-toggle,
+  .nav-compact {
     position: relative;
     z-index: 95;
   }
@@ -363,8 +401,8 @@ const current = Astro.url.pathname;
       display: none;
     }
 
-    .nav-toggle {
-      display: block;
+    .nav-compact {
+      display: flex;
     }
 
     .nav-inner {
@@ -382,10 +420,23 @@ const current = Astro.url.pathname;
 </style>
 
 <script>
+  import { cart, openCart } from '../scripts/cart';
+
   const nav = document.getElementById('nav');
   const toggle = document.getElementById('nav-toggle');
   const overlay = document.getElementById('nav-overlay');
   const darkHero = document.querySelector('[data-nav-invert]');
+
+  // Bag buttons + live count
+  const syncBag = () => {
+    const n = String(cart.count());
+    document.querySelectorAll('.nav-bag-n').forEach((el) => (el.textContent = n));
+  };
+  document.querySelectorAll('.nav-bag').forEach((btn) => {
+    btn.addEventListener('click', openCart);
+  });
+  window.addEventListener('cart:updated', syncBag);
+  syncBag();
 
   const onScroll = () => {
     const condensed = window.scrollY > 40;
