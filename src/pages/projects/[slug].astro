@@ -87,16 +87,28 @@ const detail = (i: number) => `${p.file.replace('.jpg', '')}-detail-0${i}.jpg`;
       </div>
     </div>
 
-    <!-- Editorial beat: pull quote -->
-    {
-      p.quote && (
-        <blockquote class="g-quote grid-12">
-          <p class="quote" data-reveal="line">
-            &ldquo;{p.quote}&rdquo;
-          </p>
-        </blockquote>
-      )
-    }
+    <!-- Editorial beat: the written middle of the gallery -->
+    <div class="story grid-12">
+      <p class="label story-label" data-reveal>Approach</p>
+
+      <h2 class="h2 story-title" data-reveal="line">{p.storyTitle}</h2>
+
+      <div class="story-body" data-reveal data-reveal-delay="0.15">
+        <p>{p.story[0]}</p>
+        <p>{p.story[1]}</p>
+      </div>
+
+      <div class="story-materials" data-reveal data-reveal-delay="0.25">
+        <p class="label story-materials-key">Materials</p>
+        <ul class="story-materials-list">
+          {p.materials.map((m) => <li>{m}</li>)}
+        </ul>
+      </div>
+
+      <blockquote class="story-quote" data-reveal="line">
+        <p class="quote">&ldquo;{p.quote}&rdquo;</p>
+      </blockquote>
+    </div>
 
     <!-- G4: wide, pushed right -->
     <div class="g-wide" data-reveal="media">
@@ -294,13 +306,72 @@ const detail = (i: number) => `${p.file.replace('.jpg', '')}-detail-0${i}.jpg`;
     margin-top: clamp(4rem, 12vh, 9rem);
   }
 
-  .g-quote {
+  /* ----- the written middle ----- */
+  .story {
     padding-block: var(--space-2xl);
+    row-gap: var(--space-m);
   }
 
-  .g-quote .quote {
-    grid-column: 3 / 10;
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
+  .story-label {
+    grid-column: 1 / 3;
+    color: var(--accent);
+    padding-top: 0.4rem;
+  }
+
+  .story-title {
+    grid-column: 4 / 11;
+    text-wrap: balance;
+  }
+
+  .story-body {
+    grid-column: 4 / 9;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    color: var(--ink-soft);
+  }
+
+  .story-materials {
+    grid-column: 10 / 13;
+    border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+    padding-top: var(--space-s);
+  }
+
+  .story-materials-key {
+    color: var(--ink-soft);
+    margin-bottom: 0.875rem;
+  }
+
+  .story-materials-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.9375rem;
+  }
+
+  .story-quote {
+    grid-column: 5 / 12;
+    margin-top: var(--space-l);
+  }
+
+  .story-quote .quote {
+    font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  }
+
+  @media (max-width: 56rem) {
+    .story-label,
+    .story-title,
+    .story-quote {
+      grid-column: 1 / -1;
+    }
+
+    .story-body {
+      grid-column: 1 / 11;
+    }
+
+    .story-materials {
+      grid-column: 2 / -1;
+    }
   }
 
   .g-wide {
