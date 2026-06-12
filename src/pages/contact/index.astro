@@ -1,102 +1,127 @@
 ---
 /**
- * Contact — form left, studio details right. Calm, type-led,
- * no hero image. Per the PDF web spec: contact form, catalog
- * download, newsletter signup.
- * Form has no backend yet — wire to a form endpoint at deploy.
+ * Contact — split canvas.
+ * Left: studio image (dropped, echoing the project splits) over a
+ * ruled ledger of studio facts. Right: the form as an editorial
+ * questionnaire — numbered fields, large serif inputs, accent
+ * focus line. Form has no backend yet — wired at Shopify launch.
+ * Swap slot: contact-01.jpg.
  */
 import Base from '../../layouts/Base.astro';
+import Placeholder from '../../components/Placeholder.astro';
+
+const demo =
+  'https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?q=80&w=1400&auto=format&fit=crop';
 ---
 
 <Base
   title="Contact"
   description="Talk to KAMU Concepts — interior design studio in Umalas, Bali. New projects, collaborations and product enquiries."
 >
+  <!-- ============ HEAD ============ -->
   <header class="ct-head grid-12">
-    <p class="label ct-eyebrow" data-reveal>Contact</p>
+    <p class="label ct-eyebrow" data-reveal>
+      <span class="duo"><span>Contact</span><span class="duo-sub">Umalas, Bali</span></span>
+    </p>
     <h1 class="display ct-title" data-reveal="line">Let&rsquo;s talk</h1>
-    <p class="ct-intro" data-reveal data-reveal-delay="0.15">
-      New project, collaboration or a question about a piece — tell us
-      what you&rsquo;re imagining. We reply within two working days.
+    <p class="ct-reply" data-reveal data-reveal-delay="0.2">
+      We reply within two working days.
     </p>
   </header>
 
+  <!-- ============ SPLIT CANVAS ============ -->
   <section class="ct grid-12">
-    <!-- ============ FORM ============ -->
-    <form class="ct-form" action="#" method="post" data-reveal>
-      <div class="ct-field">
-        <label class="label" for="ct-name">Name</label>
+    <!-- left: image + studio ledger -->
+    <div class="ct-side">
+      <div data-reveal="media">
+        <Placeholder
+          name="contact-01.jpg"
+          ratio="3x4"
+          demo={demo}
+          alt="The KAMU studio in Umalas"
+          parallax
+        />
+      </div>
+
+      <div class="ct-rows" data-reveal data-reveal-delay="0.15">
+        <div class="ct-row">
+          <p class="label ct-key">Studio</p>
+          <address class="ct-val">
+            Jl. Dukuh Indah No.71, Umalas<br />
+            Badung 80361, Bali, Indonesia
+          </address>
+        </div>
+        <div class="ct-row">
+          <p class="label ct-key">Direct</p>
+          <p class="ct-val">
+            <a href="mailto:hello@kamuconcepts.com">hello@kamuconcepts.com</a><br />
+            <a href="tel:+6282338888971">+62 823 3888 8971</a>
+          </p>
+        </div>
+        <div class="ct-row">
+          <p class="label ct-key">Hours</p>
+          <p class="ct-val">Monday to Friday, 9.00&ndash;17.00 WITA</p>
+        </div>
+        <div class="ct-row">
+          <p class="label ct-key">Catalog</p>
+          <p class="ct-val">
+            <a href="/assets/kamu-catalog.pdf" class="ct-link" download>Download the catalog</a>
+          </p>
+        </div>
+        <div class="ct-row">
+          <p class="label ct-key">Social</p>
+          <p class="ct-val ct-social">
+            <a href="https://instagram.com/kamuconcepts" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://tiktok.com/@kamuconcepts" target="_blank" rel="noopener">TikTok</a>
+            <a href="https://pinterest.com/kamuconcepts" target="_blank" rel="noopener">Pinterest</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- right: the questionnaire -->
+    <form class="ct-form" action="#" method="post">
+      <p class="ct-form-lead" data-reveal>
+        New project, collaboration, or a question about a piece —
+        tell us what you&rsquo;re imagining.
+      </p>
+
+      <div class="ct-fld" data-reveal data-reveal-delay="0.1">
+        <label class="label ct-fld-label" for="ct-name">
+          <span class="duo"><span class="duo-num">01</span><span>Name</span></span>
+        </label>
         <input type="text" id="ct-name" name="name" autocomplete="name" required />
       </div>
 
-      <div class="ct-row">
-        <div class="ct-field">
-          <label class="label" for="ct-email">Email</label>
+      <div class="ct-pair">
+        <div class="ct-fld" data-reveal data-reveal-delay="0.15">
+          <label class="label ct-fld-label" for="ct-email">
+            <span class="duo"><span class="duo-num">02</span><span>Email</span></span>
+          </label>
           <input type="email" id="ct-email" name="email" autocomplete="email" required />
         </div>
-        <div class="ct-field">
-          <label class="label" for="ct-phone">Phone</label>
+        <div class="ct-fld" data-reveal data-reveal-delay="0.2">
+          <label class="label ct-fld-label" for="ct-phone">
+            <span class="duo"><span class="duo-num">03</span><span>Phone</span></span>
+          </label>
           <input type="tel" id="ct-phone" name="phone" autocomplete="tel" />
         </div>
       </div>
 
-      <div class="ct-field">
-        <label class="label" for="ct-message">Message</label>
-        <textarea id="ct-message" name="message" rows="5" required></textarea>
+      <div class="ct-fld" data-reveal data-reveal-delay="0.25">
+        <label class="label ct-fld-label" for="ct-message">
+          <span class="duo"><span class="duo-num">04</span><span>Message</span></span>
+        </label>
+        <textarea id="ct-message" name="message" rows="4" required></textarea>
       </div>
 
-      <button type="submit" class="ct-send">Send</button>
-    </form>
-
-    <!-- ============ DETAILS ============ -->
-    <aside class="ct-aside" data-reveal data-reveal-delay="0.15">
-      <div class="ct-block">
-        <p class="label ct-key">Studio</p>
-        <address class="ct-val">
-          Jl. Dukuh Indah No.71, Umalas,<br />
-          Badung, 80361<br />
-          Bali, Indonesia
-        </address>
-      </div>
-
-      <div class="ct-block">
-        <p class="label ct-key">Direct</p>
-        <p class="ct-val">
-          <a href="mailto:hello@kamuconcepts.com">hello@kamuconcepts.com</a><br />
-          <a href="tel:+6282338888971">+62 823 3888 8971</a>
+      <div class="ct-actions" data-reveal data-reveal-delay="0.3">
+        <button type="submit" class="ct-send">Send Message</button>
+        <p class="caption ct-privacy">
+          Your details stay with the studio. No lists, no noise.
         </p>
       </div>
-
-      <div class="ct-block">
-        <p class="label ct-key">Catalog</p>
-        <a href="/assets/kamu-catalog.pdf" class="text-link label" download>
-          Download the catalog
-        </a>
-      </div>
-
-      <div class="ct-block">
-        <p class="label ct-key">Newsletter</p>
-        <form class="ct-news" action="#" method="post">
-          <input
-            type="email"
-            name="email"
-            placeholder="Your email"
-            aria-label="Email address for newsletter"
-            required
-          />
-          <button type="submit" class="label">Sign up</button>
-        </form>
-      </div>
-
-      <div class="ct-block">
-        <p class="label ct-key">Social</p>
-        <div class="ct-social label">
-          <a href="https://instagram.com/kamuconcepts" target="_blank" rel="noopener">Instagram</a>
-          <a href="https://tiktok.com/@kamuconcepts" target="_blank" rel="noopener">TikTok</a>
-          <a href="https://pinterest.com/kamuconcepts" target="_blank" rel="noopener">Pinterest</a>
-        </div>
-      </div>
-    </aside>
+    </form>
   </section>
 </Base>
 
@@ -106,148 +131,111 @@ import Base from '../../layouts/Base.astro';
     padding-top: calc(var(--nav-h) + var(--space-xl));
     padding-bottom: var(--space-xl);
     row-gap: var(--space-s);
+    align-items: end;
   }
 
   .ct-eyebrow {
-    grid-column: 1 / 5;
+    grid-column: 1 / 6;
+    grid-row: 1;
     color: var(--accent);
   }
 
   .ct-title {
-    grid-column: 1 / 8;
+    grid-column: 1 / 9;
     grid-row: 2;
     text-transform: uppercase;
   }
 
-  .ct-intro {
-    grid-column: 9 / 13;
+  /* serif counterweight, bottom-right of the headline */
+  .ct-reply {
+    grid-column: 10 / 13;
     grid-row: 2;
     align-self: end;
+    justify-self: end;
+    text-align: right;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.125rem;
     color: var(--ink-soft);
+    padding-bottom: 0.75rem;
   }
 
   @media (max-width: 56rem) {
     .ct-eyebrow,
     .ct-title,
-    .ct-intro {
+    .ct-reply {
       grid-column: 1 / -1;
     }
 
-    .ct-intro {
+    .ct-reply {
       grid-row: 3;
-      margin-top: var(--space-s);
+      justify-self: start;
+      text-align: left;
+      padding-bottom: 0;
     }
   }
 
-  /* ================= LAYOUT ================= */
+  /* ================= SPLIT ================= */
   .ct {
     padding-bottom: var(--space-xl);
     row-gap: var(--space-xl);
   }
 
-  .ct-form {
-    grid-column: 1 / 8;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-m);
+  .ct-side {
+    grid-column: 1 / 6;
+    /* dropped, echoing the project split rhythm */
+    margin-top: clamp(3rem, 8vh, 6rem);
   }
 
-  .ct-aside {
-    grid-column: 9 / 13;
+  .ct-form {
+    grid-column: 7 / 13;
     display: flex;
     flex-direction: column;
     gap: var(--space-l);
   }
 
   @media (max-width: 56rem) {
-    .ct-form,
-    .ct-aside {
+    .ct-side,
+    .ct-form {
       grid-column: 1 / -1;
     }
-  }
 
-  /* ================= FORM ================= */
-  .ct-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-m);
-  }
+    .ct-side {
+      order: 2;
+      margin-top: 0;
+    }
 
-  .ct-field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.625rem;
-  }
-
-  .ct-field label {
-    color: var(--ink-soft);
-  }
-
-  .ct-field input,
-  .ct-field textarea {
-    background: none;
-    border: none;
-    border-bottom: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
-    padding: 0.625rem 0;
-    font-family: var(--font-serif);
-    font-size: 1rem;
-    color: var(--ink);
-    outline: none;
-    border-radius: 0;
-    resize: vertical;
-    transition: border-color var(--dur-fast) var(--ease-out);
-  }
-
-  .ct-field input:focus,
-  .ct-field textarea:focus {
-    border-color: var(--ink);
-  }
-
-  .ct-send {
-    align-self: flex-start;
-    margin-top: var(--space-s);
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: 0.6875rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    padding: 1em 3em;
-    border: 1px solid var(--ink);
-    border-radius: 999px;
-    transition:
-      background-color var(--dur-base) var(--ease-out),
-      border-color var(--dur-base) var(--ease-out),
-      color var(--dur-base) var(--ease-out);
-  }
-
-  .ct-send:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--c-bone);
-  }
-
-  @media (max-width: 40rem) {
-    .ct-row {
-      grid-template-columns: 1fr;
+    .ct-form {
+      order: 1;
     }
   }
 
-  /* ================= ASIDE ================= */
-  .ct-block {
-    border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
-    padding-top: var(--space-s);
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+  /* ----- studio ledger ----- */
+  .ct-rows {
+    margin-top: var(--space-m);
+  }
+
+  .ct-row {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: var(--space-s);
+    padding-block: 1rem;
+    border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  }
+
+  .ct-row:last-child {
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
   }
 
   .ct-key {
     color: var(--ink-soft);
+    padding-top: 0.25em;
   }
 
   .ct-val {
     font-style: normal;
-    line-height: 1.6;
+    font-size: 0.9375rem;
+    line-height: 1.7;
   }
 
   .ct-val a {
@@ -258,32 +246,9 @@ import Base from '../../layouts/Base.astro';
     color: var(--accent);
   }
 
-  .ct-news {
-    display: flex;
-    border-bottom: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
-    transition: border-color var(--dur-fast) var(--ease-out);
-  }
-
-  .ct-news:focus-within {
-    border-color: var(--ink);
-  }
-
-  .ct-news input {
-    flex: 1;
-    min-width: 0;
-    background: none;
-    border: none;
-    outline: none;
-    font-family: var(--font-serif);
-    font-size: 0.9375rem;
-    color: var(--ink);
-    padding: 0.5rem 0;
-  }
-
-  .ct-news button {
-    color: var(--accent);
-    white-space: nowrap;
-    padding-left: 0.5rem;
+  .ct-link {
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
   }
 
   .ct-social {
@@ -291,11 +256,102 @@ import Base from '../../layouts/Base.astro';
     gap: var(--space-s);
   }
 
-  .ct-social a {
-    transition: color var(--dur-fast) var(--ease-out);
+  /* ----- the questionnaire ----- */
+  .ct-form-lead {
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 2vw, 1.625rem);
+    line-height: var(--lh-body);
+    max-width: 32rem;
   }
 
-  .ct-social a:hover {
-    color: var(--accent);
+  .ct-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-l);
+  }
+
+  .ct-fld {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 28%, transparent);
+  }
+
+  /* accent line draws across on focus */
+  .ct-fld::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .ct-fld:focus-within::after {
+    transform: scaleX(1);
+  }
+
+  .ct-fld-label {
+    color: var(--ink-soft);
+  }
+
+  .ct-fld input,
+  .ct-fld textarea {
+    background: none;
+    border: none;
+    outline: none;
+    border-radius: 0;
+    padding: 0 0 0.875rem;
+    font-family: var(--font-serif);
+    font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+    color: var(--ink);
+    resize: vertical;
+  }
+
+  .ct-actions {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-s);
+    flex-wrap: wrap;
+    margin-top: var(--space-2xs);
+  }
+
+  .ct-send {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.6875rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 1.2em 3.2em;
+    background: var(--ink);
+    color: var(--c-bone);
+    border-radius: 999px;
+    transition: background-color var(--dur-base) var(--ease-out);
+  }
+
+  .ct-send:hover {
+    background: var(--accent);
+  }
+
+  .ct-privacy {
+    max-width: 16rem;
+    text-align: right;
+  }
+
+  @media (max-width: 40rem) {
+    .ct-pair {
+      grid-template-columns: 1fr;
+      gap: var(--space-l);
+    }
+
+    .ct-privacy {
+      text-align: left;
+    }
   }
 </style>
