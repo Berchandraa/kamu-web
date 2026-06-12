@@ -1,0 +1,405 @@
+---
+/**
+ * Project Details — one route per project, generated from
+ * src/data/projects.ts. Bureau model: image-led, asymmetric
+ * gallery rhythm, generous whitespace, slow motion.
+ *
+ * Swap slots: hero = project-NN.jpg (same file as the index),
+ * gallery = project-NN-detail-01.jpg … -06.jpg.
+ */
+import Base from '../../layouts/Base.astro';
+import Placeholder from '../../components/Placeholder.astro';
+import { projects } from '../../data/projects';
+
+export function getStaticPaths() {
+  return projects.map((project, i) => ({
+    params: { slug: project.slug },
+    props: { project, next: projects[(i + 1) % projects.length] },
+  }));
+}
+
+const { project: p, next } = Astro.props;
+const detail = (i: number) => `${p.file.replace('.jpg', '')}-detail-0${i}.jpg`;
+---
+
+<Base title={p.name} description={`${p.name} — ${p.meta}. ${p.intro}`}>
+  <!-- ============ HERO — full-bleed, caption bottom-left ============ -->
+  <section class="hero" data-nav-invert>
+    <div class="hero-media" data-parallax>
+      <img
+        src={`/assets/${p.file}`}
+        alt={p.name}
+        onerror={`this.onerror=null;this.src='${p.demo}'`}
+      />
+    </div>
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <span class="ph-note label" aria-hidden="true">{p.file}</span>
+    <div class="hero-caption">
+      <p class="label hero-n">Project — {p.n}</p>
+      <h1 class="h1 hero-name">{p.name}</h1>
+      <p class="label hero-meta">{p.meta}</p>
+    </div>
+  </section>
+
+  <!-- ============ INTRO — concept, materials, approach ============ -->
+  <section class="intro grid-12">
+    <p class="label intro-label" data-reveal>Concept</p>
+    <p class="sub intro-lead" data-reveal="line">{p.intro}</p>
+    <p class="intro-body" data-reveal data-reveal-delay="0.15">{p.body}</p>
+  </section>
+
+  <!-- ============ META ROW ============ -->
+  <section class="meta grid-12" data-reveal>
+    <div class="meta-item">
+      <p class="label meta-key">Location</p>
+      <p class="meta-val">{p.location}</p>
+    </div>
+    <div class="meta-item">
+      <p class="label meta-key">Year</p>
+      <p class="meta-val">{p.year}</p>
+    </div>
+    <div class="meta-item">
+      <p class="label meta-key">Type</p>
+      <p class="meta-val">{p.type}</p>
+    </div>
+    <div class="meta-item">
+      <p class="label meta-key">Scope</p>
+      <p class="meta-val">{p.scope}</p>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY — Bureau rhythm ============ -->
+  <section class="gallery">
+    <!-- G1: full bleed -->
+    <div class="g-full" data-reveal="media">
+      <Placeholder name={detail(1)} ratio="16x9" demo={p.gallery[0]} alt={p.name} parallax class="g-noratio" />
+    </div>
+
+    <!-- G2 | G3: split 58/42, right dropped -->
+    <div class="g-split">
+      <div data-reveal="media">
+        <Placeholder name={detail(2)} ratio="4x3" demo={p.gallery[1]} alt={p.name} parallax />
+      </div>
+      <div class="g-dropped" data-reveal="media" data-reveal-delay="0.15">
+        <Placeholder name={detail(3)} ratio="3x4" demo={p.gallery[2]} alt={p.name} parallax />
+      </div>
+    </div>
+
+    <!-- Editorial beat: pull quote -->
+    {
+      p.quote && (
+        <blockquote class="g-quote grid-12">
+          <p class="quote" data-reveal="line">
+            &ldquo;{p.quote}&rdquo;
+          </p>
+        </blockquote>
+      )
+    }
+
+    <!-- G4: wide, pushed right -->
+    <div class="g-wide" data-reveal="media">
+      <Placeholder name={detail(4)} ratio="16x9" demo={p.gallery[3]} alt={p.name} parallax />
+    </div>
+
+    <!-- G5 | G6: detail shots, reversed split, left dropped -->
+    <div class="g-split g-split-rev">
+      <div class="g-dropped" data-reveal="media">
+        <Placeholder name={detail(5)} ratio="1x1" demo={p.gallery[4]} alt={`${p.name} — detail`} parallax />
+      </div>
+      <div data-reveal="media" data-reveal-delay="0.15">
+        <Placeholder name={detail(6)} ratio="4x3" demo={p.gallery[5]} alt={`${p.name} — detail`} parallax />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NEXT PROJECT ============ -->
+  <a href={`/projects/${next.slug}/`} class="next" data-parallax>
+    <img
+      src={`/assets/${next.file}`}
+      alt={next.name}
+      onerror={`this.onerror=null;this.src='${next.demo}'`}
+    />
+    <div class="next-scrim" aria-hidden="true"></div>
+    <div class="next-text">
+      <p class="label next-label" data-reveal>Next Project</p>
+      <p class="display next-name" data-reveal="line">
+        {next.name}&nbsp;<span class="next-arrow">→</span>
+      </p>
+      <p class="label next-meta" data-reveal data-reveal-delay="0.15">{next.meta}</p>
+    </div>
+  </a>
+</Base>
+
+<style>
+  /* ================= HERO ================= */
+  .hero {
+    position: relative;
+    height: 100svh;
+    overflow: hidden;
+    color: var(--c-bone);
+  }
+
+  .hero-media,
+  .hero-media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(
+        to top,
+        color-mix(in srgb, var(--c-black) 60%, transparent) 0%,
+        transparent 42%
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--c-black) 28%, transparent) 0%,
+        transparent 20%
+      );
+  }
+
+  .hero-caption {
+    position: absolute;
+    z-index: 2;
+    left: var(--gutter);
+    bottom: clamp(2.5rem, 7vh, 5rem);
+  }
+
+  .hero-n {
+    color: color-mix(in srgb, var(--c-bone) 75%, transparent);
+    margin-bottom: var(--space-s);
+  }
+
+  .hero-name {
+    text-transform: uppercase;
+  }
+
+  .hero-meta {
+    margin-top: var(--space-s);
+    opacity: 0.8;
+  }
+
+  .ph-note {
+    position: absolute;
+    top: calc(var(--nav-h) + 1rem);
+    right: var(--gutter);
+    z-index: 2;
+    padding: 0.3em 0.7em;
+    background: color-mix(in srgb, var(--c-bone) 75%, transparent);
+    color: var(--c-black);
+    font-size: 0.5625rem;
+    opacity: 0.8;
+  }
+
+  /* ================= INTRO ================= */
+  .intro {
+    padding-block: var(--space-2xl) var(--space-xl);
+    row-gap: var(--space-m);
+  }
+
+  .intro-label {
+    grid-column: 1 / 3;
+    color: var(--accent);
+    padding-top: 0.5rem;
+  }
+
+  .intro-lead {
+    grid-column: 4 / 12;
+    font-family: var(--font-serif);
+    font-size: clamp(1.375rem, 2.4vw, 2rem);
+    line-height: var(--lh-body);
+    letter-spacing: var(--ls-none);
+  }
+
+  .intro-body {
+    grid-column: 7 / 12;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 56rem) {
+    .intro-label,
+    .intro-lead {
+      grid-column: 1 / -1;
+    }
+
+    .intro-body {
+      grid-column: 2 / -1;
+    }
+  }
+
+  /* ================= META ROW ================= */
+  .meta {
+    row-gap: var(--space-m);
+    padding-bottom: var(--space-xl);
+  }
+
+  .meta-item {
+    grid-column: span 3;
+    border-top: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+    padding-top: 1rem;
+  }
+
+  .meta-key {
+    color: var(--ink-soft);
+    margin-bottom: 0.625rem;
+  }
+
+  .meta-val {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 56rem) {
+    .meta-item {
+      grid-column: span 6;
+    }
+  }
+
+  /* ================= GALLERY ================= */
+  .g-full {
+    width: 100%;
+  }
+
+  /* full-bleed slot: let the frame stretch viewport-tall on large screens */
+  .g-full :global(.media) {
+    max-height: 92svh;
+  }
+
+  .g-split {
+    display: grid;
+    grid-template-columns: 58fr 42fr;
+    gap: 0.25rem;
+    margin-top: 0.25rem;
+  }
+
+  .g-split-rev {
+    grid-template-columns: 42fr 58fr;
+    margin-top: var(--space-xl);
+  }
+
+  .g-dropped {
+    margin-top: clamp(4rem, 12vh, 9rem);
+  }
+
+  .g-quote {
+    padding-block: var(--space-2xl);
+  }
+
+  .g-quote .quote {
+    grid-column: 3 / 10;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .g-wide {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  .g-wide > :global(.media) {
+    grid-column: 5 / 13;
+  }
+
+  /* if no quote precedes it, keep breathing room */
+  .g-split + .g-wide {
+    margin-top: var(--space-xl);
+  }
+
+  @media (max-width: 56rem) {
+    .g-split,
+    .g-split-rev {
+      grid-template-columns: 1fr;
+      gap: var(--space-l);
+      margin-top: var(--space-l);
+    }
+
+    .g-dropped {
+      margin-top: 0;
+      width: 80%;
+      margin-left: auto;
+    }
+
+    .g-split-rev .g-dropped {
+      margin-left: 0;
+      margin-right: auto;
+    }
+
+    .g-quote .quote {
+      grid-column: 1 / -1;
+    }
+
+    .g-wide {
+      display: block;
+    }
+  }
+
+  /* ================= NEXT PROJECT ================= */
+  .next {
+    position: relative;
+    display: block;
+    margin-top: var(--space-2xl);
+    height: min(70svh, 44rem);
+    overflow: hidden;
+    color: var(--c-bone);
+  }
+
+  .next img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .next-scrim {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--c-black) 45%, transparent);
+    transition: background-color var(--dur-slow) var(--ease-out);
+  }
+
+  .next:hover .next-scrim {
+    background: color-mix(in srgb, var(--c-black) 30%, transparent);
+  }
+
+  .next-text {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-inline: var(--gutter);
+  }
+
+  .next-label {
+    color: color-mix(in srgb, var(--c-bone) 75%, transparent);
+    margin-bottom: var(--space-s);
+  }
+
+  .next-name {
+    text-transform: uppercase;
+  }
+
+  .next-arrow {
+    display: inline-block;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .next:hover .next-arrow {
+    transform: translateX(0.4em);
+  }
+
+  .next-meta {
+    margin-top: var(--space-s);
+    opacity: 0.8;
+  }
+</style>

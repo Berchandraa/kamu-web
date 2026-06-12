@@ -1,0 +1,161 @@
+---
+/**
+ * Base layout — fonts, tokens, navbar, footer, smooth scroll,
+ * and the shared scroll-reveal system.
+ *
+ * Reveal API (used on every page):
+ *   data-reveal            → fade-up on scroll into view
+ *   data-reveal="line"     → clip-reveal upward (headlines)
+ *   data-reveal="media"    → slow fade + subtle scale (images/video)
+ *   data-reveal-delay="0.2"→ optional stagger offset in seconds
+ */
+import '@fontsource/montserrat/400.css';
+import '@fontsource/montserrat/500.css';
+import '@fontsource/montserrat/700.css';
+import '@fontsource/lora/400.css';
+import '@fontsource/lora/400-italic.css';
+import '../styles/global.css';
+
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'KAMU Concepts — interior design studio in Bali. Timeless, modern spaces rooted in craftsmanship and slow tropical living.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — KAMU Concepts</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#e6e4df" />
+    <script is:inline>
+      document.documentElement.classList.remove('no-js');
+    </script>
+  </head>
+  <body>
+    <Navbar />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <style is:global>
+      html.is-locked {
+        overflow: hidden;
+      }
+
+      html.lenis,
+      html.lenis body {
+        height: auto;
+      }
+
+      .lenis.lenis-smooth {
+        scroll-behavior: auto !important;
+      }
+    </style>
+
+    <script>
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+      import Lenis from 'lenis';
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // ----- Smooth scroll (Lenis), driven by the GSAP ticker -----
+      if (!reduced) {
+        const lenis = new Lenis({
+          duration: 1.4,
+          easing: (t: number) => 1 - Math.pow(1 - t, 3),
+        });
+
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+      }
+
+      // ----- Scroll reveals -----
+      if (!reduced) {
+        const reveals = document.querySelectorAll<HTMLElement>('[data-reveal]');
+
+        reveals.forEach((el) => {
+          const kind = el.dataset.reveal || 'fade';
+          const delay = parseFloat(el.dataset.revealDelay || '0');
+
+          const base = {
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+            delay,
+          };
+
+          if (kind === 'line') {
+            gsap.set(el, { clipPath: 'inset(0 0 100% 0)', opacity: 1, y: 30 });
+            gsap.to(el, {
+              ...base,
+              clipPath: 'inset(0 0 0% 0)',
+              y: 0,
+              duration: 1.2,
+              ease: 'power3.out',
+            });
+          } else if (kind === 'media') {
+            gsap.set(el, { opacity: 0, scale: 1.04 });
+            gsap.to(el, {
+              ...base,
+              opacity: 1,
+              scale: 1,
+              duration: 1.6,
+              ease: 'power2.out',
+            });
+          } else {
+            gsap.set(el, { opacity: 0, y: 28 });
+            gsap.to(el, {
+              ...base,
+              opacity: 1,
+              y: 0,
+              duration: 1.1,
+              ease: 'power3.out',
+            });
+          }
+        });
+      } else {
+        // Reduced motion: everything simply visible
+        document
+          .querySelectorAll<HTMLElement>('[data-reveal]')
+          .forEach((el) => (el.style.opacity = '1'));
+      }
+
+      // ----- Slow parallax drift on media frames ([data-parallax]) -----
+      if (!reduced) {
+        document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
+          const media = el.querySelector('img, video');
+          if (!media) return;
+          gsap.set(media, { scale: 1.14 });
+          gsap.fromTo(
+            media,
+            { yPercent: -5 },
+            {
+              yPercent: 5,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: el,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true,
+              },
+            }
+          );
+        });
+      }
+    </script>
+  </body>
+</html>

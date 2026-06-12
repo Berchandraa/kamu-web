@@ -1,0 +1,442 @@
+---
+/**
+ * Product page — one route per product from src/data/products.ts.
+ * Sawdust model: gallery left, calm info column right, marketplace
+ * link-out (no cart yet, per the brand guide), related row below.
+ *
+ * Swap slots: main = product-NN.jpg (shared with the catalog),
+ * alternates = product-NN-alt-01.jpg / -alt-02.jpg.
+ */
+import Base from '../../layouts/Base.astro';
+import Placeholder from '../../components/Placeholder.astro';
+import { products, categories, marketplaces } from '../../data/products';
+
+export function getStaticPaths() {
+  return products.map((product) => {
+    const related = [
+      ...products.filter(
+        (p) => p.category === product.category && p.slug !== product.slug
+      ),
+      ...products.filter((p) => p.category !== product.category),
+    ].slice(0, 4);
+    return { params: { slug: product.slug }, props: { product, related } };
+  });
+}
+
+const { product: p, related } = Astro.props;
+const catLabel = categories.find((c) => c.slug === p.category)?.label;
+const base = p.file.replace('.jpg', '');
+const shots = [
+  { file: p.file, demo: p.demo },
+  { file: `${base}-alt-01.jpg`, demo: p.alts[0] },
+  { file: `${base}-alt-02.jpg`, demo: p.alts[1] },
+];
+---
+
+<Base title={p.name} description={`${p.name} — ${p.desc}`}>
+  <!-- ============ PRODUCT ============ -->
+  <section class="pd grid-12">
+    <!-- gallery -->
+    <div class="pd-gallery">
+      <div class="media frame-3x4 pd-main" data-reveal="media">
+        <img
+          id="pd-main-img"
+          src={`/assets/${shots[0].file}`}
+          alt={p.name}
+          onerror={`this.onerror=null;this.src='${shots[0].demo}'`}
+        />
+        <span class="pd-tag label" aria-hidden="true" id="pd-main-tag">
+          {shots[0].file}
+        </span>
+      </div>
+
+      <div class="pd-thumbs" data-reveal data-reveal-delay="0.2">
+        {
+          shots.map((s, i) => (
+            <button
+              class={`pd-thumb ${i === 0 ? 'is-active' : ''}`}
+              data-file={s.file}
+              aria-label={`View image ${i + 1}`}
+            >
+              <span class="media frame-1x1">
+                <img
+                  src={`/assets/${s.file}`}
+                  alt=""
+                  loading="lazy"
+                  onerror={`this.onerror=null;this.src='${s.demo}'`}
+                />
+              </span>
+            </button>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- info -->
+    <div class="pd-info">
+      <nav class="label pd-crumb" data-reveal aria-label="Breadcrumb">
+        <a href="/shop/">Shop</a>
+        <span aria-hidden="true">—</span>
+        <span>{catLabel}</span>
+      </nav>
+
+      <h1 class="h1 pd-name" data-reveal="line">{p.name}</h1>
+      <p class="sub pd-price" data-reveal data-reveal-delay="0.1">{p.price}</p>
+
+      <p class="pd-desc" data-reveal data-reveal-delay="0.15">{p.desc}</p>
+
+      <dl class="pd-details" data-reveal data-reveal-delay="0.2">
+        <div class="pd-detail">
+          <dt class="label">Materials</dt>
+          <dd>{p.materials}</dd>
+        </div>
+        <div class="pd-detail">
+          <dt class="label">Dimensions</dt>
+          <dd>{p.dims}</dd>
+        </div>
+        <div class="pd-detail">
+          <dt class="label">Lead time</dt>
+          <dd>4–6 weeks, made to order in Bali</dd>
+        </div>
+      </dl>
+
+      <div class="pd-buy" data-reveal data-reveal-delay="0.25">
+        <a
+          href={marketplaces.tokopedia}
+          target="_blank"
+          rel="noopener"
+          class="pd-btn pd-btn-fill"
+        >
+          Buy on Tokopedia
+        </a>
+        <a
+          href={marketplaces.shopee}
+          target="_blank"
+          rel="noopener"
+          class="pd-btn"
+        >
+          Buy on Shopee
+        </a>
+      </div>
+
+      <p class="caption pd-note" data-reveal data-reveal-delay="0.3">
+        Checkout is handled by the marketplace. Questions first?
+        <a href="/contact/" class="pd-note-link">Talk to the studio.</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ RELATED ============ -->
+  <section class="pd-related">
+    <header class="pd-related-head grid-12">
+      <h2 class="h2 pd-related-title" data-reveal="line">You may also like</h2>
+      <a href="/shop/" class="text-link label pd-related-all" data-reveal>
+        Shop all pieces
+      </a>
+    </header>
+
+    <div class="pd-related-row">
+      {
+        related.map((r, i) => (
+          <a
+            href={`/shop/${r.slug}/`}
+            class="pd-card"
+            data-reveal
+            data-reveal-delay={String(i * 0.08)}
+          >
+            <Placeholder name={r.file} ratio="3x4" demo={r.demo} alt={r.name} />
+            <div class="pd-card-caption">
+              <h3 class="pd-card-name">{r.name}</h3>
+              <p class="caption">{r.price}</p>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ================= PRODUCT ================= */
+  .pd {
+    padding-top: calc(var(--nav-h) + var(--space-l));
+    row-gap: var(--space-l);
+  }
+
+  .pd-gallery {
+    grid-column: 1 / 8;
+  }
+
+  .pd-main :global(img) {
+    transition: opacity var(--dur-fast) var(--ease-out);
+  }
+
+  .pd-tag {
+    position: absolute;
+    left: 0.875rem;
+    bottom: 0.75rem;
+    z-index: 1;
+    padding: 0.3em 0.7em;
+    background: color-mix(in srgb, var(--c-bone) 75%, transparent);
+    color: var(--c-black);
+    font-size: 0.5625rem;
+    pointer-events: none;
+  }
+
+  .pd-main.media,
+  .pd-thumb .media {
+    background: var(--bg-alt);
+  }
+
+  .pd-thumbs {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .pd-thumb {
+    width: clamp(4rem, 7vw, 6rem);
+    opacity: 0.55;
+    transition: opacity var(--dur-fast) var(--ease-out);
+  }
+
+  .pd-thumb .media {
+    display: block;
+  }
+
+  .pd-thumb.is-active,
+  .pd-thumb:hover {
+    opacity: 1;
+  }
+
+  /* ----- info column ----- */
+  .pd-info {
+    grid-column: 9 / 13;
+    align-self: start;
+    position: sticky;
+    top: calc(var(--nav-h) + var(--space-s));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    padding-top: var(--space-m);
+  }
+
+  .pd-crumb {
+    display: flex;
+    gap: 0.75em;
+    color: var(--ink-soft);
+  }
+
+  .pd-crumb a {
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .pd-crumb a:hover {
+    color: var(--ink);
+  }
+
+  .pd-name {
+    font-size: clamp(1.75rem, 3vw, 2.75rem);
+  }
+
+  .pd-price {
+    color: var(--accent);
+  }
+
+  .pd-desc {
+    color: var(--ink-soft);
+    max-width: 30rem;
+  }
+
+  .pd-details {
+    margin-top: var(--space-2xs);
+  }
+
+  .pd-detail {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: var(--space-s);
+    padding-block: 0.875rem;
+    border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+  }
+
+  .pd-detail dt {
+    color: var(--ink-soft);
+    padding-top: 0.2em;
+  }
+
+  .pd-detail dd {
+    font-size: 0.9375rem;
+  }
+
+  /* ----- buy buttons ----- */
+  .pd-buy {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: var(--space-2xs);
+  }
+
+  .pd-btn {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 0.6875rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 1em 2em;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    transition:
+      background-color var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out);
+  }
+
+  .pd-btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--c-bone);
+  }
+
+  .pd-btn-fill {
+    background: var(--ink);
+    color: var(--c-bone);
+  }
+
+  .pd-note {
+    max-width: 24rem;
+  }
+
+  .pd-note-link {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  @media (max-width: 64rem) {
+    .pd-gallery {
+      grid-column: 1 / -1;
+    }
+
+    .pd-info {
+      grid-column: 1 / -1;
+      position: static;
+      padding-top: 0;
+    }
+  }
+
+  /* ================= RELATED ================= */
+  .pd-related {
+    padding-top: var(--space-2xl);
+  }
+
+  .pd-related-head {
+    align-items: end;
+    margin-bottom: var(--space-l);
+  }
+
+  .pd-related-title {
+    grid-column: 1 / 8;
+  }
+
+  .pd-related-all {
+    grid-column: 10 / 13;
+    justify-self: end;
+  }
+
+  /* Sawdust horizontal row — snaps, peeks on smaller screens */
+  .pd-related-row {
+    display: flex;
+    gap: clamp(1rem, 2.5vw, 2.5rem);
+    overflow-x: auto;
+    padding-inline: var(--gutter);
+    padding-bottom: var(--space-s);
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .pd-related-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pd-card {
+    flex: 0 0 clamp(14rem, 22vw, 20rem);
+    scroll-snap-align: start;
+  }
+
+  .pd-card :global(.media) {
+    background: var(--bg-alt);
+  }
+
+  .pd-card :global(img) {
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+
+  .pd-card:hover :global(img) {
+    transform: scale(1.04);
+  }
+
+  .pd-card-caption {
+    text-align: center;
+    padding-top: var(--space-s);
+  }
+
+  .pd-card-name {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.8125rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 56rem) {
+    .pd-related-title,
+    .pd-related-all {
+      grid-column: 1 / -1;
+      justify-self: start;
+    }
+
+    .pd-related-all {
+      margin-top: var(--space-s);
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  // Thumbnail → main image swap, gentle crossfade
+  const main = document.getElementById('pd-main-img') as HTMLImageElement | null;
+  const tag = document.getElementById('pd-main-tag');
+  const thumbs = document.querySelectorAll<HTMLButtonElement>('.pd-thumb');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  thumbs.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (!main) return;
+      const img = btn.querySelector('img');
+      if (!img) return;
+
+      thumbs.forEach((b) => b.classList.toggle('is-active', b === btn));
+      if (tag) tag.textContent = btn.dataset.file ?? '';
+
+      const swap = () => {
+        // use the thumb's resolved src so the demo fallback carries over
+        main.src = img.currentSrc || img.src;
+      };
+
+      if (reduced) {
+        swap();
+      } else {
+        gsap.to(main, {
+          opacity: 0,
+          duration: 0.25,
+          ease: 'power2.in',
+          onComplete: () => {
+            swap();
+            gsap.to(main, { opacity: 1, duration: 0.45, ease: 'power2.out' });
+          },
+        });
+      }
+    });
+  });
+</script>

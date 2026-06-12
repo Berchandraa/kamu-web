@@ -1,0 +1,81 @@
+/* ============================================================
+   KAMU Concepts — Design Tokens
+   Source of truth: BRAND GUIDELINES_KAMU CONCEPTS_2026
+   ============================================================ */
+
+:root {
+  /* ----- Colour palette (PDF p.17–18) -----
+     Primary: Black, Mist Green
+     Secondary: Bone, Taupe, Terracotta, Desert Sand
+     Note: Taupe HEX derived from its RGB (146/133/123) —
+     the PDF's printed HEX for Taupe is a typo. */
+  --c-black: #202020;
+  --c-mist: #8b9970;
+  --c-bone: #e6e4df;
+  --c-taupe: #92857b;
+  --c-terracotta: #a34e29;
+  --c-sand: #d2b9a2;
+
+  /* Semantic roles (colour weighting, PDF p.18) */
+  --bg: var(--c-bone);          /* lightest — creates space */
+  --bg-alt: #efeeea;            /* bone lifted ~3% for subtle banding */
+  --ink: var(--c-black);        /* structural anchor */
+  --ink-soft: var(--c-taupe);   /* grounding neutral, supporting text */
+  --accent: var(--c-terracotta);/* signature accent — use sparingly */
+  --accent-soft: var(--c-sand); /* transitional warmth */
+  --natural: var(--c-mist);     /* calm natural tone */
+
+  /* ----- Typography (PDF p.23–27) ----- */
+  --font-sans: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Lora', ui-serif, Georgia, serif;
+
+  /* Type scale — fluid, mapped from the print hierarchy
+     Headline Large  Montserrat Bold     100% LH  -0.02/-0.04em
+     Headline Small  Montserrat Medium   110% LH  -0.02em
+     Subheading      Montserrat Regular  120% LH  -0.02em
+     Body            Lora Regular        140% LH   0
+     Pull quote      Lora Italic         140% LH   0
+     Caption         Lora Regular        140% LH  +0.02em */
+  --fs-display: clamp(3.25rem, 9.5vw, 8.5rem); /* hero-scale headline */
+  --fs-h1: clamp(2.5rem, 5.5vw, 4.5rem);       /* Headline Large */
+  --fs-h2: clamp(1.5rem, 3vw, 2.5rem);         /* Headline Small */
+  --fs-sub: clamp(1.125rem, 1.6vw, 1.5rem);    /* Subheading */
+  --fs-body: clamp(1rem, 1.15vw, 1.125rem);    /* Body copy */
+  --fs-quote: clamp(1.25rem, 2vw, 1.75rem);    /* Pull quotes */
+  --fs-caption: 0.8125rem;                      /* Captions */
+  --fs-label: 0.6875rem;                        /* nav / eyebrow labels */
+
+  --lh-tight: 1.0;
+  --lh-snug: 1.1;
+  --lh-sub: 1.2;
+  --lh-body: 1.4;
+
+  --ls-tight: -0.03em;   /* large headlines */
+  --ls-snug: -0.02em;    /* small headlines / subheads */
+  --ls-none: 0;          /* body */
+  --ls-wide: 0.02em;     /* captions */
+  --ls-label: 0.14em;    /* uppercase labels / nav */
+
+  /* ----- Spacing ----- */
+  --space-2xs: 0.5rem;
+  --space-xs: 1rem;
+  --space-s: 1.5rem;
+  --space-m: 2.5rem;
+  --space-l: 4rem;
+  --space-xl: clamp(5rem, 10vw, 9rem);    /* section rhythm */
+  --space-2xl: clamp(8rem, 16vw, 14rem);  /* major breaks */
+
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);  /* page margin */
+  --max-w: 100rem;
+
+  /* ----- Motion — calm, slow, never bouncy ----- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);     /* soft decelerate */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);  /* curtains, panels */
+  --dur-fast: 0.4s;
+  --dur-base: 0.8s;
+  --dur-slow: 1.2s;
+
+  /* ----- Misc ----- */
+  --nav-h: 5.5rem;
+  --nav-h-condensed: 3.75rem;
+}

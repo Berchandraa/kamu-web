@@ -1,0 +1,23 @@
+{
+  "name": "kamu-concepts",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "start": "serve dist -l ${PORT:-3000}"
+  },
+  "dependencies": {
+    "@fontsource/lora": "^5.2.5",
+    "@fontsource/montserrat": "^5.2.5",
+    "astro": "^5.7.0",
+    "gsap": "^3.12.7",
+    "lenis": "^1.2.3",
+    "serve": "^14.2.4"
+  }
+}

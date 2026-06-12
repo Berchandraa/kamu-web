@@ -1,0 +1,356 @@
+---
+/**
+ * Projects — portfolio index.
+ * Bureau model: image-led, editorial, asymmetric rhythm.
+ * Row recipe (no uniform grid):
+ *   01 full-bleed feature → 02|03 split 58/42 (right dropped)
+ *   → 04 wide pushed LEFT → 05|06 split 42/62 reversed (left dropped)
+ *   → 07 wide pushed RIGHT.
+ * Same motion system as Home: data-reveal + data-parallax.
+ */
+import Base from '../../layouts/Base.astro';
+import Placeholder from '../../components/Placeholder.astro';
+import { projects } from '../../data/projects';
+
+const [p1, p2, p3, p4, p5, p6, p7] = projects;
+---
+
+<Base
+  title="Projects"
+  description="Selected interiors by KAMU Concepts — hospitality, residential and workspace projects across Bali."
+>
+  <!-- ============ HEADER ============ -->
+  <header class="ph-head grid-12">
+    <p class="label ph-eyebrow" data-reveal>KAMU Concepts — Portfolio</p>
+    <h1 class="display ph-title" data-reveal="line">Projects</h1>
+    <p class="ph-intro" data-reveal data-reveal-delay="0.15">
+      Hospitality, residential and workspace interiors across Bali. Each
+      project begins with how a space should feel — the rest follows.
+    </p>
+    <p class="label ph-count" data-reveal data-reveal-delay="0.2">
+      Selected — {String(projects.length).padStart(2, '0')}
+    </p>
+  </header>
+
+  <!-- ============ 01 — full-bleed feature ============ -->
+  <a href={`/projects/${p1.slug}/`} class="feature" data-parallax>
+    <img
+      src={`/assets/${p1.file}`}
+      alt={p1.name}
+      onerror={`this.onerror=null;this.src='${p1.demo}'`}
+    />
+    <span class="ph-note label" aria-hidden="true">{p1.file}</span>
+    <div class="feature-caption">
+      <p class="label feature-n">{p1.n}</p>
+      <h2 class="h2">{p1.name}</h2>
+      <p class="label feature-meta">{p1.meta}</p>
+    </div>
+  </a>
+
+  <!-- ============ 02 | 03 — split, right dropped ============ -->
+  <div class="row-split">
+    <a href={`/projects/${p2.slug}/`} class="item" data-reveal="media">
+      <Placeholder name={p2.file} ratio="4x3" demo={p2.demo} alt={p2.name} parallax />
+      <div class="item-caption">
+        <span class="label item-n">{p2.n}</span>
+        <h2 class="h2 item-name">{p2.name}</h2>
+        <p class="label item-meta">{p2.meta}</p>
+      </div>
+    </a>
+
+    <a
+      href={`/projects/${p3.slug}/`}
+      class="item item-dropped"
+      data-reveal="media"
+      data-reveal-delay="0.15"
+    >
+      <Placeholder name={p3.file} ratio="3x4" demo={p3.demo} alt={p3.name} parallax />
+      <div class="item-caption">
+        <span class="label item-n">{p3.n}</span>
+        <h2 class="h2 item-name">{p3.name}</h2>
+        <p class="label item-meta">{p3.meta}</p>
+      </div>
+    </a>
+  </div>
+
+  <!-- ============ 04 — wide, pushed left ============ -->
+  <div class="row-wide row-wide-left">
+    <a href={`/projects/${p4.slug}/`} class="item" data-reveal="media">
+      <Placeholder name={p4.file} ratio="16x9" demo={p4.demo} alt={p4.name} parallax />
+      <div class="item-caption">
+        <span class="label item-n">{p4.n}</span>
+        <h2 class="h2 item-name">{p4.name}</h2>
+        <p class="label item-meta">{p4.meta}</p>
+      </div>
+    </a>
+  </div>
+
+  <!-- ============ 05 | 06 — split reversed, left dropped ============ -->
+  <div class="row-split row-split-rev">
+    <a
+      href={`/projects/${p5.slug}/`}
+      class="item item-dropped"
+      data-reveal="media"
+    >
+      <Placeholder name={p5.file} ratio="3x4" demo={p5.demo} alt={p5.name} parallax />
+      <div class="item-caption">
+        <span class="label item-n">{p5.n}</span>
+        <h2 class="h2 item-name">{p5.name}</h2>
+        <p class="label item-meta">{p5.meta}</p>
+      </div>
+    </a>
+
+    <a
+      href={`/projects/${p6.slug}/`}
+      class="item"
+      data-reveal="media"
+      data-reveal-delay="0.15"
+    >
+      <Placeholder name={p6.file} ratio="4x3" demo={p6.demo} alt={p6.name} parallax />
+      <div class="item-caption">
+        <span class="label item-n">{p6.n}</span>
+        <h2 class="h2 item-name">{p6.name}</h2>
+        <p class="label item-meta">{p6.meta}</p>
+      </div>
+    </a>
+  </div>
+
+  <!-- ============ 07 — wide, pushed right ============ -->
+  <div class="row-wide row-wide-right">
+    <a href={`/projects/${p7.slug}/`} class="item" data-reveal="media">
+      <Placeholder name={p7.file} ratio="16x9" demo={p7.demo} alt={p7.name} parallax />
+      <div class="item-caption">
+        <span class="label item-n">{p7.n}</span>
+        <h2 class="h2 item-name">{p7.name}</h2>
+        <p class="label item-meta">{p7.meta}</p>
+      </div>
+    </a>
+  </div>
+
+  <!-- ============ OUTRO ============ -->
+  <div class="ph-outro grid-12">
+    <p class="quote ph-outro-quote" data-reveal="line">
+      Every project starts with a conversation.
+    </p>
+    <a href="/contact/" class="text-link label ph-outro-link" data-reveal data-reveal-delay="0.15">
+      Start a project
+    </a>
+  </div>
+</Base>
+
+<style>
+  /* ================= HEADER ================= */
+  .ph-head {
+    padding-top: calc(var(--nav-h) + var(--space-xl));
+    padding-bottom: var(--space-xl);
+    row-gap: var(--space-s);
+  }
+
+  .ph-eyebrow {
+    grid-column: 1 / 5;
+    grid-row: 1;
+    color: var(--accent);
+  }
+
+  .ph-title {
+    grid-column: 1 / 10;
+    grid-row: 2;
+    text-transform: uppercase;
+  }
+
+  .ph-intro {
+    grid-column: 8 / 12;
+    grid-row: 3;
+    margin-top: var(--space-m);
+    color: var(--ink-soft);
+  }
+
+  .ph-count {
+    grid-column: 1 / 4;
+    grid-row: 3;
+    margin-top: var(--space-m);
+    align-self: end;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 56rem) {
+    .ph-eyebrow,
+    .ph-title,
+    .ph-intro,
+    .ph-count {
+      grid-column: 1 / -1;
+    }
+
+    .ph-count {
+      grid-row: 4;
+    }
+  }
+
+  /* ================= FEATURE (01) ================= */
+  .feature {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: min(92svh, 60rem);
+    overflow: hidden;
+  }
+
+  .feature img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .feature::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--c-black) 55%, transparent) 0%,
+      transparent 38%
+    );
+  }
+
+  .feature-caption {
+    position: absolute;
+    left: var(--gutter);
+    bottom: var(--space-m);
+    z-index: 2;
+    color: var(--c-bone);
+  }
+
+  .feature-n {
+    opacity: 0.7;
+    margin-bottom: 0.625rem;
+  }
+
+  .feature-meta {
+    margin-top: 0.5rem;
+    opacity: 0.8;
+  }
+
+  .ph-note {
+    position: absolute;
+    right: var(--gutter);
+    bottom: var(--space-m);
+    z-index: 2;
+    padding: 0.3em 0.7em;
+    background: color-mix(in srgb, var(--c-bone) 75%, transparent);
+    color: var(--c-black);
+    font-size: 0.5625rem;
+  }
+
+  /* ================= ROWS ================= */
+  .row-split {
+    display: grid;
+    grid-template-columns: 58fr 42fr;
+    gap: 0.25rem;
+    margin-top: 0.25rem;
+  }
+
+  .row-split-rev {
+    grid-template-columns: 42fr 58fr;
+    margin-top: var(--space-xl);
+  }
+
+  .item {
+    display: block;
+  }
+
+  .item-dropped {
+    margin-top: clamp(4rem, 12vh, 9rem);
+  }
+
+  .row-wide {
+    margin-top: var(--space-xl);
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  .row-wide-left .item {
+    grid-column: 1 / 10;
+  }
+
+  .row-wide-right .item {
+    grid-column: 4 / 13;
+  }
+
+  /* ----- captions: number · name · meta ----- */
+  .item-caption {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-s);
+    padding: 1rem var(--gutter) 0;
+  }
+
+  .item-n {
+    color: var(--accent);
+  }
+
+  .item-name {
+    font-size: clamp(1.125rem, 1.8vw, 1.5rem);
+  }
+
+  .item-meta {
+    margin-left: auto;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 56rem) {
+    .feature {
+      height: 70svh;
+    }
+
+    .row-split,
+    .row-split-rev {
+      grid-template-columns: 1fr;
+      gap: var(--space-l);
+      margin-top: var(--space-l);
+    }
+
+    .item-dropped {
+      margin-top: 0;
+      width: 80%;
+      margin-left: auto;
+    }
+
+    .row-split-rev .item-dropped {
+      margin-left: 0;
+      margin-right: auto;
+    }
+
+    .row-wide-left .item,
+    .row-wide-right .item {
+      grid-column: 1 / -1;
+    }
+
+    .item-meta {
+      display: none;
+    }
+  }
+
+  /* ================= OUTRO ================= */
+  .ph-outro {
+    margin-top: var(--space-2xl);
+    row-gap: var(--space-m);
+  }
+
+  .ph-outro-quote {
+    grid-column: 2 / 10;
+  }
+
+  .ph-outro-link {
+    grid-column: 2 / 6;
+  }
+
+  @media (max-width: 56rem) {
+    .ph-outro-quote,
+    .ph-outro-link {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

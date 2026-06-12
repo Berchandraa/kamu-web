@@ -1,0 +1,354 @@
+---
+/**
+ * Careers — intro, expandable role listings, application form.
+ * Per the PDF web spec: static text + apply form.
+ */
+import Base from '../../layouts/Base.astro';
+
+const roles = [
+  {
+    title: 'Interior Designer',
+    meta: 'Full-time · Umalas, Bali',
+    text: 'You turn briefs into atmospheres. 3+ years in residential or hospitality interiors, fluent in materials and detail drawings, comfortable walking a site and a client through the same decision. Portfolio over CV.',
+  },
+  {
+    title: 'Project Manager',
+    meta: 'Full-time · Umalas, Bali',
+    text: 'You keep calm projects calm. You coordinate makers, suppliers and site teams across Bali, protect timelines without drama, and know that the last 5% takes 50% of the care.',
+  },
+  {
+    title: '3D Visualizer',
+    meta: 'Full-time / Freelance · Remote-friendly',
+    text: 'You make unbuilt rooms feel inhabited. Strong with natural light, honest materials and warm muted tones — our renders should feel like our photography: calm, never glossy.',
+  },
+];
+---
+
+<Base
+  title="Careers"
+  description="Work at KAMU Concepts — open roles for designers, project managers and visualizers in Bali."
+>
+  <header class="cr-head grid-12">
+    <p class="label cr-eyebrow" data-reveal>Careers</p>
+    <h1 class="display cr-title" data-reveal="line">Work, slowly</h1>
+    <p class="cr-intro" data-reveal data-reveal-delay="0.15">
+      We&rsquo;re a small studio that cares about how things are made — including
+      how it feels to make them. Reasonable hours, real craft, projects worth
+      your name.
+    </p>
+  </header>
+
+  <!-- ============ OPEN ROLES ============ -->
+  <section class="cr-roles grid-12">
+    <p class="label cr-roles-label" data-reveal>
+      Open Roles — {String(roles.length).padStart(2, '0')}
+    </p>
+    <div class="cr-list" data-reveal data-reveal-delay="0.1">
+      {
+        roles.map((r) => (
+          <details class="cr-role">
+            <summary class="cr-role-head">
+              <span class="cr-role-title">{r.title}</span>
+              <span class="label cr-role-meta">{r.meta}</span>
+              <span class="cr-role-icon" aria-hidden="true">+</span>
+            </summary>
+            <div class="cr-role-body">
+              <p>{r.text}</p>
+              <a href="#apply" class="text-link label">Apply for this role</a>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ============ APPLICATION FORM ============ -->
+  <section class="cr-apply grid-12" id="apply">
+    <div class="cr-apply-head">
+      <p class="label cr-apply-eyebrow" data-reveal>Apply</p>
+      <h2 class="h2" data-reveal="line">Introduce yourself</h2>
+      <p class="cr-apply-note" data-reveal data-reveal-delay="0.1">
+        No role that fits? Write anyway — we keep good portfolios close.
+      </p>
+    </div>
+
+    <form class="cr-form" action="#" method="post" data-reveal data-reveal-delay="0.15">
+      <div class="cr-row">
+        <div class="cr-field">
+          <label class="label" for="cr-name">Name</label>
+          <input type="text" id="cr-name" name="name" autocomplete="name" required />
+        </div>
+        <div class="cr-field">
+          <label class="label" for="cr-email">Email</label>
+          <input type="email" id="cr-email" name="email" autocomplete="email" required />
+        </div>
+      </div>
+
+      <div class="cr-row">
+        <div class="cr-field">
+          <label class="label" for="cr-role">Role</label>
+          <select id="cr-role" name="role" required>
+            <option value="" selected disabled>Select a role</option>
+            {roles.map((r) => <option value={r.title}>{r.title}</option>)}
+            <option value="Open application">Open application</option>
+          </select>
+        </div>
+        <div class="cr-field">
+          <label class="label" for="cr-portfolio">Portfolio link</label>
+          <input
+            type="url"
+            id="cr-portfolio"
+            name="portfolio"
+            placeholder="https://"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="cr-field">
+        <label class="label" for="cr-message">Message</label>
+        <textarea id="cr-message" name="message" rows="4"></textarea>
+      </div>
+
+      <button type="submit" class="cr-send">Send application</button>
+    </form>
+  </section>
+</Base>
+
+<style>
+  /* ================= HEAD ================= */
+  .cr-head {
+    padding-top: calc(var(--nav-h) + var(--space-xl));
+    padding-bottom: var(--space-xl);
+    row-gap: var(--space-s);
+  }
+
+  .cr-eyebrow {
+    grid-column: 1 / 5;
+    color: var(--accent);
+  }
+
+  .cr-title {
+    grid-column: 1 / 9;
+    grid-row: 2;
+    text-transform: uppercase;
+  }
+
+  .cr-intro {
+    grid-column: 9 / 13;
+    grid-row: 2;
+    align-self: end;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 56rem) {
+    .cr-eyebrow,
+    .cr-title,
+    .cr-intro {
+      grid-column: 1 / -1;
+    }
+
+    .cr-intro {
+      grid-row: 3;
+      margin-top: var(--space-s);
+    }
+  }
+
+  /* ================= ROLES ================= */
+  .cr-roles {
+    padding-block: var(--space-l) var(--space-2xl);
+    row-gap: var(--space-m);
+  }
+
+  .cr-roles-label {
+    grid-column: 1 / 3;
+    color: var(--ink-soft);
+    padding-top: 1.5rem;
+  }
+
+  .cr-list {
+    grid-column: 3 / 13;
+  }
+
+  .cr-role {
+    border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  }
+
+  .cr-role:last-child {
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  }
+
+  .cr-role-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-s);
+    padding-block: var(--space-s);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .cr-role-head::-webkit-details-marker {
+    display: none;
+  }
+
+  .cr-role-title {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: clamp(1.125rem, 2vw, 1.625rem);
+    letter-spacing: var(--ls-snug);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .cr-role-head:hover .cr-role-title {
+    color: var(--accent);
+  }
+
+  .cr-role-meta {
+    color: var(--ink-soft);
+  }
+
+  .cr-role-icon {
+    margin-left: auto;
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: 1.5rem;
+    line-height: 1;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .cr-role[open] .cr-role-icon {
+    transform: rotate(45deg);
+  }
+
+  .cr-role-body {
+    max-width: 38rem;
+    padding-bottom: var(--space-m);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 56rem) {
+    .cr-roles-label,
+    .cr-list {
+      grid-column: 1 / -1;
+    }
+
+    .cr-roles-label {
+      padding-top: 0;
+    }
+
+    .cr-role-meta {
+      display: none;
+    }
+  }
+
+  /* ================= APPLY ================= */
+  .cr-apply {
+    padding-bottom: var(--space-xl);
+    row-gap: var(--space-l);
+  }
+
+  .cr-apply-head {
+    grid-column: 1 / 5;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+
+  .cr-apply-eyebrow {
+    color: var(--accent);
+  }
+
+  .cr-apply-note {
+    color: var(--ink-soft);
+    max-width: 18rem;
+  }
+
+  .cr-form {
+    grid-column: 6 / 13;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+  }
+
+  .cr-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-m);
+  }
+
+  .cr-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .cr-field label {
+    color: var(--ink-soft);
+  }
+
+  .cr-field input,
+  .cr-field textarea,
+  .cr-field select {
+    background: none;
+    border: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
+    padding: 0.625rem 0;
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    color: var(--ink);
+    outline: none;
+    border-radius: 0;
+    resize: vertical;
+    appearance: none;
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .cr-field select {
+    cursor: pointer;
+  }
+
+  .cr-field input:focus,
+  .cr-field textarea:focus,
+  .cr-field select:focus {
+    border-color: var(--ink);
+  }
+
+  .cr-send {
+    align-self: flex-start;
+    margin-top: var(--space-s);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 0.6875rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 1em 3em;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    transition:
+      background-color var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out);
+  }
+
+  .cr-send:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--c-bone);
+  }
+
+  @media (max-width: 56rem) {
+    .cr-apply-head,
+    .cr-form {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .cr-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

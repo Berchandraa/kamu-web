@@ -1,0 +1,69 @@
+---
+/**
+ * Placeholder media frame — aspect-locked, swap-safe.
+ *
+ * `name`  → the real file you'll drop into /public/assets/ later.
+ * `demo`  → live demo image (Unsplash) shown until the real file
+ *           exists. The <img> tries /assets/<name> first; if it's
+ *           missing it falls back to the demo URL. Drop the real
+ *           file in and it wins automatically — zero code changes,
+ *           zero layout shift (ratio is locked by the frame).
+ *
+ *   <Placeholder name="project-01.jpg" ratio="3x4" demo={…} alt="…" />
+ */
+interface Props {
+  name: string;
+  ratio?: '16x9' | '4x3' | '3x4' | '2x3' | '1x1' | '21x9';
+  alt?: string;
+  demo?: string;
+  parallax?: boolean;
+  class?: string;
+}
+
+const {
+  name,
+  ratio = '4x3',
+  alt = '',
+  demo,
+  parallax = false,
+  class: className,
+} = Astro.props;
+
+const src = `/assets/${name}`;
+const isVideo = /\.(mp4|webm)$/i.test(name);
+const fallback = demo
+  ? `this.onerror=null;this.src='${demo}'`
+  : 'this.remove()';
+---
+
+<div
+  class={`media frame-${ratio} ph ${className ?? ''}`}
+  data-parallax={parallax ? '' : undefined}
+>
+  {
+    isVideo ? (
+      <video src={src} poster={demo} autoplay muted loop playsinline></video>
+    ) : (
+      <img src={src} alt={alt} loading="lazy" onerror={fallback} />
+    )
+  }
+  <span class="ph-tag label" aria-hidden="true">{name}</span>
+</div>
+
+<style>
+  .ph {
+    background: var(--accent-soft);
+  }
+
+  .ph-tag {
+    position: absolute;
+    left: 0.875rem;
+    bottom: 0.75rem;
+    z-index: 1;
+    padding: 0.3em 0.7em;
+    background: color-mix(in srgb, var(--c-bone) 75%, transparent);
+    color: var(--c-black);
+    font-size: 0.5625rem;
+    pointer-events: none;
+  }
+</style>

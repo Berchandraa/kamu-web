@@ -1,0 +1,270 @@
+---
+/**
+ * Shop — product catalog.
+ * Sawdust model: clean, orderly, scannable. Uniform grid (the
+ * deliberate counterpoint to the asymmetric Projects page),
+ * plain bone backdrops, generous whitespace, quiet hovers.
+ * Category filters per the brand PDF web spec.
+ */
+import Base from '../../layouts/Base.astro';
+import Placeholder from '../../components/Placeholder.astro';
+import { products, categories } from '../../data/products';
+---
+
+<Base
+  title="Shop"
+  description="Furniture and lighting by KAMU Concepts — handcrafted pieces for slow living, made in Bali."
+>
+  <!-- ============ HEADER ============ -->
+  <header class="sh-head grid-12">
+    <p class="label sh-eyebrow" data-reveal>by KAMU — The Collection</p>
+    <h1 class="display sh-title" data-reveal="line">Shop</h1>
+    <p class="sh-intro" data-reveal data-reveal-delay="0.15">
+      Handcrafted furniture and lighting, made in Bali. Designed slowly,
+      built to last.
+    </p>
+  </header>
+
+  <!-- ============ FILTERS ============ -->
+  <nav class="sh-filters" aria-label="Product categories" data-reveal>
+    <button class="sh-filter is-active" data-filter="all" aria-pressed="true">
+      All
+    </button>
+    {
+      categories.map((c) => (
+        <button class="sh-filter" data-filter={c.slug} aria-pressed="false">
+          {c.label}
+        </button>
+      ))
+    }
+  </nav>
+
+  <!-- ============ GRID ============ -->
+  <section class="sh-grid" id="sh-grid">
+    {
+      products.map((p, i) => (
+        <a
+          href={`/shop/${p.slug}/`}
+          class="sh-card"
+          data-category={p.category}
+          data-reveal
+          data-reveal-delay={String((i % 3) * 0.1)}
+        >
+          <Placeholder name={p.file} ratio="3x4" demo={p.demo} alt={p.name} />
+          <div class="sh-caption">
+            <h2 class="sh-name">{p.name}</h2>
+            <p class="caption sh-price">{p.price}</p>
+          </div>
+        </a>
+      ))
+    }
+  </section>
+
+  <!-- ============ FULFILMENT NOTE ============ -->
+  <p class="caption sh-note" data-reveal>
+    Orders are currently fulfilled through Tokopedia and Shopee.
+  </p>
+</Base>
+
+<style>
+  /* ================= HEADER ================= */
+  .sh-head {
+    padding-top: calc(var(--nav-h) + var(--space-xl));
+    padding-bottom: var(--space-l);
+    row-gap: var(--space-s);
+  }
+
+  .sh-eyebrow {
+    grid-column: 1 / 5;
+    grid-row: 1;
+    color: var(--accent);
+  }
+
+  .sh-title {
+    grid-column: 1 / 8;
+    grid-row: 2;
+    text-transform: uppercase;
+  }
+
+  .sh-intro {
+    grid-column: 9 / 13;
+    grid-row: 2;
+    align-self: end;
+    color: var(--ink-soft);
+    max-width: 24rem;
+  }
+
+  @media (max-width: 56rem) {
+    .sh-eyebrow,
+    .sh-title,
+    .sh-intro {
+      grid-column: 1 / -1;
+    }
+
+    .sh-intro {
+      grid-row: 3;
+      margin-top: var(--space-s);
+    }
+  }
+
+  /* ================= FILTERS ================= */
+  .sh-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-m);
+    padding-inline: var(--gutter);
+    padding-block: var(--space-s) var(--space-l);
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+    margin-bottom: var(--space-l);
+  }
+
+  .sh-filter {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 0.6875rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-bottom: 0.5rem;
+    position: relative;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .sh-filter::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--ink);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .sh-filter:hover {
+    color: var(--ink);
+  }
+
+  .sh-filter.is-active {
+    color: var(--ink);
+  }
+
+  .sh-filter.is-active::after {
+    transform: scaleX(1);
+  }
+
+  /* ================= GRID — uniform, calm ================= */
+  .sh-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: var(--space-m);
+    row-gap: var(--space-xl);
+    padding-inline: var(--gutter);
+  }
+
+  .sh-card[hidden] {
+    display: none;
+  }
+
+  .sh-card :global(.media) {
+    background: var(--bg-alt);
+  }
+
+  .sh-card :global(img) {
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+
+  .sh-card:hover :global(img) {
+    transform: scale(1.04);
+  }
+
+  .sh-caption {
+    text-align: center;
+    padding-top: var(--space-s);
+  }
+
+  .sh-name {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.8125rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .sh-price {
+    margin-top: 0.4rem;
+  }
+
+  @media (max-width: 64rem) {
+    .sh-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .sh-grid {
+      grid-template-columns: 1fr;
+      row-gap: var(--space-l);
+    }
+  }
+
+  /* ================= NOTE ================= */
+  .sh-note {
+    text-align: center;
+    padding-block: var(--space-xl) 0;
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  // Category filter — calm fade out, re-stagger in
+  const grid = document.getElementById('sh-grid');
+  const filters = document.querySelectorAll<HTMLButtonElement>('.sh-filter');
+  const cards = document.querySelectorAll<HTMLElement>('.sh-card');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  filters.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.filter;
+
+      filters.forEach((b) => {
+        const active = b === btn;
+        b.classList.toggle('is-active', active);
+        b.setAttribute('aria-pressed', String(active));
+      });
+
+      const apply = () => {
+        const shown: HTMLElement[] = [];
+        cards.forEach((card) => {
+          const show = target === 'all' || card.dataset.category === target;
+          card.hidden = !show;
+          if (show) shown.push(card);
+        });
+        if (!reduced) {
+          gsap.fromTo(
+            shown,
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.8, stagger: 0.06, ease: 'power3.out', overwrite: true }
+          );
+        } else {
+          shown.forEach((c) => ((c.style.opacity = '1'), (c.style.transform = 'none')));
+        }
+      };
+
+      if (!reduced && grid) {
+        gsap.to(cards, {
+          opacity: 0,
+          duration: 0.3,
+          ease: 'power2.in',
+          overwrite: true,
+          onComplete: apply,
+        });
+      } else {
+        apply();
+      }
+    });
+  });
+</script>

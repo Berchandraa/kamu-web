@@ -1,0 +1,216 @@
+---
+/**
+ * Footer — content structure per brand PDF p.42–43:
+ * logo, address, sitemap links, legal, newsletter, socials.
+ */
+import Wordmark from './Wordmark.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img
+          class="footer-symbol"
+          src="/assets/logo.png"
+          alt=""
+          width="1371"
+          height="1459"
+        />
+        <Wordmark />
+        <p class="footer-address caption">
+          Jl. Placeholder Street No. 00<br />
+          Bingin, Bali — Indonesia<br />
+          <a href="tel:+6282338888971">+62 823 3888 8971</a>
+        </p>
+      </div>
+
+      <nav class="footer-col" aria-label="Footer — studio">
+        <span class="label footer-heading">Studio</span>
+        <a href="/about/">About</a>
+        <a href="/projects/">Projects</a>
+        <a href="/careers/">Careers</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+
+      <nav class="footer-col" aria-label="Footer — shop">
+        <span class="label footer-heading">Shop</span>
+        <a href="/shop/">All Pieces</a>
+        <a href="/shop/">Dining</a>
+        <a href="/shop/">Lounge</a>
+        <a href="/shop/">Lighting</a>
+      </nav>
+
+      <div class="footer-col footer-news">
+        <span class="label footer-heading">Newsletter</span>
+        <p class="caption">Slow interiors, in your inbox. No noise.</p>
+        <form class="footer-form" action="#" method="post">
+          <input
+            type="email"
+            name="email"
+            placeholder="jondoe@gmail.com"
+            aria-label="Email address"
+            required
+          />
+          <button type="submit" class="label">Sign up</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom caption">
+      <span>© {year} KAMU Concepts</span>
+      <div class="footer-legal">
+        <a href="/terms/">Terms &amp; Conditions</a>
+        <a href="/privacy/">Privacy Policy</a>
+      </div>
+      <div class="footer-social label">
+        <a href="https://instagram.com/kamuconcepts" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://tiktok.com/@kamuconcepts" target="_blank" rel="noopener">TikTok</a>
+        <a href="https://pinterest.com/kamuconcepts" target="_blank" rel="noopener">Pinterest</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--ink);
+    color: var(--c-bone);
+    padding-block: var(--space-xl) var(--space-m);
+    margin-top: var(--space-2xl);
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: var(--space-l);
+    padding-bottom: var(--space-l);
+    border-bottom: 1px solid color-mix(in srgb, var(--c-bone) 18%, transparent);
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-s);
+  }
+
+  .footer-symbol {
+    width: 2.5rem;
+    height: auto;
+    filter: invert(1);
+  }
+
+  .footer-address {
+    color: var(--c-taupe);
+    font-style: normal;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+  }
+
+  .footer-heading {
+    color: var(--c-taupe);
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-col a {
+    width: fit-content;
+    position: relative;
+  }
+
+  .footer-col a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .footer-col a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .footer-news .caption {
+    color: var(--c-taupe);
+  }
+
+  .footer-form {
+    display: flex;
+    border-bottom: 1px solid color-mix(in srgb, var(--c-bone) 35%, transparent);
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .footer-form:focus-within {
+    border-color: var(--c-bone);
+  }
+
+  .footer-form input {
+    flex: 1;
+    min-width: 0;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--c-bone);
+    font-family: var(--font-serif);
+    font-size: 0.9375rem;
+    padding: 0.625rem 0;
+  }
+
+  .footer-form input::placeholder {
+    color: color-mix(in srgb, var(--c-taupe) 75%, transparent);
+  }
+
+  .footer-form button {
+    color: var(--accent-soft);
+    padding-inline: 0.5rem 0;
+    white-space: nowrap;
+  }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-s);
+    padding-top: var(--space-m);
+    color: var(--c-taupe);
+    flex-wrap: wrap;
+  }
+
+  .footer-legal,
+  .footer-social {
+    display: flex;
+    gap: var(--space-s);
+  }
+
+  .footer-social a:hover,
+  .footer-legal a:hover {
+    color: var(--c-bone);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  @media (max-width: 56rem) {
+    .footer-top {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-brand,
+    .footer-news {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

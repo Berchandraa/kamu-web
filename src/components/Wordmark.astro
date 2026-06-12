@@ -1,0 +1,35 @@
+---
+/**
+ * KAMU CONCEPTS wordmark — typographic placeholder.
+ * Replace with the real logotype SVG when supplied.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<span class={`wordmark ${className ?? ''}`}>
+  KAMU<span class="wordmark-sub">Concepts</span>
+</span>
+
+<style>
+  .wordmark {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.45em;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .wordmark-sub {
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    font-size: 0.72em;
+  }
+</style>
