@@ -31,10 +31,10 @@ const roles = [
   title="Careers"
   description="Work at KAMU Concepts — open roles for designers, project managers and visualizers in Bali."
 >
-  <header class="cr-head grid-12">
-    <p class="label cr-eyebrow" data-reveal>Careers</p>
-    <h1 class="display cr-title" data-reveal="line">Work, slowly</h1>
-    <p class="cr-intro" data-reveal data-reveal-delay="0.15">
+  <header class="page-head">
+    <p class="label page-eyebrow" data-reveal>Careers</p>
+    <h1 class="page-title" data-reveal="line">Work, slowly</h1>
+    <p class="page-intro" data-reveal data-reveal-delay="0.15">
       We&rsquo;re a small studio that cares about how things are made — including
       how it feels to make them. Reasonable hours, real craft, projects worth
       your name.
@@ -119,44 +119,6 @@ const roles = [
 </Base>
 
 <style>
-  /* ================= HEAD ================= */
-  .cr-head {
-    padding-top: calc(var(--nav-h) + var(--space-xl));
-    padding-bottom: var(--space-xl);
-    row-gap: var(--space-s);
-  }
-
-  .cr-eyebrow {
-    grid-column: 1 / 5;
-    color: var(--accent);
-  }
-
-  .cr-title {
-    grid-column: 1 / 9;
-    grid-row: 2;
-    text-transform: uppercase;
-  }
-
-  .cr-intro {
-    grid-column: 9 / 13;
-    grid-row: 2;
-    align-self: end;
-    color: var(--ink-soft);
-  }
-
-  @media (max-width: 56rem) {
-    .cr-eyebrow,
-    .cr-title,
-    .cr-intro {
-      grid-column: 1 / -1;
-    }
-
-    .cr-intro {
-      grid-row: 3;
-      margin-top: var(--space-s);
-    }
-  }
-
   /* ================= ROLES ================= */
   .cr-roles {
     padding-block: var(--space-l) var(--space-2xl);

@@ -88,15 +88,15 @@ const pieces = [
   <!-- ============ HERO — full-bleed video, text floats on it ============ -->
   <section class="hero" data-nav-invert>
     <div class="hero-media">
+      {/* poster shows the real image now; add src="/assets/hero-video.mp4" when the film lands */}
       <video
-        src="/assets/hero-video.mp4"
         poster={u('1600210492486-724fe5c67fb0', 2400)}
+        data-swap="hero-video.mp4"
         autoplay
         muted
         loop
         playsinline
       ></video>
-      <span class="hero-tag label" aria-hidden="true">hero-video.mp4</span>
     </div>
     <div class="hero-scrim" aria-hidden="true"></div>
 
@@ -146,11 +146,9 @@ const pieces = [
     <!-- Feature: edge to edge -->
     <a href="/projects/mira-hotel/" class="feature" data-parallax>
       <img
-        src={`/assets/${projects[0].file}`}
+        src={projects[0].demo}
         alt={projects[0].name}
-        onerror={`this.onerror=null;this.src='${projects[0].demo}'`}
       />
-      <span class="ph-note label" aria-hidden="true">{projects[0].file}</span>
       <div class="feature-caption">
         <h3 class="h2">{projects[0].name}</h3>
         <p class="label feature-meta duo">
@@ -288,18 +286,6 @@ const pieces = [
 
   .hero-media video {
     object-fit: cover;
-  }
-
-  .hero-tag {
-    position: absolute;
-    top: calc(var(--nav-h) + 1rem);
-    right: var(--gutter);
-    z-index: 3;
-    padding: 0.3em 0.7em;
-    background: color-mix(in srgb, var(--c-black) 45%, transparent);
-    color: var(--c-bone);
-    font-size: 0.5625rem;
-    opacity: 0.7;
   }
 
   .hero-scrim {
@@ -476,17 +462,6 @@ const pieces = [
   .feature-meta {
     margin-top: 0.5rem;
     opacity: 0.8;
-  }
-
-  .ph-note {
-    position: absolute;
-    right: var(--gutter);
-    bottom: var(--space-m);
-    z-index: 2;
-    padding: 0.3em 0.7em;
-    background: color-mix(in srgb, var(--c-bone) 75%, transparent);
-    color: var(--c-black);
-    font-size: 0.5625rem;
   }
 
   /* Asymmetric split — minimal gap, right column dropped */

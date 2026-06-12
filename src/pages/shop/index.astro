@@ -21,12 +21,12 @@ const labelFor = (slug: string) =>
   description="Furniture and lighting by KAMU Concepts — handcrafted pieces for slow living, made in Bali."
 >
   <!-- ============ HEADER ============ -->
-  <header class="sh-head grid-12">
-    <p class="label sh-eyebrow" data-reveal>
+  <header class="page-head">
+    <p class="label page-eyebrow" data-reveal>
       <span class="duo"><span>by KAMU</span><span class="duo-sub">The Collection</span></span>
     </p>
-    <h1 class="display sh-title" data-reveal="line">Shop</h1>
-    <p class="sh-intro" data-reveal data-reveal-delay="0.15">
+    <h1 class="page-title" data-reveal="line">Shop</h1>
+    <p class="page-intro" data-reveal data-reveal-delay="0.15">
       Handcrafted furniture and lighting, made in Bali. Designed slowly,
       built to last.
     </p>
@@ -83,47 +83,6 @@ const labelFor = (slug: string) =>
 </Base>
 
 <style>
-  /* ================= HEADER ================= */
-  .sh-head {
-    padding-top: calc(var(--nav-h) + var(--space-xl));
-    padding-bottom: var(--space-l);
-    row-gap: var(--space-s);
-  }
-
-  .sh-eyebrow {
-    grid-column: 1 / 5;
-    grid-row: 1;
-    color: var(--accent);
-  }
-
-  .sh-title {
-    grid-column: 1 / 8;
-    grid-row: 2;
-    text-transform: uppercase;
-  }
-
-  .sh-intro {
-    grid-column: 9 / 13;
-    grid-row: 2;
-    align-self: end;
-    color: var(--ink);
-    opacity: 0.78;
-    max-width: 24rem;
-  }
-
-  @media (max-width: 56rem) {
-    .sh-eyebrow,
-    .sh-title,
-    .sh-intro {
-      grid-column: 1 / -1;
-    }
-
-    .sh-intro {
-      grid-row: 3;
-      margin-top: var(--space-s);
-    }
-  }
-
   /* ================= FILTER BAR ================= */
   .sh-bar {
     display: flex;

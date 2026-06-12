@@ -157,6 +157,46 @@ ol {
 .frame-1x1  { aspect-ratio: 1 / 1; }
 .frame-21x9 { aspect-ratio: 21 / 9; }
 
+/* Locked page header — ONE title treatment on every page.
+   Identical size, weight, position and grid placement, no deviation. */
+.page-head {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--space-s);
+  row-gap: var(--space-m);
+  padding-inline: var(--gutter);
+  padding-top: calc(var(--nav-h) + var(--space-2xl));
+  padding-bottom: var(--space-xl);
+}
+
+.page-eyebrow {
+  grid-column: 1 / 7;
+  color: var(--accent);
+}
+
+.page-title {
+  grid-column: 1 / 12;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  text-transform: uppercase;
+}
+
+.page-intro {
+  grid-column: 1 / 7;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 56rem) {
+  .page-eyebrow,
+  .page-title,
+  .page-intro {
+    grid-column: 1 / -1;
+  }
+}
+
 /* 12-col editorial grid — shared page scaffold */
 .grid-12 {
   display: grid;

@@ -19,12 +19,12 @@ const demo =
   description="Talk to KAMU Concepts — interior design studio in Umalas, Bali. New projects, collaborations and product enquiries."
 >
   <!-- ============ HEAD ============ -->
-  <header class="ct-head grid-12">
-    <p class="label ct-eyebrow" data-reveal>
+  <header class="page-head">
+    <p class="label page-eyebrow" data-reveal>
       <span class="duo"><span>Contact</span><span class="duo-sub">Umalas, Bali</span></span>
     </p>
-    <h1 class="display ct-title" data-reveal="line">Let&rsquo;s talk</h1>
-    <p class="ct-reply" data-reveal data-reveal-delay="0.2">
+    <h1 class="page-title" data-reveal="line">Let&rsquo;s talk</h1>
+    <p class="page-intro" data-reveal data-reveal-delay="0.15">
       We reply within two working days.
     </p>
   </header>
@@ -126,54 +126,7 @@ const demo =
 </Base>
 
 <style>
-  /* ================= HEAD ================= */
-  .ct-head {
-    padding-top: calc(var(--nav-h) + var(--space-xl));
-    padding-bottom: var(--space-xl);
-    row-gap: var(--space-s);
-    align-items: end;
-  }
 
-  .ct-eyebrow {
-    grid-column: 1 / 6;
-    grid-row: 1;
-    color: var(--accent);
-  }
-
-  .ct-title {
-    grid-column: 1 / 9;
-    grid-row: 2;
-    text-transform: uppercase;
-  }
-
-  /* serif counterweight, bottom-right of the headline */
-  .ct-reply {
-    grid-column: 10 / 13;
-    grid-row: 2;
-    align-self: end;
-    justify-self: end;
-    text-align: right;
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: 1.125rem;
-    color: var(--ink-soft);
-    padding-bottom: 0.75rem;
-  }
-
-  @media (max-width: 56rem) {
-    .ct-eyebrow,
-    .ct-title,
-    .ct-reply {
-      grid-column: 1 / -1;
-    }
-
-    .ct-reply {
-      grid-row: 3;
-      justify-self: start;
-      text-align: left;
-      padding-bottom: 0;
-    }
-  }
 
   /* ================= SPLIT ================= */
   .ct {

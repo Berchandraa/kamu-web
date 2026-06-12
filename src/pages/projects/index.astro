@@ -21,28 +21,23 @@ const [p1, p2, p3, p4, p5, p6, p7] = projects;
   description="Selected interiors by KAMU Concepts — hospitality, residential and workspace projects across Bali."
 >
   <!-- ============ HEADER ============ -->
-  <header class="ph-head grid-12">
-    <p class="label ph-eyebrow" data-reveal>
+  <header class="page-head">
+    <p class="label page-eyebrow" data-reveal>
       <span class="duo"><span>KAMU Concepts</span><span class="duo-sub">Portfolio</span></span>
     </p>
-    <h1 class="display ph-title" data-reveal="line">Projects</h1>
-    <p class="ph-intro" data-reveal data-reveal-delay="0.15">
+    <h1 class="page-title" data-reveal="line">Projects</h1>
+    <p class="page-intro" data-reveal data-reveal-delay="0.15">
       Hospitality, residential and workspace interiors across Bali. Each
       project begins with how a space should feel — the rest follows.
-    </p>
-    <p class="label ph-count" data-reveal data-reveal-delay="0.2">
-      <span class="duo"><span>Selected</span><span class="duo-num">{String(projects.length).padStart(2, '0')}</span></span>
     </p>
   </header>
 
   <!-- ============ 01 — full-bleed feature ============ -->
   <a href={`/projects/${p1.slug}/`} class="feature" data-parallax>
     <img
-      src={`/assets/${p1.file}`}
+      src={p1.demo}
       alt={p1.name}
-      onerror={`this.onerror=null;this.src='${p1.demo}'`}
     />
-    <span class="ph-note label" aria-hidden="true">{p1.file}</span>
     <div class="feature-caption">
       <p class="label feature-n">{p1.n}</p>
       <h2 class="h2">{p1.name}</h2>
@@ -134,53 +129,6 @@ const [p1, p2, p3, p4, p5, p6, p7] = projects;
 </Base>
 
 <style>
-  /* ================= HEADER ================= */
-  .ph-head {
-    padding-top: calc(var(--nav-h) + var(--space-xl));
-    padding-bottom: var(--space-xl);
-    row-gap: var(--space-s);
-  }
-
-  .ph-eyebrow {
-    grid-column: 1 / 5;
-    grid-row: 1;
-    color: var(--accent);
-  }
-
-  .ph-title {
-    grid-column: 1 / 10;
-    grid-row: 2;
-    text-transform: uppercase;
-  }
-
-  .ph-intro {
-    grid-column: 8 / 12;
-    grid-row: 3;
-    margin-top: var(--space-m);
-    color: var(--ink-soft);
-  }
-
-  .ph-count {
-    grid-column: 1 / 4;
-    grid-row: 3;
-    margin-top: var(--space-m);
-    align-self: end;
-    color: var(--ink-soft);
-  }
-
-  @media (max-width: 56rem) {
-    .ph-eyebrow,
-    .ph-title,
-    .ph-intro,
-    .ph-count {
-      grid-column: 1 / -1;
-    }
-
-    .ph-count {
-      grid-row: 4;
-    }
-  }
-
   /* ================= FEATURE (01) ================= */
   .feature {
     position: relative;
@@ -225,17 +173,6 @@ const [p1, p2, p3, p4, p5, p6, p7] = projects;
   .feature-meta {
     margin-top: 0.5rem;
     opacity: 0.8;
-  }
-
-  .ph-note {
-    position: absolute;
-    right: var(--gutter);
-    bottom: var(--space-m);
-    z-index: 2;
-    padding: 0.3em 0.7em;
-    background: color-mix(in srgb, var(--c-bone) 75%, transparent);
-    color: var(--c-black);
-    font-size: 0.5625rem;
   }
 
   /* ================= ROWS ================= */

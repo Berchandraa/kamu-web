@@ -1,13 +1,11 @@
 ---
 /**
- * Placeholder media frame — aspect-locked, swap-safe.
+ * Media frame — aspect-locked.
  *
- * `name`  → the real file you'll drop into /public/assets/ later.
- * `demo`  → live demo image (Unsplash) shown until the real file
- *           exists. The <img> tries /assets/<name> first; if it's
- *           missing it falls back to the demo URL. Drop the real
- *           file in and it wins automatically — zero code changes,
- *           zero layout shift (ratio is locked by the frame).
+ * `demo` is the live image (a direct images.unsplash.com URL) and is
+ * shown immediately as the src — no flat-colour flash, no 404-first.
+ * `name` is recorded on data-swap as the target filename for the real
+ * asset; when real files land in /public/assets we point src at them.
  *
  *   <Placeholder name="project-01.jpg" ratio="3x4" demo={…} alt="…" />
  */
@@ -15,8 +13,9 @@ interface Props {
   name: string;
   ratio?: '16x9' | '4x3' | '3x4' | '2x3' | '1x1' | '21x9';
   alt?: string;
-  demo?: string;
+  demo: string;
   parallax?: boolean;
+  eager?: boolean;
   class?: string;
 }
 
@@ -26,44 +25,29 @@ const {
   alt = '',
   demo,
   parallax = false,
+  eager = false,
   class: className,
 } = Astro.props;
 
-const src = `/assets/${name}`;
 const isVideo = /\.(mp4|webm)$/i.test(name);
-const fallback = demo
-  ? `this.onerror=null;this.src='${demo}'`
-  : 'this.remove()';
 ---
 
 <div
   class={`media frame-${ratio} ph ${className ?? ''}`}
   data-parallax={parallax ? '' : undefined}
+  data-swap={name}
 >
   {
     isVideo ? (
-      <video src={src} poster={demo} autoplay muted loop playsinline></video>
+      <video src={demo} poster={demo} autoplay muted loop playsinline></video>
     ) : (
-      <img src={src} alt={alt} loading="lazy" onerror={fallback} />
+      <img src={demo} alt={alt} loading={eager ? 'eager' : 'lazy'} />
     )
   }
-  <span class="ph-tag label" aria-hidden="true">{name}</span>
 </div>
 
 <style>
   .ph {
     background: var(--accent-soft);
-  }
-
-  .ph-tag {
-    position: absolute;
-    left: 0.875rem;
-    bottom: 0.75rem;
-    z-index: 1;
-    padding: 0.3em 0.7em;
-    background: color-mix(in srgb, var(--c-bone) 75%, transparent);
-    color: var(--c-black);
-    font-size: 0.5625rem;
-    pointer-events: none;
   }
 </style>

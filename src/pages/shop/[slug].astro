@@ -71,13 +71,9 @@ const accordion = [
       <div class="media frame-3x4 pd-main" data-reveal="media">
         <img
           id="pd-main-img"
-          src={`/assets/${shots[0].file}`}
+          src={shots[0].demo}
           alt={p.name}
-          onerror={`this.onerror=null;this.src='${shots[0].demo}'`}
         />
-        <span class="pd-tag label" aria-hidden="true" id="pd-main-tag">
-          {shots[0].file}
-        </span>
       </div>
 
       <div class="pd-thumbs" data-reveal data-reveal-delay="0.2">
@@ -90,10 +86,9 @@ const accordion = [
             >
               <span class="media frame-1x1">
                 <img
-                  src={`/assets/${s.file}`}
+                  src={s.demo}
                   alt=""
                   loading="lazy"
-                  onerror={`this.onerror=null;this.src='${s.demo}'`}
                 />
               </span>
             </button>
@@ -120,7 +115,7 @@ const accordion = [
         data-id={p.slug}
         data-name={p.name}
         data-amount={p.amount}
-        data-image={`/assets/${p.file}`}
+        data-image={p.demo}
         data-fallback={p.demo}
         data-reveal
         data-reveal-delay="0.2"
@@ -190,18 +185,6 @@ const accordion = [
 
   .pd-main :global(img) {
     transition: opacity var(--dur-fast) var(--ease-out);
-  }
-
-  .pd-tag {
-    position: absolute;
-    left: 0.875rem;
-    bottom: 0.75rem;
-    z-index: 1;
-    padding: 0.3em 0.7em;
-    background: color-mix(in srgb, var(--c-bone) 75%, transparent);
-    color: var(--c-black);
-    font-size: 0.5625rem;
-    pointer-events: none;
   }
 
   .pd-main.media,
@@ -480,7 +463,6 @@ const accordion = [
 
   // Thumbnail → main image swap, gentle crossfade
   const main = document.getElementById('pd-main-img') as HTMLImageElement | null;
-  const tag = document.getElementById('pd-main-tag');
   const thumbs = document.querySelectorAll<HTMLButtonElement>('.pd-thumb');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -491,7 +473,6 @@ const accordion = [
       if (!img) return;
 
       thumbs.forEach((b) => b.classList.toggle('is-active', b === btn));
-      if (tag) tag.textContent = btn.dataset.file ?? '';
 
       const swap = () => {
         // use the thumb's resolved src so the demo fallback carries over
