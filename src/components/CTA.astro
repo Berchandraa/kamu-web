@@ -30,7 +30,7 @@ const {
     <a href={href} class="cta-link" data-reveal="line">
       <span class="cta-pre">{pre}</span>
       <span class="cta-action">
-        {action}<span class="cta-arrow" aria-hidden="true"></span>
+        {action}<span class="cta-arrow" aria-hidden="true"><span class="cta-arrow-line"></span></span>
       </span>
     </a>
 
@@ -81,27 +81,37 @@ const {
   .cta-action {
     font-family: var(--font-sans);
     font-weight: 700;
-    font-size: var(--fs-display);
+    /* viewport-relative cap so word + indent + arrow always fit */
+    font-size: clamp(2.5rem, 6.5vw, 6.25rem);
     line-height: var(--lh-tight);
     letter-spacing: var(--ls-tight);
     text-transform: uppercase;
-    margin-left: clamp(2.5rem, 8vw, 8rem);
+    margin-left: clamp(2rem, 7vw, 7rem);
     transition: color var(--dur-base) var(--ease-out);
   }
 
-  /* drawn rule-arrow that extends on hover */
+  /* drawn rule-arrow: container reserves the full hover width,
+     only the inner line grows — zero layout shift, nothing to clip */
   .cta-arrow {
     display: inline-block;
     position: relative;
-    width: 0.85em;
+    width: 1.7em;
     height: 0.045em;
-    background: currentColor;
     margin-left: 0.3em;
     vertical-align: 0.22em;
+  }
+
+  .cta-arrow-line {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 55%;
+    background: currentColor;
     transition: width var(--dur-slow) var(--ease-out);
   }
 
-  .cta-arrow::after {
+  .cta-arrow-line::after {
     content: '';
     position: absolute;
     right: 0.01em;
@@ -121,8 +131,8 @@ const {
     color: var(--ink);
   }
 
-  .cta-link:hover .cta-arrow {
-    width: 1.6em;
+  .cta-link:hover .cta-arrow-line {
+    width: 100%;
   }
 
   /* email counterweight, right-aligned */

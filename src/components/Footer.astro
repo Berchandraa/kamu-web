@@ -1,76 +1,94 @@
 ---
 /**
- * Footer — content structure per brand PDF p.42–43:
- * logo, address, sitemap links, legal, newsletter, socials.
+ * Footer — editorial close.
+ * Sequence: newsletter as a serif invitation line → offset link
+ * columns with the studio address → thin legal bar → a giant
+ * KAMU wordmark deliberately cropped by the bottom edge of the
+ * page (the brand sinking into the ground it stands on).
+ * All content per brand PDF p.42–43.
  */
-import Wordmark from './Wordmark.astro';
-
 const year = new Date().getFullYear();
 ---
 
 <footer class="footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <img
-          class="footer-symbol"
-          src="/assets/logo.png"
-          alt=""
-          width="1371"
-          height="1459"
-        />
-        <Wordmark />
-        <p class="footer-address caption">
-          Jl. Dukuh Indah No.71, Umalas<br />
-          Badung 80361, Bali, Indonesia<br />
-          <a href="tel:+6282338888971">+62 823 3888 8971</a>
-        </p>
-      </div>
+  <!-- ============ NEWSLETTER — the invitation line ============ -->
+  <div class="grid-12 f-news">
+    <p class="f-news-line">Slow interiors, in your inbox.</p>
+    <form class="f-news-form" action="#" method="post">
+      <input
+        type="email"
+        name="email"
+        placeholder="jondoe@gmail.com"
+        aria-label="Email address"
+        required
+      />
+      <button type="submit" class="label">Sign up</button>
+    </form>
+  </div>
 
-      <nav class="footer-col" aria-label="Footer — studio">
-        <span class="label footer-heading">Studio</span>
-        <a href="/about/">About</a>
-        <a href="/projects/">Projects</a>
-        <a href="/careers/">Careers</a>
-        <a href="/contact/">Contact</a>
-      </nav>
-
-      <nav class="footer-col" aria-label="Footer — shop">
-        <span class="label footer-heading">Shop</span>
-        <a href="/shop/">All Pieces</a>
-        <a href="/shop/">Dining</a>
-        <a href="/shop/">Lounge</a>
-        <a href="/shop/">Lighting</a>
-      </nav>
-
-      <div class="footer-col footer-news">
-        <span class="label footer-heading">Newsletter</span>
-        <p class="caption">Slow interiors, in your inbox. No noise.</p>
-        <form class="footer-form" action="#" method="post">
-          <input
-            type="email"
-            name="email"
-            placeholder="jondoe@gmail.com"
-            aria-label="Email address"
-            required
-          />
-          <button type="submit" class="label">Sign up</button>
-        </form>
-      </div>
+  <!-- ============ COLUMNS — offset on the 12-grid ============ -->
+  <div class="grid-12 f-mid">
+    <div class="f-brand">
+      <img
+        class="f-logo"
+        src="/assets/logo.png"
+        alt=""
+        width="1371"
+        height="1459"
+      />
+      <address class="caption f-address">
+        Jl. Dukuh Indah No.71, Umalas<br />
+        Badung 80361, Bali, Indonesia
+      </address>
+      <p class="caption f-direct">
+        <a href="mailto:hello@kamuconcepts.com">hello@kamuconcepts.com</a><br />
+        <a href="tel:+6282338888971">+62 823 3888 8971</a>
+      </p>
     </div>
 
-    <div class="footer-bottom caption">
-      <span>© {year} KAMU Concepts</span>
-      <div class="footer-legal">
-        <a href="/terms/">Terms &amp; Conditions</a>
-        <a href="/privacy/">Privacy Policy</a>
-      </div>
-      <div class="footer-social label">
-        <a href="https://instagram.com/kamuconcepts" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://tiktok.com/@kamuconcepts" target="_blank" rel="noopener">TikTok</a>
-        <a href="https://pinterest.com/kamuconcepts" target="_blank" rel="noopener">Pinterest</a>
-      </div>
+    <nav class="f-col" aria-label="Footer studio links">
+      <span class="label f-key">Studio</span>
+      <a href="/about/">About</a>
+      <a href="/projects/">Projects</a>
+      <a href="/careers/">Careers</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+
+    <nav class="f-col" aria-label="Footer shop links">
+      <span class="label f-key">Shop</span>
+      <a href="/shop/">All Pieces</a>
+      <a href="/shop/">Dining</a>
+      <a href="/shop/">Lounge</a>
+      <a href="/shop/">Lighting</a>
+    </nav>
+
+    <nav class="f-col" aria-label="Footer social links">
+      <span class="label f-key">
+        <span class="duo"><span>Follow</span><span class="duo-sub">@kamuconcepts</span></span>
+      </span>
+      <a href="https://instagram.com/kamuconcepts" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://tiktok.com/@kamuconcepts" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://pinterest.com/kamuconcepts" target="_blank" rel="noopener">Pinterest</a>
+    </nav>
+  </div>
+
+  <!-- ============ LEGAL BAR ============ -->
+  <div class="grid-12 f-bar caption">
+    <span class="duo">
+      <span>&copy; {year}</span>
+      <span class="duo-sub">KAMU Concepts</span>
+    </span>
+    <div class="f-legal">
+      <a href="/terms/">Terms &amp; Conditions</a>
+      <a href="/privacy/">Privacy Policy</a>
     </div>
+    <button class="f-top label" id="f-top">Back to top</button>
+  </div>
+
+  <!-- ============ GIANT MARK — cropped by the page edge ============ -->
+  <div class="f-mark" aria-hidden="true">
+    <span class="f-mark-kamu">KAMU</span>
+    <span class="f-mark-concepts">Concepts</span>
   </div>
 </footer>
 
@@ -78,37 +96,96 @@ const year = new Date().getFullYear();
   .footer {
     background: var(--ink);
     color: var(--c-bone);
-    padding-block: var(--space-xl) var(--space-m);
     margin-top: var(--space-2xl);
+    padding-top: var(--space-xl);
+    overflow: hidden;
   }
 
-  .footer-top {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1.5fr;
-    gap: var(--space-l);
+  /* ================= NEWSLETTER ================= */
+  .f-news {
+    row-gap: var(--space-m);
+    align-items: end;
     padding-bottom: var(--space-l);
-    border-bottom: 1px solid color-mix(in srgb, var(--c-bone) 18%, transparent);
   }
 
-  .footer-brand {
+  .f-news-line {
+    grid-column: 1 / 7;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.25;
+  }
+
+  .f-news-form {
+    grid-column: 8 / 13;
+    display: flex;
+    border-bottom: 1px solid color-mix(in srgb, var(--c-bone) 35%, transparent);
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .f-news-form:focus-within {
+    border-color: var(--c-bone);
+  }
+
+  .f-news-form input {
+    flex: 1;
+    min-width: 0;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--c-bone);
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    padding: 0.75rem 0;
+  }
+
+  .f-news-form input::placeholder {
+    color: color-mix(in srgb, var(--c-taupe) 75%, transparent);
+  }
+
+  .f-news-form button {
+    color: var(--accent-soft);
+    white-space: nowrap;
+    padding-left: 0.75rem;
+  }
+
+  /* ================= COLUMNS ================= */
+  .f-mid {
+    row-gap: var(--space-l);
+    padding-block: var(--space-l);
+    border-top: 1px solid color-mix(in srgb, var(--c-bone) 14%, transparent);
+  }
+
+  .f-brand {
+    grid-column: 1 / 5;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-s);
   }
 
-  .footer-symbol {
-    width: 2.5rem;
+  .f-logo {
+    width: 2.25rem;
     height: auto;
     filter: invert(1);
   }
 
-  .footer-address {
-    color: var(--c-taupe);
+  .f-address,
+  .f-direct {
     font-style: normal;
+    color: var(--c-taupe);
+    line-height: 1.7;
   }
 
-  .footer-col {
+  .f-direct a {
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .f-direct a:hover {
+    color: var(--c-bone);
+  }
+
+  .f-col {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -117,17 +194,29 @@ const year = new Date().getFullYear();
     letter-spacing: 0.02em;
   }
 
-  .footer-heading {
-    color: var(--c-taupe);
-    margin-bottom: 0.5rem;
+  .f-col:nth-of-type(1) {
+    grid-column: 6 / 8;
   }
 
-  .footer-col a {
+  .f-col:nth-of-type(2) {
+    grid-column: 8 / 10;
+  }
+
+  .f-col:nth-of-type(3) {
+    grid-column: 10 / 13;
+  }
+
+  .f-key {
+    color: var(--c-taupe);
+    margin-bottom: 0.625rem;
+  }
+
+  .f-col a {
     width: fit-content;
     position: relative;
   }
 
-  .footer-col a::after {
+  .f-col a::after {
     content: '';
     position: absolute;
     left: 0;
@@ -140,77 +229,111 @@ const year = new Date().getFullYear();
     transition: transform var(--dur-base) var(--ease-out);
   }
 
-  .footer-col a:hover::after {
+  .f-col a:hover::after {
     transform: scaleX(1);
     transform-origin: left;
   }
 
-  .footer-news .caption {
-    color: var(--c-taupe);
-  }
-
-  .footer-form {
+  /* ================= LEGAL BAR ================= */
+  .f-bar {
     display: flex;
-    border-bottom: 1px solid color-mix(in srgb, var(--c-bone) 35%, transparent);
-    transition: border-color var(--dur-fast) var(--ease-out);
-  }
-
-  .footer-form:focus-within {
-    border-color: var(--c-bone);
-  }
-
-  .footer-form input {
-    flex: 1;
-    min-width: 0;
-    background: none;
-    border: none;
-    outline: none;
-    color: var(--c-bone);
-    font-family: var(--font-serif);
-    font-size: 0.9375rem;
-    padding: 0.625rem 0;
-  }
-
-  .footer-form input::placeholder {
-    color: color-mix(in srgb, var(--c-taupe) 75%, transparent);
-  }
-
-  .footer-form button {
-    color: var(--accent-soft);
-    padding-inline: 0.5rem 0;
-    white-space: nowrap;
-  }
-
-  .footer-bottom {
-    display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    align-items: baseline;
     justify-content: space-between;
     gap: var(--space-s);
-    padding-top: var(--space-m);
+    padding-block: var(--space-s);
+    border-top: 1px solid color-mix(in srgb, var(--c-bone) 14%, transparent);
     color: var(--c-taupe);
-    flex-wrap: wrap;
   }
 
-  .footer-legal,
-  .footer-social {
+  .f-legal {
     display: flex;
     gap: var(--space-s);
   }
 
-  .footer-social a:hover,
-  .footer-legal a:hover {
+  .f-legal a:hover,
+  .f-top:hover {
     color: var(--c-bone);
+  }
+
+  .f-legal a,
+  .f-top {
     transition: color var(--dur-fast) var(--ease-out);
   }
 
+  .f-top {
+    color: var(--c-taupe);
+  }
+
+  /* ================= GIANT MARK ================= */
+  .f-mark {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+    padding-inline: var(--gutter);
+    margin-top: var(--space-m);
+    font-size: clamp(5rem, 21vw, 23rem);
+    line-height: 0.78;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .f-mark-kamu {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: color-mix(in srgb, var(--c-bone) 92%, transparent);
+    /* the crop: baseline sinks below the page edge */
+    margin-bottom: -0.22em;
+  }
+
+  .f-mark-concepts {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.16em;
+    color: var(--c-taupe);
+    transform: translateY(-2.2em);
+  }
+
+  /* ================= RESPONSIVE ================= */
   @media (max-width: 56rem) {
-    .footer-top {
-      grid-template-columns: 1fr 1fr;
+    .f-news-line {
+      grid-column: 1 / -1;
     }
 
-    .footer-brand,
-    .footer-news {
+    .f-news-form {
       grid-column: 1 / -1;
+    }
+
+    .f-brand {
+      grid-column: 1 / -1;
+    }
+
+    .f-col:nth-of-type(1) {
+      grid-column: 1 / 5;
+    }
+
+    .f-col:nth-of-type(2) {
+      grid-column: 5 / 9;
+    }
+
+    .f-col:nth-of-type(3) {
+      grid-column: 9 / 13;
+    }
+
+    .f-bar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .f-mark {
+      font-size: 24vw;
     }
   }
 </style>
+
+<script>
+  document.getElementById('f-top')?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
