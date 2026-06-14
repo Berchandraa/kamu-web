@@ -81,10 +81,9 @@ const year = new Date().getFullYear();
     <button class="f-top label" id="f-top">Back to top</button>
   </div>
 
-  <!-- ============ GIANT MARK — cropped by the page edge ============ -->
+  <!-- ============ GIANT MARK — bleeds past both edges, cropped ============ -->
   <div class="f-mark" aria-hidden="true">
     <span class="f-mark-kamu">KAMU</span>
-    <span class="f-mark-concepts">Concepts</span>
   </div>
 </footer>
 
@@ -278,33 +277,33 @@ const year = new Date().getFullYear();
   }
 
   /* ================= GIANT MARK ================= */
+  /* One oversized word, wider than the viewport, centered so it bleeds
+     past BOTH edges — the K and U are intentionally clipped by the
+     footer's overflow:hidden. Anchored flush to the very bottom. */
   .f-mark {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5em;
-    padding-inline: var(--gutter);
+    display: block;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
     margin-top: var(--space-m);
-    font-size: clamp(5rem, 21vw, 23rem);
-    line-height: 0.78;
+    /* vw-driven so "KAMU" always overruns the viewport at any width */
+    font-size: 41vw;
+    line-height: 0.7;
     user-select: none;
     pointer-events: none;
   }
 
   .f-mark-kamu {
+    display: inline-block;
     font-family: var(--font-sans);
     font-weight: 700;
-    letter-spacing: -0.04em;
+    /* one tight, confident mark */
+    letter-spacing: -0.055em;
+    /* trailing letter-spacing nudges the glyphs left; pull back to centre */
+    margin-right: -0.055em;
     color: color-mix(in srgb, var(--c-bone) 92%, transparent);
-    /* the crop: baseline sinks below the page edge */
-    margin-bottom: -0.22em;
-  }
-
-  .f-mark-concepts {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: 0.16em;
-    color: color-mix(in srgb, var(--c-bone) 55%, transparent);
-    transform: translateY(-2.2em);
+    /* sink the cap bottoms flush with / just past the bottom edge */
+    margin-bottom: -0.06em;
   }
 
   /* ================= RESPONSIVE ================= */
@@ -339,7 +338,8 @@ const year = new Date().getFullYear();
     }
 
     .f-mark {
-      font-size: 24vw;
+      /* still overruns the narrow viewport so the clip effect holds */
+      font-size: 46vw;
     }
   }
 </style>
