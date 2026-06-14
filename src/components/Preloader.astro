@@ -1,17 +1,38 @@
 ---
 /**
- * Preloader — home page only.
- * K symbol fades up on bone, holds, then the curtain lifts.
- * Plays once per browser session (sessionStorage), skipped
- * entirely for prefers-reduced-motion.
- * Fires `kamu:ready` on window when done — hero intro
- * animations should wait for this event.
+ * Preloader — home page only. "A slow inhale before the site opens."
+ *
+ * The KAMU K mark builds itself: the three geometric shapes draw on as
+ * hairline strokes (stroke-dashoffset), then quietly fill with ink —
+ * a nod to the logo's basic-shape construction. A thin progress line +
+ * understated counter track real asset loading underneath. When loading
+ * and the draw both settle, a brief beat, then the bone curtain lifts to
+ * hand off to the hero (fires `kamu:ready`).
+ *
+ * Bone ground, ink mark. Calm throughout (~3s feel). prefers-reduced-
+ * motion skips the draw and simply fades. Once-per-session lock is
+ * DISABLED for review — re-enable before final deploy.
  */
 ---
 
 <div class="preloader" id="preloader" aria-hidden="true">
-  <div class="preloader-mark">
-    <span class="preloader-logo" role="img" aria-label="KAMU Concepts"></span>
+  <div class="preloader-mark" id="preloader-mark">
+    <svg
+      class="preloader-symbol"
+      id="preloader-symbol"
+      viewBox="-5 -5 145.5 154"
+      role="img"
+      aria-label="KAMU Concepts"
+    >
+      <path d="M133.91.03c-38.24,1.05-68.93,32.87-68.93,71.97s31.74,72,70.89,72V0C135.21,0,134.56.01,133.91.03Z" />
+      <path d="M0,72v72h70.89c0-39.76-31.74-72-70.89-72Z" />
+      <path d="M0,72C39.15,72,70.89,39.76,70.89,0H0v72Z" />
+    </svg>
+
+    <div class="preloader-progress" id="preloader-progress">
+      <div class="preloader-bar"><span class="preloader-bar-fill" id="preloader-bar-fill"></span></div>
+      <span class="preloader-count" id="preloader-count">00</span>
+    </div>
   </div>
 </div>
 
@@ -30,17 +51,71 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-s);
   }
 
-  /* Real KAMU CONCEPTS lockup (asset-1.svg), ink fill on bone */
-  .preloader-logo {
-    display: block;
-    width: clamp(9rem, 24vw, 14rem);
-    aspect-ratio: 648.07 / 144;
-    background-color: var(--ink);
-    -webkit-mask: url('/assets/asset-1.svg') no-repeat center / contain;
-    mask: url('/assets/asset-1.svg') no-repeat center / contain;
+  .preloader-symbol {
+    width: clamp(3.75rem, 7vw, 5.25rem);
+    height: auto;
+    overflow: visible;
+  }
+
+  .preloader-symbol path {
+    fill: var(--ink);
+    fill-opacity: 0;
+    stroke: var(--ink);
+    stroke-width: 1.75;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  /* Progress — thin line + small counter, ink palette only */
+  .preloader-progress {
+    width: clamp(7.5rem, 16vw, 11rem);
+    margin-top: clamp(2.25rem, 4vw, 3rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    opacity: 0;
+  }
+
+  .preloader-bar {
+    position: relative;
+    width: 100%;
+    height: 1px;
+    background: color-mix(in srgb, var(--ink) 14%, transparent);
+    overflow: hidden;
+  }
+
+  .preloader-bar-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--ink);
+    transform: scaleX(0);
+    transform-origin: left;
+    will-change: transform;
+  }
+
+  .preloader-count {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 0.6875rem;
+    letter-spacing: 0.28em;
+    /* leading-tracking visual balance for the trailing space */
+    text-indent: 0.28em;
+    color: color-mix(in srgb, var(--ink) 52%, transparent);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .preloader-symbol path {
+      fill-opacity: 1;
+      stroke-width: 0;
+    }
+    .preloader-progress {
+      display: none;
+    }
   }
 </style>
 
@@ -48,6 +123,11 @@
   import { gsap } from 'gsap';
 
   const preloader = document.getElementById('preloader');
+  const symbol = document.getElementById('preloader-symbol');
+  const mark = document.getElementById('preloader-mark');
+  const progress = document.getElementById('preloader-progress');
+  const barFill = document.getElementById('preloader-bar-fill');
+  const counter = document.getElementById('preloader-count');
 
   const finish = () => {
     preloader?.remove();
@@ -64,30 +144,128 @@
   //   …and `sessionStorage.setItem('kamu-preloader', '1')` below.
   const seen = false;
 
-  if (!preloader || reduced || seen) {
+  if (!preloader || seen) {
     finish();
+  } else if (reduced) {
+    // Reduced motion: no draw, just a calm fade-out
+    document.documentElement.classList.add('is-locked');
+    gsap.to(preloader, {
+      opacity: 0,
+      duration: 0.5,
+      delay: 0.35,
+      ease: 'power1.out',
+      onComplete: finish,
+    });
   } else {
     document.documentElement.classList.add('is-locked');
 
-    const tl = gsap.timeline({ onComplete: finish });
+    // ----- Real asset-loading progress -----
+    const assets: Array<HTMLImageElement> = [];
+    document.querySelectorAll<HTMLImageElement>('img').forEach((img) => {
+      if (img.loading !== 'lazy') assets.push(img);
+    });
+    const poster = document.querySelector('video')?.getAttribute('poster');
+    if (poster) {
+      const pre = new Image();
+      pre.src = poster;
+      assets.push(pre);
+    }
 
-    tl.from('.preloader-logo', {
-      y: 22,
-      opacity: 0,
-      duration: 1.2,
-      ease: 'power3.out',
-    })
-      .to('.preloader-mark', {
-        opacity: 0,
-        y: -16,
-        duration: 0.6,
-        ease: 'power2.in',
-        delay: 0.6,
-      })
-      .to(preloader, {
-        yPercent: -100,
-        duration: 1.1,
-        ease: 'power3.inOut',
-      });
+    let loaded = 0;
+    const total = Math.max(assets.length, 1);
+    assets.forEach((a) => {
+      if (a.complete) loaded++;
+      else {
+        const tick = () => (loaded += 1);
+        a.addEventListener('load', tick, { once: true });
+        a.addEventListener('error', tick, { once: true });
+      }
+    });
+
+    let windowLoaded = document.readyState === 'complete';
+    window.addEventListener('load', () => (windowLoaded = true), { once: true });
+
+    let fontsReady = false;
+    (document.fonts?.ready ?? Promise.resolve()).then(() => (fontsReady = true));
+
+    // ----- The self-construction draw -----
+    const paths = symbol ? Array.from(symbol.querySelectorAll('path')) : [];
+    paths.forEach((p) => {
+      const len = p.getTotalLength();
+      p.style.strokeDasharray = String(len);
+      p.style.strokeDashoffset = String(len);
+    });
+
+    let drawDone = false;
+    const tl = gsap.timeline();
+    tl.to(progress, { opacity: 1, duration: 0.6, ease: 'power1.out' }, 0.1)
+      .to(
+        paths,
+        {
+          strokeDashoffset: 0,
+          duration: 1.5,
+          ease: 'power2.inOut',
+          stagger: 0.22,
+        },
+        0.15
+      )
+      .to(
+        paths,
+        {
+          fillOpacity: 1,
+          duration: 0.8,
+          ease: 'power2.out',
+          onComplete: () => (drawDone = true),
+        },
+        '-=0.35'
+      );
+
+    // ----- Progress loop: ease the shown value toward real load -----
+    let shown = 0;
+    let raf = 0;
+    const start = performance.now();
+    let done = false;
+
+    const complete = () => {
+      if (done) return;
+      done = true;
+      cancelAnimationFrame(raf);
+      counter && (counter.textContent = '100');
+      barFill && (barFill.style.transform = 'scaleX(1)');
+      gsap
+        .timeline({ onComplete: finish, delay: 0.45 })
+        .to(mark, { y: -14, opacity: 0, duration: 0.6, ease: 'power2.in' })
+        .to(preloader, { yPercent: -100, duration: 1.1, ease: 'power3.inOut' }, '-=0.15');
+    };
+
+    // Pace the bar to the DRAW (so they move together), held back by real
+    // load when the network is slow, and only released to 100 once the mark
+    // has finished AND the page is genuinely loaded.
+    const DRAW_DUR = 2600;
+    const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
+
+    const update = (now: number) => {
+      const elapsed = now - start;
+      const fracAssets = (loaded + (fontsReady ? 1 : 0)) / (total + 1);
+
+      const timeProgress = easeOut(Math.min(1, elapsed / DRAW_DUR)) * 0.97;
+      const loadCeiling = windowLoaded ? 1 : fracAssets;
+      let target = Math.min(timeProgress, loadCeiling);
+
+      const canComplete = drawDone && (windowLoaded || elapsed > 6500);
+      if (canComplete) target = 1;
+
+      shown += (target - shown) * 0.12;
+      const pct = Math.round(shown * 100);
+      if (counter) counter.textContent = String(pct).padStart(2, '0');
+      if (barFill) barFill.style.transform = `scaleX(${shown.toFixed(4)})`;
+
+      if (canComplete && pct >= 99) {
+        complete();
+        return;
+      }
+      raf = requestAnimationFrame(update);
+    };
+    raf = requestAnimationFrame(update);
   }
 </script>
