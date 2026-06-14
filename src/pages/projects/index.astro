@@ -1,19 +1,26 @@
 ---
 /**
- * Projects — portfolio index.
- * Bureau model: image-led, editorial, asymmetric rhythm.
- * Row recipe (no uniform grid):
- *   01 full-bleed feature → 02|03 split 58/42 (right dropped)
- *   → 04 wide pushed LEFT → 05|06 split 42/62 reversed (left dropped)
- *   → 07 wide pushed RIGHT.
- * Same motion system as Home: data-reveal + data-parallax.
+ * Projects — portfolio index (Yodezeen model).
+ * An "All Projects" header over a tight, image-led masonry grid:
+ * varied heights, small consistent gaps, every slot a real interior.
+ * A calm tracked-out filter bar scopes the grid by project type.
+ * Captions stay minimal — name + location, clean separator system.
  */
 import Base from '../../layouts/Base.astro';
-import Placeholder from '../../components/Placeholder.astro';
 import { projects } from '../../data/projects';
 import CTA from '../../components/CTA.astro';
 
-const [p1, p2, p3, p4, p5, p6, p7] = projects;
+// Filter bar — built from the real project types in the data
+const filters = [
+  { key: 'all', label: 'All' },
+  { key: 'residential', label: 'Residential' },
+  { key: 'hospitality', label: 'Hospitality' },
+  { key: 'workspace', label: 'Workspace' },
+];
+
+// Aspect pattern keeps the masonry lively (tall / wide / square mix)
+const ratios = ['3x4', '4x3', '1x1', '3x4', '4x3', '4x3', '3x4'];
+const ratioFor = (i: number) => ratios[i % ratios.length];
 ---
 
 <Base
@@ -21,248 +28,240 @@ const [p1, p2, p3, p4, p5, p6, p7] = projects;
   description="Selected interiors by KAMU Concepts — hospitality, residential and workspace projects across Bali."
 >
   <!-- ============ HEADER ============ -->
-  <header class="page-head">
-    <p class="label page-eyebrow" data-reveal>
-      <span class="duo"><span>KAMU Concepts</span><span class="duo-sub">Portfolio</span></span>
+  <header class="pj-head">
+    <p class="label pj-eyebrow" data-reveal>
+      <span class="duo"><span>Interior Design</span><span class="duo-sub">Architecture</span></span>
     </p>
-    <h1 class="page-title" data-reveal="line">Projects</h1>
-    <p class="page-intro" data-reveal data-reveal-delay="0.15">
-      Hospitality, residential and workspace interiors across Bali. Each
-      project begins with how a space should feel — the rest follows.
+    <h1 class="pj-title" data-reveal="line">All Projects</h1>
+    <p class="pj-intro" data-reveal data-reveal-delay="0.1">
+      A growing portfolio of hospitality, residential and workspace interiors
+      across Bali. Each begins with how a space should feel.
     </p>
+
+    <!-- ============ FILTER BAR ============ -->
+    <div class="pj-filters" role="tablist" aria-label="Filter projects by type" data-reveal data-reveal-delay="0.15">
+      {
+        filters.map((f, i) => (
+          <button
+            class={`pj-filter${i === 0 ? ' is-active' : ''}`}
+            data-filter={f.key}
+            role="tab"
+            aria-selected={i === 0 ? 'true' : 'false'}
+          >
+            {f.label}
+          </button>
+        ))
+      }
+    </div>
   </header>
 
-  <!-- ============ 01 — full-bleed feature ============ -->
-  <a href={`/projects/${p1.slug}/`} class="feature" data-parallax>
-    <img
-      src={p1.demo}
-      alt={p1.name}
-    />
-    <div class="feature-caption">
-      <p class="label feature-n">{p1.n}</p>
-      <h2 class="h2">{p1.name}</h2>
-      <p class="label feature-meta duo"><span>{p1.location}</span><span class="duo-sub">{p1.type}</span></p>
-    </div>
-  </a>
-
-  <!-- ============ 02 | 03 — split, right dropped ============ -->
-  <div class="row-split">
-    <a href={`/projects/${p2.slug}/`} class="item" data-reveal="media">
-      <Placeholder name={p2.file} ratio="4x3" demo={p2.demo} alt={p2.name} parallax />
-      <div class="item-caption">
-        <span class="label item-n">{p2.n}</span>
-        <h2 class="h2 item-name">{p2.name}</h2>
-        <p class="label item-meta duo"><span>{p2.location}</span><span class="duo-sub">{p2.type}</span></p>
-      </div>
-    </a>
-
-    <a
-      href={`/projects/${p3.slug}/`}
-      class="item item-dropped"
-      data-reveal="media"
-      data-reveal-delay="0.15"
-    >
-      <Placeholder name={p3.file} ratio="3x4" demo={p3.demo} alt={p3.name} parallax />
-      <div class="item-caption">
-        <span class="label item-n">{p3.n}</span>
-        <h2 class="h2 item-name">{p3.name}</h2>
-        <p class="label item-meta duo"><span>{p3.location}</span><span class="duo-sub">{p3.type}</span></p>
-      </div>
-    </a>
+  <!-- ============ MASONRY GRID ============ -->
+  <div class="pj-grid" id="pj-grid">
+    {
+      projects.map((p, i) => (
+        <a
+          href={`/projects/${p.slug}/`}
+          class="pj-card"
+          data-type={p.type.toLowerCase()}
+          data-reveal="media"
+        >
+          <div class={`media frame-${ratioFor(i)} pj-media`}>
+            <img src={p.demo} alt={p.name} loading="lazy" />
+          </div>
+          <div class="pj-cap">
+            <h2 class="pj-name">{p.name}</h2>
+            <p class="caption pj-loc duo">
+              <span>{p.location}</span><span class="duo-sub">{p.type}</span>
+            </p>
+          </div>
+        </a>
+      ))
+    }
   </div>
 
-  <!-- ============ 04 — wide, pushed left ============ -->
-  <div class="row-wide row-wide-left">
-    <a href={`/projects/${p4.slug}/`} class="item" data-reveal="media">
-      <Placeholder name={p4.file} ratio="16x9" demo={p4.demo} alt={p4.name} parallax />
-      <div class="item-caption">
-        <span class="label item-n">{p4.n}</span>
-        <h2 class="h2 item-name">{p4.name}</h2>
-        <p class="label item-meta duo"><span>{p4.location}</span><span class="duo-sub">{p4.type}</span></p>
-      </div>
-    </a>
-  </div>
-
-  <!-- ============ 05 | 06 — split reversed, left dropped ============ -->
-  <div class="row-split row-split-rev">
-    <a
-      href={`/projects/${p5.slug}/`}
-      class="item item-dropped"
-      data-reveal="media"
-    >
-      <Placeholder name={p5.file} ratio="3x4" demo={p5.demo} alt={p5.name} parallax />
-      <div class="item-caption">
-        <span class="label item-n">{p5.n}</span>
-        <h2 class="h2 item-name">{p5.name}</h2>
-        <p class="label item-meta duo"><span>{p5.location}</span><span class="duo-sub">{p5.type}</span></p>
-      </div>
-    </a>
-
-    <a
-      href={`/projects/${p6.slug}/`}
-      class="item"
-      data-reveal="media"
-      data-reveal-delay="0.15"
-    >
-      <Placeholder name={p6.file} ratio="4x3" demo={p6.demo} alt={p6.name} parallax />
-      <div class="item-caption">
-        <span class="label item-n">{p6.n}</span>
-        <h2 class="h2 item-name">{p6.name}</h2>
-        <p class="label item-meta duo"><span>{p6.location}</span><span class="duo-sub">{p6.type}</span></p>
-      </div>
-    </a>
-  </div>
-
-  <!-- ============ 07 — wide, pushed right ============ -->
-  <div class="row-wide row-wide-right">
-    <a href={`/projects/${p7.slug}/`} class="item" data-reveal="media">
-      <Placeholder name={p7.file} ratio="16x9" demo={p7.demo} alt={p7.name} parallax />
-      <div class="item-caption">
-        <span class="label item-n">{p7.n}</span>
-        <h2 class="h2 item-name">{p7.name}</h2>
-        <p class="label item-meta duo"><span>{p7.location}</span><span class="duo-sub">{p7.type}</span></p>
-      </div>
-    </a>
-  </div>
+  <p class="pj-empty caption" id="pj-empty" hidden>No projects in this category yet.</p>
 
   <CTA />
 </Base>
 
 <style>
-  /* ================= FEATURE (01) ================= */
-  .feature {
+  /* ================= HEADER ================= */
+  .pj-head {
+    padding-inline: var(--gutter);
+    padding-top: calc(var(--nav-h) + var(--space-2xl));
+    padding-bottom: var(--space-l);
+  }
+
+  .pj-eyebrow {
+    color: var(--ink);
+    margin-bottom: var(--space-s);
+  }
+
+  .pj-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: var(--fs-display);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-tight);
+    text-transform: uppercase;
+  }
+
+  .pj-intro {
+    max-width: 32rem;
+    margin-top: var(--space-m);
+    color: var(--ink-soft);
+  }
+
+  /* ================= FILTER BAR ================= */
+  .pj-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.5rem, 3vw, 3rem);
+    margin-top: var(--space-l);
+    padding-bottom: var(--space-s);
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  }
+
+  .pj-filter {
     position: relative;
-    display: block;
-    width: 100%;
-    height: min(92svh, 60rem);
-    overflow: hidden;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--fs-label);
+    letter-spacing: var(--ls-label);
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-bottom: 0.4rem;
+    transition: color var(--dur-fast) var(--ease-out);
   }
 
-  .feature img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .feature::after {
+  .pj-filter::after {
     content: '';
     position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to top,
-      color-mix(in srgb, var(--c-black) 55%, transparent) 0%,
-      transparent 38%
-    );
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--ink);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--dur-base) var(--ease-out);
   }
 
-  .feature-caption {
-    position: absolute;
-    left: var(--gutter);
-    bottom: var(--space-m);
-    z-index: 2;
-    color: var(--c-bone);
+  .pj-filter:hover {
+    color: var(--ink);
   }
 
-  .feature-n {
-    opacity: 0.7;
-    margin-bottom: 0.625rem;
+  .pj-filter.is-active {
+    color: var(--ink);
   }
 
-  .feature-meta {
-    margin-top: 0.5rem;
-    opacity: 0.8;
+  .pj-filter.is-active::after {
+    transform: scaleX(1);
+    transform-origin: left;
   }
 
-  /* ================= ROWS ================= */
-  .row-split {
-    display: grid;
-    grid-template-columns: 58fr 42fr;
-    gap: 0.25rem;
-    margin-top: 0.25rem;
+  /* ================= MASONRY GRID ================= */
+  .pj-grid {
+    columns: 3;
+    column-gap: 0.5rem;
+    padding-inline: var(--gutter);
+    margin-top: var(--space-l);
   }
 
-  .row-split-rev {
-    grid-template-columns: 42fr 58fr;
-    margin-top: var(--space-xl);
-  }
-
-  .item {
+  .pj-card {
     display: block;
+    break-inside: avoid;
+    margin-bottom: 0.5rem;
   }
 
-  .item-dropped {
-    margin-top: clamp(4rem, 12vh, 9rem);
+  .pj-card.is-hidden {
+    display: none;
   }
 
-  .row-wide {
-    margin-top: var(--space-xl);
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
+  .pj-media {
+    background: var(--bg-alt);
   }
 
-  .row-wide-left .item {
-    grid-column: 1 / 10;
+  .pj-media img {
+    transition: transform var(--dur-slow) var(--ease-out);
   }
 
-  .row-wide-right .item {
-    grid-column: 4 / 13;
+  .pj-card:hover .pj-media img {
+    transform: scale(1.05);
   }
 
-  /* ----- captions: number · name · meta ----- */
-  .item-caption {
+  /* ----- minimal caption: name + location ----- */
+  .pj-cap {
     display: flex;
     align-items: baseline;
+    justify-content: space-between;
     gap: var(--space-s);
-    padding: 1rem var(--gutter) 0;
+    padding: 0.85rem 0.1rem var(--space-m);
   }
 
-  .item-n {
-    color: var(--accent);
+  .pj-name {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: clamp(0.95rem, 1.4vw, 1.125rem);
+    letter-spacing: 0.01em;
   }
 
-  .item-name {
-    font-size: clamp(1.125rem, 1.8vw, 1.5rem);
-  }
-
-  .item-meta {
-    margin-left: auto;
+  .pj-loc {
     color: var(--ink-soft);
     white-space: nowrap;
   }
 
-  @media (max-width: 56rem) {
-    .feature {
-      height: 70svh;
-    }
+  .pj-empty {
+    padding: var(--space-2xl) var(--gutter);
+    text-align: center;
+  }
 
-    .row-split,
-    .row-split-rev {
-      grid-template-columns: 1fr;
-      gap: var(--space-l);
-      margin-top: var(--space-l);
-    }
-
-    .item-dropped {
-      margin-top: 0;
-      width: 80%;
-      margin-left: auto;
-    }
-
-    .row-split-rev .item-dropped {
-      margin-left: 0;
-      margin-right: auto;
-    }
-
-    .row-wide-left .item,
-    .row-wide-right .item {
-      grid-column: 1 / -1;
-    }
-
-    .item-meta {
-      display: none;
+  /* ================= RESPONSIVE ================= */
+  @media (max-width: 64rem) {
+    .pj-grid {
+      columns: 2;
     }
   }
 
+  @media (max-width: 40rem) {
+    .pj-grid {
+      columns: 1;
+    }
+
+    .pj-cap {
+      padding-bottom: var(--space-l);
+    }
+  }
 </style>
+
+<script>
+  const grid = document.getElementById('pj-grid');
+  const empty = document.getElementById('pj-empty');
+  const filters = document.querySelectorAll<HTMLButtonElement>('.pj-filter');
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('.pj-card'));
+
+  filters.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.filter || 'all';
+
+      filters.forEach((b) => {
+        const active = b === btn;
+        b.classList.toggle('is-active', active);
+        b.setAttribute('aria-selected', String(active));
+      });
+
+      let shown = 0;
+      cards.forEach((card) => {
+        const match = key === 'all' || card.dataset.type === key;
+        card.classList.toggle('is-hidden', !match);
+        // ensure any not-yet-revealed cards are visible once filtered in
+        if (match) {
+          card.style.opacity = '1';
+          shown++;
+        }
+      });
+
+      if (empty) empty.toggleAttribute('hidden', shown !== 0);
+    });
+  });
+</script>

@@ -29,13 +29,16 @@ const year = new Date().getFullYear();
   <!-- ============ COLUMNS — offset on the 12-grid ============ -->
   <div class="grid-12 f-mid">
     <div class="f-brand">
-      <img
-        class="f-logo"
-        src="/assets/logo.png"
-        alt=""
-        width="1371"
-        height="1459"
-      />
+      <a href="/" class="f-lockup" aria-label="KAMU Concepts — home">
+        <img
+          class="f-logo"
+          src="/assets/logo.png"
+          alt=""
+          width="1371"
+          height="1459"
+        />
+        <span class="f-lockup-word">KAMU <em>Concepts</em></span>
+      </a>
       <address class="caption f-address">
         Jl. Dukuh Indah No.71, Umalas<br />
         Badung 80361, Bali, Indonesia
@@ -99,6 +102,9 @@ const year = new Date().getFullYear();
     margin-top: var(--space-2xl);
     padding-top: var(--space-xl);
     overflow: hidden;
+    /* Legible "muted" tone on the dark footer — bone-based, not taupe,
+       so supporting text and labels stay readable at small sizes. */
+    --f-muted: color-mix(in srgb, var(--c-bone) 64%, transparent);
   }
 
   /* ================= NEWSLETTER ================= */
@@ -140,11 +146,11 @@ const year = new Date().getFullYear();
   }
 
   .f-news-form input::placeholder {
-    color: color-mix(in srgb, var(--c-taupe) 75%, transparent);
+    color: color-mix(in srgb, var(--c-bone) 45%, transparent);
   }
 
   .f-news-form button {
-    color: var(--accent-soft);
+    color: var(--c-bone);
     white-space: nowrap;
     padding-left: 0.75rem;
   }
@@ -164,16 +170,40 @@ const year = new Date().getFullYear();
     gap: var(--space-s);
   }
 
+  /* Stacked KAMU CONCEPTS lockup — symbol over wordmark */
+  .f-lockup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem;
+  }
+
   .f-logo {
-    width: 2.25rem;
+    width: 2.75rem;
     height: auto;
     filter: invert(1);
+  }
+
+  .f-lockup-word {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.8125rem;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--c-bone);
+    line-height: 1;
+  }
+
+  .f-lockup-word em {
+    font-style: normal;
+    font-weight: 300;
+    letter-spacing: 0.34em;
   }
 
   .f-address,
   .f-direct {
     font-style: normal;
-    color: var(--c-taupe);
+    color: var(--f-muted);
     line-height: 1.7;
   }
 
@@ -207,7 +237,7 @@ const year = new Date().getFullYear();
   }
 
   .f-key {
-    color: var(--c-taupe);
+    color: var(--f-muted);
     margin-bottom: 0.625rem;
   }
 
@@ -243,7 +273,7 @@ const year = new Date().getFullYear();
     gap: var(--space-s);
     padding-block: var(--space-s);
     border-top: 1px solid color-mix(in srgb, var(--c-bone) 14%, transparent);
-    color: var(--c-taupe);
+    color: var(--f-muted);
   }
 
   .f-legal {
@@ -262,7 +292,7 @@ const year = new Date().getFullYear();
   }
 
   .f-top {
-    color: var(--c-taupe);
+    color: var(--f-muted);
   }
 
   /* ================= GIANT MARK ================= */
@@ -291,7 +321,7 @@ const year = new Date().getFullYear();
     font-family: var(--font-serif);
     font-style: italic;
     font-size: 0.16em;
-    color: var(--c-taupe);
+    color: color-mix(in srgb, var(--c-bone) 55%, transparent);
     transform: translateY(-2.2em);
   }
 

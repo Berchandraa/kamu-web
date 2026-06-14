@@ -20,6 +20,38 @@ const right = [
 
 const all = [...left, ...right];
 const current = Astro.url.pathname;
+
+// SHOP mega-menu (Sawdust model) — three calm columns
+const shopMega = [
+  {
+    key: 'By Collection',
+    links: [
+      { label: 'Signature Collection', href: '/shop/' },
+      { label: 'The Bali Series', href: '/shop/' },
+      { label: 'New Arrivals', href: '/shop/' },
+      { label: 'Lookbook 2026', href: '/shop/' },
+    ],
+  },
+  {
+    key: 'By Area',
+    links: [
+      { label: 'Living Room', href: '/shop/' },
+      { label: 'Dining Room', href: '/shop/' },
+      { label: 'Bedroom', href: '/shop/' },
+      { label: 'Outdoor', href: '/shop/' },
+    ],
+  },
+  {
+    key: 'By Type',
+    links: [
+      { label: 'Dining Tables', href: '/shop/' },
+      { label: 'Dining Chairs', href: '/shop/' },
+      { label: 'Lounge Chairs', href: '/shop/' },
+      { label: 'Cabinets', href: '/shop/' },
+      { label: 'Lamp Pendants', href: '/shop/' },
+    ],
+  },
+];
 ---
 
 <header class="nav" id="nav">
@@ -30,6 +62,9 @@ const current = Astro.url.pathname;
           <a
             href={l.href}
             class="nav-link"
+            data-mega={l.label === 'Shop' ? 'shop' : undefined}
+            aria-haspopup={l.label === 'Shop' ? 'true' : undefined}
+            aria-expanded={l.label === 'Shop' ? 'false' : undefined}
             aria-current={current.startsWith(l.href) ? 'page' : undefined}
           >
             {l.label}
@@ -78,6 +113,22 @@ const current = Astro.url.pathname;
       </button>
     </div>
   </div>
+
+  <!-- ============ SHOP mega-menu ============ -->
+  <div class="nav-mega" id="nav-mega" aria-hidden="true">
+    <div class="nav-mega-inner">
+      {
+        shopMega.map((col) => (
+          <div class="nav-mega-col">
+            <span class="nav-mega-key label">{col.key}</span>
+            {col.links.map((l) => (
+              <a href={l.href} class="nav-mega-link">{l.label}</a>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
 </header>
 
 <div class="nav-overlay" id="nav-overlay" aria-hidden="true">
@@ -118,12 +169,15 @@ const current = Astro.url.pathname;
     color: var(--c-bone);
   }
 
+  /* Scrolled: clean full-width spread on a SOLID bone bar, ink text —
+     same layout as the static top nav, just grounded on opaque bone.
+     (Solid, not translucent: a see-through bar let the hero's curved
+     forms bleed up over the links and read as a stray arc.) */
   .nav.is-condensed {
     height: var(--nav-h-condensed);
     color: var(--ink);
-    background: color-mix(in srgb, var(--bg) 86%, transparent);
-    -webkit-backdrop-filter: blur(14px);
-    backdrop-filter: blur(14px);
+    background: var(--bg);
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
   }
 
   /* Edge-to-edge: gutter padding only, no max-width */
@@ -181,6 +235,93 @@ const current = Astro.url.pathname;
 
   .nav-link:hover::after,
   .nav-link[aria-current='page']::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* ----- SHOP mega-menu (Sawdust model) ----- */
+  .nav-mega {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100vw;
+    color: var(--ink);
+    background: var(--bg);
+    border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+    box-shadow: 0 30px 50px -34px rgba(32, 32, 32, 0.32);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition:
+      opacity var(--dur-base) var(--ease-out),
+      transform var(--dur-base) var(--ease-out),
+      visibility 0s var(--dur-base);
+  }
+
+  html.mega-open .nav-mega {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition:
+      opacity var(--dur-base) var(--ease-out),
+      transform var(--dur-base) var(--ease-out),
+      visibility 0s;
+  }
+
+  /* Opening the mega grounds the whole bar on solid bone */
+  html.mega-open .nav {
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  html.mega-open .nav .nav-logo {
+    filter: none;
+  }
+
+  .nav-mega-inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-l);
+    max-width: 60rem;
+    padding: var(--space-l) var(--gutter) var(--space-xl);
+  }
+
+  .nav-mega-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
+  }
+
+  .nav-mega-key {
+    color: var(--ink-soft);
+    margin-bottom: 0.55rem;
+  }
+
+  .nav-mega-link {
+    position: relative;
+    width: fit-content;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 0.9375rem;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+  }
+
+  .nav-mega-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .nav-mega-link:hover::after {
     transform: scaleX(1);
     transform-origin: left;
   }
@@ -281,7 +422,8 @@ const current = Astro.url.pathname;
     font-size: 0.8em;
     letter-spacing: 0;
     margin-left: 0.35em;
-    color: var(--accent);
+    color: currentColor;
+    opacity: 0.55;
   }
 
   /* ----- Compact cluster (bag + menu on small screens) ----- */
@@ -375,7 +517,7 @@ const current = Astro.url.pathname;
     right: var(--gutter);
     display: flex;
     justify-content: space-between;
-    color: var(--c-taupe);
+    color: color-mix(in srgb, var(--c-bone) 64%, transparent);
   }
 
   html.menu-open .nav {
@@ -398,6 +540,10 @@ const current = Astro.url.pathname;
 
   @media (max-width: 64rem) {
     .nav-side {
+      display: none;
+    }
+
+    .nav-mega {
       display: none;
     }
 
@@ -452,4 +598,59 @@ const current = Astro.url.pathname;
     overlay?.setAttribute('aria-hidden', String(!open));
     document.documentElement.classList.toggle('is-locked', open);
   });
+
+  // ----- SHOP mega-menu -----
+  const root = document.documentElement;
+  const trigger = document.querySelector<HTMLAnchorElement>('[data-mega="shop"]');
+  const mega = document.getElementById('nav-mega');
+  const canHover = window.matchMedia('(hover: hover)').matches;
+
+  if (trigger && mega) {
+    let closeTimer: ReturnType<typeof setTimeout>;
+    const isOpen = () => root.classList.contains('mega-open');
+
+    const openMega = () => {
+      clearTimeout(closeTimer);
+      root.classList.add('mega-open');
+      mega.setAttribute('aria-hidden', 'false');
+      trigger.setAttribute('aria-expanded', 'true');
+    };
+    const closeMega = (immediate = false) => {
+      clearTimeout(closeTimer);
+      const done = () => {
+        root.classList.remove('mega-open');
+        mega.setAttribute('aria-hidden', 'true');
+        trigger.setAttribute('aria-expanded', 'false');
+      };
+      if (immediate) done();
+      else closeTimer = setTimeout(done, 140);
+    };
+
+    if (canHover) {
+      [trigger, mega].forEach((el) => {
+        el.addEventListener('mouseenter', openMega);
+        el.addEventListener('mouseleave', () => closeMega());
+      });
+      trigger.addEventListener('focus', openMega);
+    } else {
+      // Touch: first tap opens, second tap follows the link to /shop/
+      trigger.addEventListener('click', (e) => {
+        if (!isOpen()) {
+          e.preventDefault();
+          openMega();
+        }
+      });
+    }
+
+    // Dismiss on Escape, outside click, or when the overlay menu opens
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen()) closeMega(true);
+    });
+    document.addEventListener('click', (e) => {
+      if (!isOpen()) return;
+      const t = e.target as Node;
+      if (!mega.contains(t) && !trigger.contains(t)) closeMega(true);
+    });
+    toggle?.addEventListener('click', () => closeMega(true));
+  }
 </script>

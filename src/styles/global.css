@@ -171,7 +171,7 @@ ol {
 
 .page-eyebrow {
   grid-column: 1 / 7;
-  color: var(--accent);
+  color: var(--ink);
 }
 
 .page-title {
@@ -242,7 +242,7 @@ ol {
 }
 
 .duo-num {
-  color: var(--accent);
+  color: var(--ink);
 }
 
 /* ----- Scroll-reveal primitives (animated by GSAP) -----
