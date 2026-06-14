@@ -30,6 +30,7 @@ const lines = invite.split('\n');
 ---
 
 <section class="cta">
+  <div class="cta-panel">
   <div class="cta-media" data-parallax>
     <img src={image} alt="" loading="lazy" />
   </div>
@@ -57,14 +58,22 @@ const lines = invite.split('\n');
       <a href="mailto:hello@kamuconcepts.com" class="cta-mail">hello@kamuconcepts.com</a>
     </div>
   </div>
+  </div>
 </section>
 
 <style>
+  /* Generous calm space around the whole moment — the image band is
+     inset from every edge, never touching the section above or below. */
   .cta {
+    padding: var(--space-2xl) var(--gutter) var(--space-xl);
+    margin-top: var(--space-xl);
+  }
+
+  .cta-panel {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    min-height: clamp(34rem, 78vh, 52rem);
+    min-height: clamp(32rem, 74vh, 48rem);
     display: flex;
     align-items: flex-end;
     color: var(--c-bone);
@@ -103,9 +112,8 @@ const lines = invite.split('\n');
 
   .cta-inner {
     width: 100%;
-    max-width: 48rem;
-    padding: var(--gutter);
-    padding-bottom: clamp(3rem, 6vw, 5rem);
+    max-width: 46rem;
+    padding: clamp(2.5rem, 5.5vw, 5rem);
     display: flex;
     flex-direction: column;
     gap: var(--space-s);

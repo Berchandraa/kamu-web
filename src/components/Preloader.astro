@@ -11,14 +11,7 @@
 
 <div class="preloader" id="preloader" aria-hidden="true">
   <div class="preloader-mark">
-    <img
-      class="preloader-symbol"
-      src="/assets/logo.png"
-      alt=""
-      width="1371"
-      height="1459"
-    />
-    <span class="preloader-word label">KAMU Concepts</span>
+    <span class="preloader-logo" role="img" aria-label="KAMU Concepts"></span>
   </div>
 </div>
 
@@ -40,13 +33,14 @@
     gap: var(--space-s);
   }
 
-  .preloader-symbol {
-    width: clamp(3.5rem, 8vw, 5.5rem);
-    height: auto;
-  }
-
-  .preloader-word {
-    color: var(--ink-soft);
+  /* Real KAMU CONCEPTS lockup (asset-1.svg), ink fill on bone */
+  .preloader-logo {
+    display: block;
+    width: clamp(9rem, 24vw, 14rem);
+    aspect-ratio: 648.07 / 144;
+    background-color: var(--ink);
+    -webkit-mask: url('/assets/asset-1.svg') no-repeat center / contain;
+    mask: url('/assets/asset-1.svg') no-repeat center / contain;
   }
 </style>
 
@@ -77,23 +71,18 @@
 
     const tl = gsap.timeline({ onComplete: finish });
 
-    tl.from('.preloader-symbol', {
-      y: 24,
+    tl.from('.preloader-logo', {
+      y: 22,
       opacity: 0,
-      duration: 1.1,
+      duration: 1.2,
       ease: 'power3.out',
     })
-      .from(
-        '.preloader-word',
-        { y: 12, opacity: 0, duration: 0.9, ease: 'power3.out' },
-        '-=0.7'
-      )
       .to('.preloader-mark', {
         opacity: 0,
         y: -16,
         duration: 0.6,
         ease: 'power2.in',
-        delay: 0.5,
+        delay: 0.6,
       })
       .to(preloader, {
         yPercent: -100,

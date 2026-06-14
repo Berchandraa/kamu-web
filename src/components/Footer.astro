@@ -30,14 +30,7 @@ const year = new Date().getFullYear();
   <div class="grid-12 f-mid">
     <div class="f-brand">
       <a href="/" class="f-lockup" aria-label="KAMU Concepts — home">
-        <img
-          class="f-logo"
-          src="/assets/logo.png"
-          alt=""
-          width="1371"
-          height="1459"
-        />
-        <span class="f-lockup-word">KAMU <em>Concepts</em></span>
+        <span class="f-logo" role="img" aria-label="by KAMU"></span>
       </a>
       <address class="caption f-address">
         Jl. Dukuh Indah No.71, Umalas<br />
@@ -170,34 +163,23 @@ const year = new Date().getFullYear();
     gap: var(--space-s);
   }
 
-  /* Stacked KAMU CONCEPTS lockup — symbol over wordmark */
+  /* Real "by KAMU" signature (asset-2.svg), bone fill on the dark footer */
   .f-lockup {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.9rem;
+    display: inline-flex;
   }
 
   .f-logo {
-    width: 2.75rem;
-    height: auto;
-    filter: invert(1);
+    display: block;
+    width: clamp(8rem, 14vw, 10.5rem);
+    aspect-ratio: 359.93 / 99.57;
+    background-color: var(--c-bone);
+    -webkit-mask: url('/assets/asset-2.svg') no-repeat center left / contain;
+    mask: url('/assets/asset-2.svg') no-repeat center left / contain;
+    transition: background-color var(--dur-fast) var(--ease-out);
   }
 
-  .f-lockup-word {
-    font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: 0.8125rem;
-    letter-spacing: 0.34em;
-    text-transform: uppercase;
-    color: var(--c-bone);
-    line-height: 1;
-  }
-
-  .f-lockup-word em {
-    font-style: normal;
-    font-weight: 300;
-    letter-spacing: 0.34em;
+  .f-lockup:hover .f-logo {
+    background-color: color-mix(in srgb, var(--c-bone) 80%, transparent);
   }
 
   .f-address,

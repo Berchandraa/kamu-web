@@ -74,8 +74,7 @@ const shopMega = [
     </nav>
 
     <a href="/" class="nav-brand" aria-label="KAMU Concepts — home">
-      <img class="nav-logo" src="/assets/logo.png" alt="" width="1371" height="1459" />
-      <span class="nav-wordmark">KAMU <em>Concepts</em></span>
+      <span class="nav-logo" role="img" aria-label="KAMU Concepts"></span>
     </a>
 
     <div class="nav-side nav-side-right">
@@ -275,10 +274,6 @@ const shopMega = [
     color: var(--ink);
   }
 
-  html.mega-open .nav .nav-logo {
-    filter: none;
-  }
-
   .nav-mega-inner {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -334,35 +329,24 @@ const shopMega = [
     justify-self: center;
   }
 
+  /* Real KAMU CONCEPTS lockup (asset-1.svg), recoloured via mask so it
+     follows the bar's currentColor — bone over the dark hero, ink on the
+     scrolled bone bar — with no per-state filter hacks. */
   .nav-logo {
+    display: block;
     height: 1.5rem;
+    aspect-ratio: 648.07 / 144;
     width: auto;
+    background-color: currentColor;
+    -webkit-mask: url('/assets/asset-1.svg') no-repeat center / contain;
+    mask: url('/assets/asset-1.svg') no-repeat center / contain;
     transition:
       height var(--dur-base) var(--ease-in-out),
-      filter var(--dur-base) var(--ease-in-out);
-  }
-
-  .nav.is-inverted .nav-logo {
-    filter: invert(1);
+      background-color var(--dur-base) var(--ease-in-out);
   }
 
   .nav.is-condensed .nav-logo {
     height: 1.2rem;
-  }
-
-  .nav-wordmark {
-    font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: 0.8125rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .nav-wordmark em {
-    font-style: normal;
-    font-weight: 300;
-    letter-spacing: 0.3em;
   }
 
   /* ----- Pill CTA ----- */
@@ -527,10 +511,6 @@ const shopMega = [
     color: var(--c-bone);
   }
 
-  html.menu-open .nav-logo {
-    filter: invert(1);
-  }
-
   .nav-brand,
   .nav-toggle,
   .nav-compact {
@@ -559,8 +539,8 @@ const shopMega = [
       grid-column: 2;
     }
 
-    .nav-wordmark {
-      font-size: 0.75rem;
+    .nav-logo {
+      height: 1.3rem;
     }
   }
 </style>
