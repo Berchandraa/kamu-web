@@ -213,7 +213,7 @@ const pieces = [
   <!-- ============ PHILOSOPHY — mist band ============ -->
   <section class="philosophy">
     <div class="grid-12">
-      <p class="quote philosophy-quote" data-reveal="line">
+      <p class="philosophy-quote" data-reveal="line">
         Atmosphere over decoration. Handmade elements, natural textures, and
         warm neutral tones — spaces that feel calm, lived-in and effortlessly
         inviting.
@@ -386,6 +386,15 @@ const pieces = [
     color: var(--ink-soft);
   }
 
+  /* Pull-quote: Lora italic, high-contrast ink (#202020) — never the
+     terracotta accent, which is accent-only and not for body copy. */
+  .manifesto-body p {
+    color: var(--ink);
+    font-style: italic;
+    font-size: var(--fs-sub);
+    line-height: var(--lh-body);
+  }
+
   @media (max-width: 56rem) {
     .manifesto-label {
       grid-column: 1 / -1;
@@ -555,15 +564,23 @@ const pieces = [
     padding-block: var(--space-2xl);
   }
 
+  /* Montserrat, bone on the mist-green band — clean, modern, well-weighted
+     for strong contrast (not a faint serif overlay). */
   .philosophy-quote {
-    grid-column: 2 / 10;
+    grid-column: 2 / 11;
+    font-family: var(--font-sans);
+    font-weight: 500;
     font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--c-bone);
+    text-wrap: balance;
   }
 
   .philosophy-credit {
     grid-column: 2 / 8;
-    margin-top: var(--space-m);
-    color: color-mix(in srgb, var(--c-bone) 70%, transparent);
+    margin-top: var(--space-l);
+    color: color-mix(in srgb, var(--c-bone) 78%, transparent);
   }
 
   @media (max-width: 56rem) {

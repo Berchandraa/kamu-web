@@ -11,27 +11,12 @@ import CTA from '../../components/CTA.astro';
 const u = (id: string, w = 1800) =>
   `https://images.unsplash.com/photo-${id}?q=80&w=${w}&auto=format&fit=crop`;
 
+// Values per the brand guidelines (p.4) — names only, exactly as written.
 const values = [
-  {
-    n: '01',
-    name: 'Creativity & Innovation',
-    text: 'New ideas, grounded in how people actually live. We design forward without chasing trends.',
-  },
-  {
-    n: '02',
-    name: 'Quality & Precision',
-    text: 'Meticulous attention to detail, from first drawing to final install. If it isn’t right, it doesn’t ship.',
-  },
-  {
-    n: '03',
-    name: 'Client-Centric',
-    text: 'Your lifestyle and aspirations lead the brief. We guide the decisions; the space stays yours.',
-  },
-  {
-    n: '04',
-    name: 'Sustainability & Ethical Sourcing',
-    text: 'Local makers, natural materials, honest supply chains. Pieces made nearby, made to last.',
-  },
+  { n: '01', name: 'Creativity & Innovation' },
+  { n: '02', name: 'Quality & Precision' },
+  { n: '03', name: 'Client-Centric Approach' },
+  { n: '04', name: 'Sustainability & Ethical Sourcing' },
 ];
 ---
 
@@ -68,34 +53,36 @@ const values = [
     </p>
     <div class="ab-story-body" data-reveal data-reveal-delay="0.15">
       <p>
-        Rooted in timeless design and handcrafted detail, we combine locally
-        made pieces with a modern, refined aesthetic. Inspired by organic
-        forms, earthy tones and the beauty of slow interiors, we embrace the
-        harmony between traditional craftsmanship and modern living.
+        Rooted in timeless design and handcrafted detail, the brand combines
+        locally made products with a modern, refined aesthetic. Each piece is
+        carefully designed to bring warmth, texture and balance into
+        contemporary spaces. Inspired by organic forms, earthy tones, and the
+        beauty of slow interiors, KAMU Concepts embraces the harmony between
+        traditional craftsmanship and modern living.
       </p>
       <p>
-        More than a design studio, KAMU represents a way of living —
-        intentional spaces that feel calm, lived-in and effortlessly
-        inviting. Atmosphere over decoration, always.
+        More than a furniture brand, KAMU Concepts represents a lifestyle
+        centered around intentional spaces — spaces that feel calm, lived-in
+        and effortlessly inviting.
       </p>
     </div>
   </section>
 
   <!-- ============ VALUES — dark band ============ -->
   <section class="ab-values">
-    <div class="grid-12">
-      <h2 class="h2 ab-values-title" data-reveal="line">What we hold onto</h2>
-    </div>
-    <div class="ab-values-grid grid-12">
-      {
-        values.map((v, i) => (
-          <div class="ab-value" data-reveal data-reveal-delay={String(i * 0.1)}>
-            <p class="label ab-value-n">{v.n}</p>
-            <h3 class="ab-value-name">{v.name}</h3>
-            <p class="ab-value-text">{v.text}</p>
-          </div>
-        ))
-      }
+    <div class="ab-values-inner">
+      <h2 class="ab-values-title" data-reveal="line">What we hold onto</h2>
+
+      <ol class="ab-values-list">
+        {
+          values.map((v, i) => (
+            <li class="ab-value" data-reveal data-reveal-delay={String(i * 0.08)}>
+              <span class="ab-value-n">{v.n}</span>
+              <span class="ab-value-name">{v.name}</span>
+            </li>
+          ))
+        }
+      </ol>
     </div>
   </section>
 
@@ -104,17 +91,16 @@ const values = [
     <div class="ab-vm-block ab-vision" data-reveal>
       <p class="label ab-vm-label">Vision</p>
       <p class="sub ab-vm-text">
-        To be a leading interior design studio known for timeless, modern and
-        luxury aesthetics — with an uncompromising commitment to quality and
+        To be a leading interior design studio known for timeless, modern, and
+        luxury aesthetics with a strong commitment to quality and attention to
         detail.
       </p>
     </div>
     <div class="ab-vm-block ab-mission" data-reveal data-reveal-delay="0.15">
       <p class="label ab-vm-label">Mission</p>
       <p class="sub ab-vm-text">
-        To create innovative, personalized interiors that reflect each
-        client’s lifestyle and aspirations — guiding every step from first
-        concept to final touch.
+        To create innovative and personalized interior design solutions that
+        reflect our clients’ unique lifestyles and aspirations.
       </p>
     </div>
   </section>
@@ -143,8 +129,8 @@ const values = [
     </div>
     <div class="grid-12 ab-studio-foot">
       <p class="quote ab-studio-quote" data-reveal="line">
-        From statement furniture to whole interiors — every piece is made
-        with attention to quality, simplicity and lasting character.
+        From statement furniture to curated home pieces, every collection is
+        created with attention to quality, simplicity and lasting character.
       </p>
     </div>
   </section>
@@ -191,55 +177,65 @@ const values = [
     }
   }
 
-  /* ================= VALUES ================= */
+  /* ================= VALUES — dark editorial list ================= */
   .ab-values {
     background: var(--ink);
     color: var(--c-bone);
     padding-block: var(--space-2xl);
   }
 
-  .ab-values-title {
-    grid-column: 1 / 7;
-    margin-bottom: var(--space-xl);
+  .ab-values-inner {
+    padding-inline: var(--gutter);
   }
 
-  .ab-values-grid {
-    row-gap: var(--space-l);
+  .ab-values-title {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: var(--fs-h2);
+    line-height: var(--lh-snug);
+    letter-spacing: var(--ls-snug);
+    color: var(--c-bone);
+    margin-bottom: var(--space-xl);
+    max-width: 22ch;
+  }
+
+  /* Each value is a full-width row: index + name, generous breathing
+     room, separated by hairline rules. Names only, per the guidelines. */
+  .ab-values-list {
+    border-top: 1px solid color-mix(in srgb, var(--c-bone) 16%, transparent);
   }
 
   .ab-value {
-    grid-column: span 3;
-    border-top: 1px solid color-mix(in srgb, var(--c-bone) 22%, transparent);
-    padding-top: var(--space-s);
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    align-items: baseline;
+    gap: clamp(1.5rem, 4vw, 4rem);
+    padding-block: clamp(1.75rem, 3.5vw, 3rem);
+    border-bottom: 1px solid color-mix(in srgb, var(--c-bone) 16%, transparent);
   }
 
   .ab-value-n {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: var(--fs-label);
+    letter-spacing: var(--ls-label);
     color: var(--accent-soft);
-    margin-bottom: var(--space-s);
   }
 
   .ab-value-name {
     font-family: var(--font-sans);
     font-weight: 500;
-    font-size: 1rem;
-    letter-spacing: 0.04em;
-    margin-bottom: 0.75rem;
-  }
-
-  .ab-value-text {
-    font-size: 0.9375rem;
-    color: color-mix(in srgb, var(--c-bone) 72%, transparent);
-  }
-
-  @media (max-width: 64rem) {
-    .ab-value {
-      grid-column: span 6;
-    }
+    font-size: clamp(1.5rem, 3.2vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--c-bone);
+    text-wrap: balance;
   }
 
   @media (max-width: 40rem) {
     .ab-value {
-      grid-column: 1 / -1;
+      grid-template-columns: 2.5rem 1fr;
+      gap: var(--space-s);
     }
   }
 
@@ -296,8 +292,16 @@ const values = [
     row-gap: var(--space-m);
   }
 
+  /* Grid-anchored editorial pull-quote (Lora italic) — a hairline rule
+     gives it structure instead of floating it loosely in the middle. */
   .ab-studio-quote {
-    grid-column: 2 / 10;
+    grid-column: 2 / 11;
+    padding-top: var(--space-l);
+    border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+    font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+    line-height: var(--lh-body);
+    color: var(--ink);
+    text-wrap: balance;
   }
 
   .ab-studio-link {

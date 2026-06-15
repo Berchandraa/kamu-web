@@ -234,6 +234,24 @@ const ratioFor = (i: number) => ratios[i % ratios.length];
   }
 </style>
 
+<style is:global>
+  /* Projects index has a bone background from the very top (no dark hero),
+     so pin the navbar to high-contrast ink and bring the links + CTA to
+     full strength — they must read clearly over bone, never faint. */
+  .nav:not(.is-condensed) {
+    color: var(--ink);
+  }
+
+  .nav:not(.is-condensed) .nav-link,
+  .nav:not(.is-condensed) .nav-bag {
+    opacity: 1;
+  }
+
+  .nav:not(.is-condensed) .nav-cta {
+    border-color: color-mix(in srgb, var(--ink) 78%, transparent);
+  }
+</style>
+
 <script>
   const grid = document.getElementById('pj-grid');
   const empty = document.getElementById('pj-empty');
