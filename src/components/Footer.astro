@@ -8,6 +8,13 @@
  * All content per brand PDF p.42–43.
  */
 const year = new Date().getFullYear();
+
+interface Props {
+  logoVariant?: 'main' | 'by-kamu';
+}
+
+const { logoVariant = 'main' } = Astro.props;
+const isByKamu = logoVariant === 'by-kamu';
 ---
 
 <footer class="footer">
@@ -30,7 +37,11 @@ const year = new Date().getFullYear();
   <div class="grid-12 f-mid">
     <div class="f-brand">
       <a href="/" class="f-lockup" aria-label="KAMU Concepts — home">
-        <span class="f-logo" role="img" aria-label="by KAMU"></span>
+        <span
+          class={`f-logo ${isByKamu ? 'is-by-kamu' : 'is-main'}`}
+          role="img"
+          aria-label={isByKamu ? 'by KAMU' : 'KAMU Concepts'}
+        ></span>
       </a>
       <address class="caption f-address">
         Jl. Dukuh Indah No.71, Umalas<br />
@@ -81,9 +92,16 @@ const year = new Date().getFullYear();
     <button class="f-top label" id="f-top">Back to top</button>
   </div>
 
-  <!-- ============ GIANT MARK — bleeds past both edges, cropped ============ -->
-  <div class="f-mark" aria-hidden="true">
-    <span class="f-mark-kamu">KAMU</span>
+  <!-- ============ SUBTLE BRAND LINE — lighter than the previous giant mark ============ -->
+  <div class="f-marquee" aria-hidden="true">
+    <div class="f-marquee-track">
+      <span>KAMU Concepts</span>
+      <span>Slow Tropical Living</span>
+      <span>Interiors Rooted in Craft</span>
+      <span>KAMU Concepts</span>
+      <span>Slow Tropical Living</span>
+      <span>Interiors Rooted in Craft</span>
+    </div>
   </div>
 </footer>
 
@@ -164,19 +182,30 @@ const year = new Date().getFullYear();
     gap: var(--space-s);
   }
 
-  /* Real "by KAMU" signature (asset-2.svg), bone fill on the dark footer */
+  /* Footer logo follows page context:
+     main KAMU lockup for studio pages, byKAMU only for shop/collection. */
   .f-lockup {
     display: inline-flex;
   }
 
   .f-logo {
     display: block;
+    background-color: var(--c-bone);
+    transition: background-color var(--dur-fast) var(--ease-out);
+  }
+
+  .f-logo.is-main {
+    width: clamp(10rem, 16vw, 13rem);
+    aspect-ratio: 648.07 / 144;
+    -webkit-mask: url('/assets/asset-1.svg') no-repeat center left / contain;
+    mask: url('/assets/asset-1.svg') no-repeat center left / contain;
+  }
+
+  .f-logo.is-by-kamu {
     width: clamp(8rem, 14vw, 10.5rem);
     aspect-ratio: 359.93 / 99.57;
-    background-color: var(--c-bone);
     -webkit-mask: url('/assets/asset-2.svg') no-repeat center left / contain;
     mask: url('/assets/asset-2.svg') no-repeat center left / contain;
-    transition: background-color var(--dur-fast) var(--ease-out);
   }
 
   .f-lockup:hover .f-logo {
@@ -278,34 +307,51 @@ const year = new Date().getFullYear();
     color: var(--f-muted);
   }
 
-  /* ================= GIANT MARK ================= */
-  /* One oversized word, wider than the viewport, centered so it bleeds
-     past BOTH edges — the K and U are intentionally clipped by the
-     footer's overflow:hidden. Anchored flush to the very bottom. */
-  .f-mark {
-    display: block;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
+  /* ================= SUBTLE MARQUEE ================= */
+  .f-marquee {
     margin-top: var(--space-m);
-    /* vw-driven so "KAMU" always overruns the viewport at any width */
-    font-size: 41vw;
-    line-height: 0.7;
+    border-top: 1px solid color-mix(in srgb, var(--c-bone) 14%, transparent);
+    overflow: hidden;
+  }
+
+  .f-marquee-track {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    gap: clamp(2rem, 4vw, 4rem);
+    padding-block: clamp(1.25rem, 2.5vw, 2rem);
+    white-space: nowrap;
+    font-family: var(--font-sans);
+    font-size: clamp(1rem, 2.2vw, 2rem);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--c-bone) 52%, transparent);
+    animation: f-marquee 28s linear infinite;
     user-select: none;
     pointer-events: none;
   }
 
-  .f-mark-kamu {
-    display: inline-block;
-    font-family: var(--font-sans);
-    font-weight: 700;
-    /* one tight, confident mark */
-    letter-spacing: -0.055em;
-    /* trailing letter-spacing nudges the glyphs left; pull back to centre */
-    margin-right: -0.055em;
-    color: color-mix(in srgb, var(--c-bone) 92%, transparent);
-    /* sink the cap bottoms flush with / just past the bottom edge */
-    margin-bottom: -0.06em;
+  .f-marquee-track span::after {
+    content: '+';
+    margin-left: clamp(2rem, 4vw, 4rem);
+    color: color-mix(in srgb, var(--c-bone) 28%, transparent);
+  }
+
+  @keyframes f-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .f-marquee-track {
+      animation: none;
+      transform: translateX(0);
+    }
   }
 
   /* ================= RESPONSIVE ================= */
@@ -339,9 +385,8 @@ const year = new Date().getFullYear();
       align-items: flex-start;
     }
 
-    .f-mark {
-      /* still overruns the narrow viewport so the clip effect holds */
-      font-size: 46vw;
+    .f-marquee-track {
+      font-size: clamp(0.875rem, 5vw, 1.5rem);
     }
   }
 </style>

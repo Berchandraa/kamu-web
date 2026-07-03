@@ -26,7 +26,7 @@ const demo =
     </p>
     <h1 class="page-title" data-reveal="line">Let&rsquo;s talk</h1>
     <p class="page-intro" data-reveal data-reveal-delay="0.15">
-      We reply within two working days.
+      Studio details, direct contacts and project enquiries in one place.
     </p>
   </header>
 
@@ -81,10 +81,13 @@ const demo =
     </div>
 
     <!-- right: the questionnaire -->
-    <form class="ct-form" action="#" method="post">
+    <form class="ct-form" id="start-project" action="#" method="post">
+      <p class="label ct-form-kicker" data-reveal>
+        <span class="duo"><span>Let&rsquo;s Talk</span><span class="duo-sub">Project Enquiry</span></span>
+      </p>
       <p class="ct-form-lead" data-reveal>
-        New project, collaboration, or a question about a piece —
-        tell us what you&rsquo;re imagining.
+        Use this form for new interiors, collaborations, or bespoke furniture
+        enquiries. For simple studio details, the contact ledger stays on the left.
       </p>
 
       <div class="ct-fld" data-reveal data-reveal-delay="0.1">
@@ -211,6 +214,11 @@ const demo =
   }
 
   /* ----- the questionnaire ----- */
+  .ct-form-kicker {
+    color: var(--ink-soft);
+    margin-bottom: calc(var(--space-l) * -0.5);
+  }
+
   .ct-form-lead {
     font-family: var(--font-serif);
     font-size: clamp(1.25rem, 2vw, 1.625rem);

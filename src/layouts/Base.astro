@@ -30,6 +30,8 @@ const {
   title,
   description = 'KAMU Concepts — interior design studio in Bali. Timeless, modern spaces rooted in craftsmanship and slow tropical living.',
 } = Astro.props;
+
+const footerLogo = Astro.url.pathname.startsWith('/shop/') ? 'by-kamu' : 'main';
 ---
 
 <!doctype html>
@@ -49,7 +51,7 @@ const {
     <main id="main">
       <slot />
     </main>
-    <Footer />
+    <Footer logoVariant={footerLogo} />
     <CartDrawer />
     <Cursor />
 
