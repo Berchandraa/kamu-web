@@ -1,39 +1,27 @@
 ---
-/**
- * Contact — split canvas.
- * Left: studio image (dropped, echoing the project splits) over a
- * ruled ledger of studio facts. Right: the form as an editorial
- * questionnaire — numbered fields, large serif inputs, accent
- * focus line. Form has no backend yet — wired at Shopify launch.
- * Swap slot: contact-01.jpg.
- */
 import Base from '../../layouts/Base.astro';
 import Placeholder from '../../components/Placeholder.astro';
 
-// Warm, muted, architectural living room — calm lifestyle interior, on brand
 const demo =
   'https://images.unsplash.com/photo-1540574163026-643ea20ade25?q=80&w=1600&auto=format&fit=crop';
 ---
 
 <Base
   title="Contact"
-  description="Talk to KAMU Concepts — interior design studio in Umalas, Bali. New projects, collaborations and product enquiries."
+  description="Contact KAMU Concepts, interior design studio in Umalas, Bali."
 >
-  <!-- ============ HEAD ============ -->
   <header class="page-head">
     <p class="label page-eyebrow" data-reveal>
       <span class="duo"><span>Contact</span><span class="duo-sub">Umalas, Bali</span></span>
     </p>
-    <h1 class="page-title" data-reveal="line">Contact &amp; Enquiries</h1>
+    <h1 class="page-title" data-reveal="line">Contact</h1>
     <p class="page-intro" data-reveal data-reveal-delay="0.15">
-      Studio details, direct contacts and project enquiries in one place.
+      Studio address, direct contacts and social channels.
     </p>
   </header>
 
-  <!-- ============ SPLIT CANVAS ============ -->
-  <section class="ct grid-12">
-    <!-- left: image + studio ledger -->
-    <div class="ct-side" id="studio-contact">
+  <section class="ct grid-12" id="studio-contact">
+    <div class="ct-side">
       <div data-reveal="media">
         <Placeholder
           name="contact-01.jpg"
@@ -62,7 +50,7 @@ const demo =
         </div>
         <div class="ct-row">
           <p class="label ct-key">Hours</p>
-          <p class="ct-val">Monday to Friday, 9.00&ndash;17.00 WITA</p>
+          <p class="ct-val">Monday to Friday, 9.00-17.00 WITA</p>
         </div>
         <div class="ct-row">
           <p class="label ct-key">Catalog</p>
@@ -81,59 +69,15 @@ const demo =
       </div>
     </div>
 
-    <!-- right: the questionnaire -->
-    <form class="ct-form" id="start-project" action="#" method="post">
-      <p class="label ct-form-kicker" data-reveal>
-        <span class="duo"><span>Let&rsquo;s Talk</span><span class="duo-sub">Project Enquiry</span></span>
-      </p>
-      <p class="ct-form-lead" data-reveal>
-        Use this form for new interiors, collaborations, or bespoke furniture
-        enquiries. For simple studio details, the contact ledger stays on the left.
-      </p>
-
-      <div class="ct-fld" data-reveal data-reveal-delay="0.1">
-        <label class="label ct-fld-label" for="ct-name">
-          <span class="duo"><span class="duo-num">01</span><span>Name</span></span>
-        </label>
-        <input type="text" id="ct-name" name="name" autocomplete="name" required />
-      </div>
-
-      <div class="ct-pair">
-        <div class="ct-fld" data-reveal data-reveal-delay="0.15">
-          <label class="label ct-fld-label" for="ct-email">
-            <span class="duo"><span class="duo-num">02</span><span>Email</span></span>
-          </label>
-          <input type="email" id="ct-email" name="email" autocomplete="email" required />
-        </div>
-        <div class="ct-fld" data-reveal data-reveal-delay="0.2">
-          <label class="label ct-fld-label" for="ct-phone">
-            <span class="duo"><span class="duo-num">03</span><span>Phone</span></span>
-          </label>
-          <input type="tel" id="ct-phone" name="phone" autocomplete="tel" />
-        </div>
-      </div>
-
-      <div class="ct-fld" data-reveal data-reveal-delay="0.25">
-        <label class="label ct-fld-label" for="ct-message">
-          <span class="duo"><span class="duo-num">04</span><span>Message</span></span>
-        </label>
-        <textarea id="ct-message" name="message" rows="4" required></textarea>
-      </div>
-
-      <div class="ct-actions" data-reveal data-reveal-delay="0.3">
-        <button type="submit" class="ct-send">Send Message</button>
-        <p class="caption ct-privacy">
-          Your details stay with the studio. No lists, no noise.
-        </p>
-      </div>
-    </form>
+    <aside class="ct-note" data-reveal data-reveal-delay="0.2">
+      <p class="label">Project Enquiry</p>
+      <p>For new interiors, collaborations, or bespoke furniture, use Let's Talk.</p>
+      <a href="/lets-talk/" class="ct-note-link">Start a project</a>
+    </aside>
   </section>
 </Base>
 
 <style>
-
-
-  /* ================= SPLIT ================= */
   .ct {
     padding-bottom: var(--space-xl);
     row-gap: var(--space-xl);
@@ -141,36 +85,43 @@ const demo =
 
   .ct-side {
     grid-column: 1 / 6;
-    /* dropped, echoing the project split rhythm */
     margin-top: clamp(3rem, 8vh, 6rem);
-    scroll-margin-top: calc(var(--nav-h-condensed) + var(--space-m));
   }
 
-  .ct-form {
+  .ct-note {
     grid-column: 7 / 13;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-l);
-    scroll-margin-top: calc(var(--nav-h-condensed) + var(--space-m));
+    align-self: start;
+    padding: var(--space-l);
+    border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+    border-radius: 1.5rem;
   }
 
-  @media (max-width: 56rem) {
-    .ct-side,
-    .ct-form {
-      grid-column: 1 / -1;
-    }
-
-    .ct-side {
-      order: 2;
-      margin-top: 0;
-    }
-
-    .ct-form {
-      order: 1;
-    }
+  .ct-note p:not(.label) {
+    margin-top: var(--space-s);
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 2vw, 1.625rem);
+    line-height: var(--lh-body);
   }
 
-  /* ----- studio ledger ----- */
+  .ct-note-link {
+    display: inline-flex;
+    margin-top: var(--space-m);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.6875rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 1.2em 3.2em;
+    background: var(--ink);
+    color: var(--c-bone);
+    border-radius: 999px;
+    transition: background-color var(--dur-base) var(--ease-out);
+  }
+
+  .ct-note-link:hover {
+    background: var(--accent);
+  }
+
   .ct-rows {
     margin-top: var(--space-m);
   }
@@ -221,107 +172,14 @@ const demo =
     gap: var(--space-s);
   }
 
-  /* ----- the questionnaire ----- */
-  .ct-form-kicker {
-    color: var(--ink-soft);
-    margin-bottom: calc(var(--space-l) * -0.5);
-  }
-
-  .ct-form-lead {
-    font-family: var(--font-serif);
-    font-size: clamp(1.25rem, 2vw, 1.625rem);
-    line-height: var(--lh-body);
-    max-width: 32rem;
-  }
-
-  .ct-pair {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-l);
-  }
-
-  .ct-fld {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 0.875rem;
-    border-bottom: 1px solid color-mix(in srgb, var(--ink) 28%, transparent);
-  }
-
-  /* accent line draws across on focus */
-  .ct-fld::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -1px;
-    width: 100%;
-    height: 1px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform var(--dur-base) var(--ease-out);
-  }
-
-  .ct-fld:focus-within::after {
-    transform: scaleX(1);
-  }
-
-  .ct-fld-label {
-    color: var(--ink-soft);
-  }
-
-  .ct-fld input,
-  .ct-fld textarea {
-    background: none;
-    border: none;
-    outline: none;
-    border-radius: 0;
-    padding: 0 0 0.875rem;
-    font-family: var(--font-serif);
-    font-size: clamp(1.125rem, 1.5vw, 1.375rem);
-    color: var(--ink);
-    resize: vertical;
-  }
-
-  .ct-actions {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-s);
-    flex-wrap: wrap;
-    margin-top: var(--space-2xs);
-  }
-
-  .ct-send {
-    font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: 0.6875rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    padding: 1.2em 3.2em;
-    background: var(--ink);
-    color: var(--c-bone);
-    border-radius: 999px;
-    transition: background-color var(--dur-base) var(--ease-out);
-  }
-
-  .ct-send:hover {
-    background: var(--accent);
-  }
-
-  .ct-privacy {
-    max-width: 16rem;
-    text-align: right;
-  }
-
-  @media (max-width: 40rem) {
-    .ct-pair {
-      grid-template-columns: 1fr;
-      gap: var(--space-l);
+  @media (max-width: 56rem) {
+    .ct-side,
+    .ct-note {
+      grid-column: 1 / -1;
     }
 
-    .ct-privacy {
-      text-align: left;
+    .ct-side {
+      margin-top: 0;
     }
   }
 </style>

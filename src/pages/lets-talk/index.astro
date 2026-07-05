@@ -1,0 +1,203 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="Let's Talk"
+  description="Start a project enquiry with KAMU Concepts."
+>
+  <header class="page-head">
+    <p class="label page-eyebrow" data-reveal>
+      <span class="duo"><span>Let's Talk</span><span class="duo-sub">Project Enquiry</span></span>
+    </p>
+    <h1 class="page-title" data-reveal="line">Start a project</h1>
+    <p class="page-intro" data-reveal data-reveal-delay="0.15">
+      For new interiors, collaborations, or bespoke furniture enquiries.
+    </p>
+  </header>
+
+  <section class="lt grid-12">
+    <div class="lt-copy" data-reveal>
+      <p class="label">Project Enquiry</p>
+      <p>
+        Tell the studio what you are planning, where it is, and what kind of
+        support you need.
+      </p>
+      <a href="/contact/" class="lt-contact">Need studio details? Contact</a>
+    </div>
+
+    <form class="lt-form" action="#" method="post">
+      <div class="lt-fld" data-reveal data-reveal-delay="0.1">
+        <label class="label lt-fld-label" for="lt-name">
+          <span class="duo"><span class="duo-num">01</span><span>Name</span></span>
+        </label>
+        <input type="text" id="lt-name" name="name" autocomplete="name" required />
+      </div>
+
+      <div class="lt-pair">
+        <div class="lt-fld" data-reveal data-reveal-delay="0.15">
+          <label class="label lt-fld-label" for="lt-email">
+            <span class="duo"><span class="duo-num">02</span><span>Email</span></span>
+          </label>
+          <input type="email" id="lt-email" name="email" autocomplete="email" required />
+        </div>
+        <div class="lt-fld" data-reveal data-reveal-delay="0.2">
+          <label class="label lt-fld-label" for="lt-phone">
+            <span class="duo"><span class="duo-num">03</span><span>Phone</span></span>
+          </label>
+          <input type="tel" id="lt-phone" name="phone" autocomplete="tel" />
+        </div>
+      </div>
+
+      <div class="lt-fld" data-reveal data-reveal-delay="0.25">
+        <label class="label lt-fld-label" for="lt-message">
+          <span class="duo"><span class="duo-num">04</span><span>Project brief</span></span>
+        </label>
+        <textarea id="lt-message" name="message" rows="5" required></textarea>
+      </div>
+
+      <div class="lt-actions" data-reveal data-reveal-delay="0.3">
+        <button type="submit" class="lt-send">Send Enquiry</button>
+        <p class="caption lt-privacy">
+          The form is visual only for this static preview.
+        </p>
+      </div>
+    </form>
+  </section>
+</Base>
+
+<style>
+  .lt {
+    padding-bottom: var(--space-xl);
+    row-gap: var(--space-xl);
+  }
+
+  .lt-copy {
+    grid-column: 1 / 5;
+    align-self: start;
+    position: sticky;
+    top: calc(var(--nav-h-condensed) + var(--space-l));
+  }
+
+  .lt-copy p:not(.label) {
+    margin-top: var(--space-s);
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 2vw, 1.625rem);
+    line-height: var(--lh-body);
+  }
+
+  .lt-contact {
+    display: inline-flex;
+    margin-top: var(--space-m);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  .lt-form {
+    grid-column: 6 / 13;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
+  }
+
+  .lt-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-l);
+  }
+
+  .lt-fld {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 28%, transparent);
+  }
+
+  .lt-fld::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .lt-fld:focus-within::after {
+    transform: scaleX(1);
+  }
+
+  .lt-fld-label {
+    color: var(--ink-soft);
+  }
+
+  .lt-fld input,
+  .lt-fld textarea {
+    background: none;
+    border: none;
+    outline: none;
+    border-radius: 0;
+    padding: 0 0 0.875rem;
+    font-family: var(--font-serif);
+    font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+    color: var(--ink);
+    resize: vertical;
+  }
+
+  .lt-actions {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-s);
+    flex-wrap: wrap;
+    margin-top: var(--space-2xs);
+  }
+
+  .lt-send {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.6875rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 1.2em 3.2em;
+    background: var(--ink);
+    color: var(--c-bone);
+    border-radius: 999px;
+    transition: background-color var(--dur-base) var(--ease-out);
+  }
+
+  .lt-send:hover {
+    background: var(--accent);
+  }
+
+  .lt-privacy {
+    max-width: 16rem;
+    text-align: right;
+  }
+
+  @media (max-width: 56rem) {
+    .lt-copy,
+    .lt-form {
+      grid-column: 1 / -1;
+    }
+
+    .lt-copy {
+      position: static;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .lt-pair {
+      grid-template-columns: 1fr;
+      gap: var(--space-l);
+    }
+
+    .lt-privacy {
+      text-align: left;
+    }
+  }
+</style>
