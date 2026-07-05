@@ -10,7 +10,7 @@
 const left = [
   { label: 'Projects', href: '/projects/' },
   { label: 'Shop', href: '/shop/' },
-  { label: 'Contact', href: '/contact/' },
+  { label: 'Contact', href: '/contact/#studio-contact' },
 ];
 
 const right = [
@@ -20,6 +20,7 @@ const right = [
 
 const all = [...left, ...right];
 const current = Astro.url.pathname;
+const isCurrent = (href: string) => current.startsWith(href.split('#')[0]);
 
 // SHOP mega-menu (Sawdust model) — three calm columns
 const shopMega = [
@@ -65,7 +66,7 @@ const shopMega = [
             data-mega={l.label === 'Shop' ? 'shop' : undefined}
             aria-haspopup={l.label === 'Shop' ? 'true' : undefined}
             aria-expanded={l.label === 'Shop' ? 'false' : undefined}
-            aria-current={current.startsWith(l.href) ? 'page' : undefined}
+            aria-current={isCurrent(l.href) ? 'page' : undefined}
           >
             {l.label}
           </a>
@@ -83,7 +84,7 @@ const shopMega = [
           <a
             href={l.href}
             class="nav-link"
-            aria-current={current.startsWith(l.href) ? 'page' : undefined}
+            aria-current={isCurrent(l.href) ? 'page' : undefined}
           >
             {l.label}
           </a>

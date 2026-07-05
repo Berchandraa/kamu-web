@@ -24,7 +24,7 @@ const demo =
     <p class="label page-eyebrow" data-reveal>
       <span class="duo"><span>Contact</span><span class="duo-sub">Umalas, Bali</span></span>
     </p>
-    <h1 class="page-title" data-reveal="line">Let&rsquo;s talk</h1>
+    <h1 class="page-title" data-reveal="line">Contact &amp; Enquiries</h1>
     <p class="page-intro" data-reveal data-reveal-delay="0.15">
       Studio details, direct contacts and project enquiries in one place.
     </p>
@@ -33,7 +33,7 @@ const demo =
   <!-- ============ SPLIT CANVAS ============ -->
   <section class="ct grid-12">
     <!-- left: image + studio ledger -->
-    <div class="ct-side">
+    <div class="ct-side" id="studio-contact">
       <div data-reveal="media">
         <Placeholder
           name="contact-01.jpg"
@@ -45,6 +45,7 @@ const demo =
       </div>
 
       <div class="ct-rows" data-reveal data-reveal-delay="0.15">
+        <p class="label ct-section-label">Studio Contact</p>
         <div class="ct-row">
           <p class="label ct-key">Studio</p>
           <address class="ct-val">
@@ -142,6 +143,7 @@ const demo =
     grid-column: 1 / 6;
     /* dropped, echoing the project split rhythm */
     margin-top: clamp(3rem, 8vh, 6rem);
+    scroll-margin-top: calc(var(--nav-h-condensed) + var(--space-m));
   }
 
   .ct-form {
@@ -149,6 +151,7 @@ const demo =
     display: flex;
     flex-direction: column;
     gap: var(--space-l);
+    scroll-margin-top: calc(var(--nav-h-condensed) + var(--space-m));
   }
 
   @media (max-width: 56rem) {
@@ -170,6 +173,11 @@ const demo =
   /* ----- studio ledger ----- */
   .ct-rows {
     margin-top: var(--space-m);
+  }
+
+  .ct-section-label {
+    margin-bottom: 0.75rem;
+    color: var(--ink-soft);
   }
 
   .ct-row {
