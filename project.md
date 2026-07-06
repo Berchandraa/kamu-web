@@ -4,7 +4,7 @@ Source: https://www.kamuconcepts.com/
 
 Last checked: 2026-07-06
 
-Note: This file records project names found from the live KAMU Concepts website. The public page exposes portfolio items mostly through image filenames and Wix page labels, so details like location, year, scope, and project descriptions should be treated as unknown until confirmed by client/PM.
+Note: This file records project names found from the live KAMU Concepts website. The public page exposes portfolio items mostly through image filenames and Wix page labels. For fields not exposed on the website, use the existing demo data in `src/data/projects.ts` as temporary working copy until client/PM confirms the final content.
 
 ## Verified Portfolio Items
 
@@ -52,13 +52,21 @@ Suggested first batch:
 12. Villa Bocce
 13. Villa Osun
 
-## Unknown / Needs Confirmation
+## Working Placeholder Data
 
-- Exact project locations
-- Year
-- Scope
-- Project category/type
-- Final descriptions and case-study copy
+Use the existing `src/data/projects.ts` values for now, only as demo placeholders:
+
+| Field | Temporary source | Note |
+| --- | --- | --- |
+| Location | Existing `location` values | Safe for layout/demo, not confirmed as the real location for each live-site project. |
+| Year | Existing `year` values | Safe for visual continuity, not confirmed as final client data. |
+| Scope | Existing `scope` values | Keep current wording until client provides exact scope. |
+| Type/category | Existing `type` values | Use for filters so the project page keeps working. |
+| Intro/body/story/copy | Existing project copy | Use as temporary editorial copy; replace when client gives real case-study text. |
+| Materials/quote/gallery | Existing values | Keep for demo richness; not verified against the live projects. |
+
+## Still Needs Confirmation
+
 - Whether missing portfolio numbers 05 and 08 are intentionally hidden, deleted, or unpublished
 - Whether all website image assets are approved for use in the new demo
-
+- Final client-approved case-study copy before production
