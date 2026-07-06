@@ -49,8 +49,16 @@ const pool = [
   k('e92c2b_b0019a4cd10545caa138a62efa96be21~mv2.jpg'),
 ];
 
-/** Keep detail pages visually consistent: no cross-project image mixing. */
-const galleryFor = (image: string) => Array.from({ length: 6 }, () => image);
+const villaBocce = [
+  k('e92c2b_0053309285cf422b89160c4a959f0863~mv2.jpg'),
+  k('e92c2b_38f9ffa911d84e5f8527803432aa704a~mv2.jpg'),
+  k('e92c2b_3ce83fc6675b4c3bb06537cf5f3f365f~mv2.jpg'),
+  k('e92c2b_46e703addfa444e0b481bed11cc1a3fb~mv2.jpg'),
+  k('e92c2b_712baad054da4dc984455df1e1349790~mv2.jpg'),
+  k('e92c2b_78dd0e3070134f589f39c2e2337909ec~mv2.jpg'),
+];
+
+const galleryFor = (images: string[]) => Array.from({ length: 6 }, (_, i) => images[i % images.length]);
 
 export const projects: Project[] = [
   {
@@ -74,7 +82,7 @@ export const projects: Project[] = [
       'Every loose piece was made within the island: tables from reclaimed teak beams, light fittings woven by hand in Tabanan, plaster mixed with local limestone. The building will patina in the salt air, and it was specified to do exactly that.',
     ],
     materials: ['Reclaimed teak', 'Limestone plaster', 'Hand-woven fibre', 'Brushed brass'],
-    gallery: galleryFor(pool[2]),
+    gallery: galleryFor([pool[2], pool[12], pool[4], pool[6], pool[0], pool[5]]),
   },
   {
     n: '02',
@@ -97,7 +105,7 @@ export const projects: Project[] = [
     ],
     materials: ['Rammed earth', 'Rattan', 'Warm teak', 'Basalt stone'],
     quote: 'A clifftop house should hold you, not perform for you.',
-    gallery: galleryFor(pool[1]),
+    gallery: galleryFor([pool[1], pool[11], pool[3], pool[0], pool[4], pool[6]]),
   },
   {
     n: '03',
@@ -120,7 +128,7 @@ export const projects: Project[] = [
     ],
     materials: ['Lime plaster', 'Pale teak', 'Linen', 'Terrazzo'],
     quote: 'Fewer things, better made.',
-    gallery: galleryFor(pool[10]),
+    gallery: galleryFor([pool[10], pool[0], pool[5], pool[6], pool[12], pool[3]]),
   },
   {
     n: '04',
@@ -143,7 +151,7 @@ export const projects: Project[] = [
     ],
     materials: ['Mist green limewash', 'Terracotta tile', 'Bone linen', 'Teak'],
     quote: 'Generosity is a section drawing, not a square-metre count.',
-    gallery: galleryFor(pool[11]),
+    gallery: galleryFor(villaBocce),
   },
   {
     n: '05',
@@ -166,7 +174,7 @@ export const projects: Project[] = [
     ],
     materials: ['Smoked oak', 'Black steel', 'Deep mist green', 'Wool bouclé'],
     quote: 'A house for thinking needs shadows to think in.',
-    gallery: galleryFor(pool[7]),
+    gallery: galleryFor([pool[7], pool[0], pool[4], pool[12], pool[6], pool[5]]),
   },
   {
     n: '06',
@@ -189,7 +197,7 @@ export const projects: Project[] = [
     ],
     materials: ['Teak', 'Raw steel', 'Canvas', 'Paper cord'],
     quote: 'We test everything on ourselves first.',
-    gallery: galleryFor(pool[8]),
+    gallery: galleryFor([pool[8], pool[4], pool[0], pool[6], pool[5], pool[12]]),
   },
   {
     n: '07',
@@ -212,6 +220,6 @@ export const projects: Project[] = [
     ],
     materials: ['Polished concrete', 'Teak frame', 'Rattan', 'Linen'],
     quote: 'The rice field is the largest room in the house.',
-    gallery: galleryFor(pool[9]),
+    gallery: galleryFor([pool[9], pool[3], pool[11], pool[0], pool[5], pool[6]]),
   },
 ];
