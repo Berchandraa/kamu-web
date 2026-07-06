@@ -67,6 +67,9 @@ const ratioFor = (i: number) => ratios[i % ratios.length];
         >
           <div class={`media frame-${ratioFor(i)} pj-media`}>
             <img src={p.demo} alt={p.name} loading="lazy" />
+            <span class="pj-logo-reveal" aria-hidden="true">
+              <img src={p.demo} alt="" loading="lazy" />
+            </span>
           </div>
           <div class="pj-cap">
             <h2 class="pj-name">{p.name}</h2>
@@ -188,6 +191,35 @@ const ratioFor = (i: number) => ratios[i % ratios.length];
 
   .pj-card:hover .pj-media img {
     transform: scale(1.05);
+  }
+
+  .pj-logo-reveal {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(0.9);
+    transform-origin: center;
+    -webkit-mask: url('/assets/asset-1.svg') no-repeat left center / 330% auto;
+    mask: url('/assets/asset-1.svg') no-repeat left center / 330% auto;
+    transition:
+      opacity var(--dur-base) var(--ease-out),
+      transform var(--dur-slow) var(--ease-out);
+  }
+
+  .pj-logo-reveal img {
+    filter: saturate(1.08) contrast(1.04);
+    transform: scale(1.16);
+  }
+
+  .pj-card:hover .pj-logo-reveal,
+  .pj-card:focus-visible .pj-logo-reveal {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .pj-card:hover .pj-logo-reveal img,
+  .pj-card:focus-visible .pj-logo-reveal img {
+    transform: scale(1.24);
   }
 
   /* ----- minimal caption: name + location ----- */
