@@ -6,7 +6,7 @@
  * set over a soft scrim, and a single refined pill button carries the
  * one terracotta accent on the whole page. Used consistently site-wide.
  *
- * Drop /assets/cta.jpg into public/assets to override the Unsplash demo.
+ * Default image uses the live KAMU Concepts portfolio assets.
  */
 interface Props {
   eyebrow?: string;
@@ -23,7 +23,7 @@ const {
   note = 'Every space we make begins with a conversation. Tell us how you want to live, and we’ll take it from there.',
   action = 'Start a conversation',
   href = '/contact/',
-  image = 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=2400&auto=format&fit=crop',
+  image = 'https://static.wixstatic.com/media/e92c2b_01b12db1eb9d42b392b173ff3a65e84d~mv2.jpg',
 } = Astro.props;
 
 const lines = invite.split('\n');
