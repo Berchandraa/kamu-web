@@ -17,17 +17,7 @@
 
 <div class="preloader" id="preloader" aria-hidden="true">
   <div class="preloader-mark" id="preloader-mark">
-    <svg
-      class="preloader-symbol"
-      id="preloader-symbol"
-      viewBox="-5 -5 145.5 154"
-      role="img"
-      aria-label="KAMU Concepts"
-    >
-      <path d="M133.91.03c-38.24,1.05-68.93,32.87-68.93,71.97s31.74,72,70.89,72V0C135.21,0,134.56.01,133.91.03Z" />
-      <path d="M0,72v72h70.89c0-39.76-31.74-72-70.89-72Z" />
-      <path d="M0,72C39.15,72,70.89,39.76,70.89,0H0v72Z" />
-    </svg>
+    <span class="preloader-symbol" id="preloader-symbol" role="img" aria-label="KAMU Concepts"></span>
 
     <div class="preloader-progress" id="preloader-progress">
       <div class="preloader-bar"><span class="preloader-bar-fill" id="preloader-bar-fill"></span></div>
@@ -54,19 +44,15 @@
   }
 
   .preloader-symbol {
-    width: clamp(3.75rem, 7vw, 5.25rem);
-    height: auto;
-    overflow: visible;
-  }
-
-  .preloader-symbol path {
-    fill: var(--ink);
-    fill-opacity: 0;
-    stroke: var(--ink);
-    stroke-width: 1.75;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-    vector-effect: non-scaling-stroke;
+    display: block;
+    width: clamp(13rem, 28vw, 24rem);
+    aspect-ratio: 648.07 / 144;
+    background: var(--ink);
+    -webkit-mask: url('/assets/asset-1.svg') no-repeat center / contain;
+    mask: url('/assets/asset-1.svg') no-repeat center / contain;
+    opacity: 0;
+    transform: scale(0.96);
+    transform-origin: center;
   }
 
   /* Progress — thin line + small counter, ink palette only */
@@ -109,10 +95,11 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .preloader-symbol path {
-      fill-opacity: 1;
-      stroke-width: 0;
+    .preloader-symbol {
+      opacity: 1;
+      transform: none;
     }
+
     .preloader-progress {
       display: none;
     }
@@ -188,36 +175,28 @@
     let fontsReady = false;
     (document.fonts?.ready ?? Promise.resolve()).then(() => (fontsReady = true));
 
-    // ----- The self-construction draw -----
-    const paths = symbol ? Array.from(symbol.querySelectorAll('path')) : [];
-    paths.forEach((p) => {
-      const len = p.getTotalLength();
-      p.style.strokeDasharray = String(len);
-      p.style.strokeDashoffset = String(len);
-    });
-
     let drawDone = false;
     const tl = gsap.timeline();
     tl.to(progress, { opacity: 1, duration: 0.6, ease: 'power1.out' }, 0.1)
       .to(
-        paths,
+        symbol,
         {
-          strokeDashoffset: 0,
-          duration: 1.5,
-          ease: 'power2.inOut',
-          stagger: 0.22,
+          opacity: 1,
+          scale: 1,
+          duration: 1.2,
+          ease: 'power2.out',
         },
-        0.15
+        0
       )
       .to(
-        paths,
+        symbol,
         {
-          fillOpacity: 1,
-          duration: 0.8,
-          ease: 'power2.out',
+          opacity: 0.88,
+          duration: 0.45,
+          ease: 'power1.inOut',
           onComplete: () => (drawDone = true),
         },
-        '-=0.35'
+        '+=0.15'
       );
 
     // ----- Progress loop: ease the shown value toward real load -----
