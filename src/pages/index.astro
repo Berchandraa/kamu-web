@@ -161,6 +161,49 @@ const lookbook = [
     </div>
   </section>
 
+  <section class="lookbook" aria-labelledby="lookbook-title">
+    <header class="lookbook-head">
+      <h2 id="lookbook-title" class="lookbook-title" data-reveal="line">
+        THE LIVING LOOKBOOK
+      </h2>
+      <p class="lookbook-intro" data-reveal data-reveal-delay="0.1">
+        Explore curated spaces designed with architectural intentionality.<br />
+        Discover the pieces that define the KAMU aesthetic.
+      </p>
+    </header>
+
+    <div class="lookbook-stage" data-reveal="media">
+      {
+        lookbook.map((item, i) => (
+          <figure class={`lookbook-slide ${i === 0 ? 'is-active' : ''}`} aria-hidden={i === 0 ? 'false' : 'true'}>
+            <img src={item.image} alt={item.alt} loading={i === 0 ? 'eager' : 'lazy'} />
+            <figcaption class="lookbook-label">{item.label}</figcaption>
+          </figure>
+        ))
+      }
+
+      <button class="lookbook-arrow lookbook-prev" type="button" data-lookbook-prev aria-label="Previous lookbook slide">
+        ‹
+      </button>
+      <button class="lookbook-arrow lookbook-next" type="button" data-lookbook-next aria-label="Next lookbook slide">
+        ›
+      </button>
+
+      <div class="lookbook-dots" aria-label="Lookbook slides">
+        {
+          lookbook.map((_, i) => (
+            <button
+              class={`lookbook-dot ${i === 0 ? 'is-active' : ''}`}
+              type="button"
+              data-lookbook-dot={i}
+              aria-label={`Show lookbook slide ${i + 1}`}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
   <!-- ============ PHILOSOPHY — mist band ============ -->
   <section class="philosophy">
     <div class="grid-12">
@@ -208,49 +251,6 @@ const lookbook = [
 
     <div class="collection-foot" data-reveal>
       <a href="/shop/" class="collection-cta">Shop Now</a>
-    </div>
-  </section>
-
-  <section class="lookbook" aria-labelledby="lookbook-title">
-    <header class="lookbook-head">
-      <h2 id="lookbook-title" class="lookbook-title" data-reveal="line">
-        THE LIVING LOOKBOOK
-      </h2>
-      <p class="lookbook-intro" data-reveal data-reveal-delay="0.1">
-        Explore curated spaces designed with architectural intentionality.<br />
-        Discover the pieces that define the KAMU aesthetic.
-      </p>
-    </header>
-
-    <div class="lookbook-stage" data-reveal="media">
-      {
-        lookbook.map((item, i) => (
-          <figure class={`lookbook-slide ${i === 0 ? 'is-active' : ''}`} aria-hidden={i === 0 ? 'false' : 'true'}>
-            <img src={item.image} alt={item.alt} loading={i === 0 ? 'eager' : 'lazy'} />
-            <figcaption class="lookbook-label">{item.label}</figcaption>
-          </figure>
-        ))
-      }
-
-      <button class="lookbook-arrow lookbook-prev" type="button" data-lookbook-prev aria-label="Previous lookbook slide">
-        ‹
-      </button>
-      <button class="lookbook-arrow lookbook-next" type="button" data-lookbook-next aria-label="Next lookbook slide">
-        ›
-      </button>
-
-      <div class="lookbook-dots" aria-label="Lookbook slides">
-        {
-          lookbook.map((_, i) => (
-            <button
-              class={`lookbook-dot ${i === 0 ? 'is-active' : ''}`}
-              type="button"
-              data-lookbook-dot={i}
-              aria-label={`Show lookbook slide ${i + 1}`}
-            />
-          ))
-        }
-      </div>
     </div>
   </section>
 
