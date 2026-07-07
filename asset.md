@@ -59,3 +59,29 @@ Suggested gallery array:
   '/assets/projects/villa-bocce/04-lounge-dining.png',
 ]
 ```
+
+## Villa Kamal
+
+Source: user-provided images from PM/client reference.
+
+Recommended use:
+
+| Slot | File | Usage |
+| --- | --- | --- |
+| 01 | `/assets/projects/villa-kamal/01-exterior-pool.png` | Cover / hero image |
+| 02 | `/assets/projects/villa-kamal/02-pool-courtyard.png` | Detail gallery |
+| 03 | `/assets/projects/villa-kamal/03-bedroom-pool-view.png` | Detail gallery |
+| 04 | `/assets/projects/villa-kamal/04-living-room.png` | Detail gallery |
+| 05 | `/assets/projects/villa-kamal/05-lounge-chairs.png` | Detail gallery |
+
+Suggested gallery array:
+
+```ts
+[
+  '/assets/projects/villa-kamal/01-exterior-pool.png',
+  '/assets/projects/villa-kamal/02-pool-courtyard.png',
+  '/assets/projects/villa-kamal/03-bedroom-pool-view.png',
+  '/assets/projects/villa-kamal/04-living-room.png',
+  '/assets/projects/villa-kamal/05-lounge-chairs.png',
+]
+```

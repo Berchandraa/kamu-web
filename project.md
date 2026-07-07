@@ -38,6 +38,7 @@ These appeared on the live site but are not enough by themselves to create full 
 | --- | --- | --- |
 | Yucca Villas Studio | `public/assets/projects/yucca-villas-studio/` | 5 detail images ready; see `asset.md`. |
 | Villa Bocce | `public/assets/projects/villa-bocce/` | 4 detail images ready; see `asset.md`. |
+| Villa Kamal | `public/assets/projects/villa-kamal/` | 5 detail images ready; see `asset.md`. |
 
 ## Recommended Data Replacement
 
