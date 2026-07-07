@@ -5,6 +5,7 @@
  */
 
 const k = (id: string) => `https://static.wixstatic.com/media/${id}`;
+const local = (path: string) => `/assets/projects/${path}`;
 
 export interface GalleryShot {
   /** ratio class suffix used by the layout — fixed per slot */
@@ -49,13 +50,27 @@ const pool = [
   k('e92c2b_b0019a4cd10545caa138a62efa96be21~mv2.jpg'),
 ];
 
+const yuccaVillasStudio = [
+  local('yucca-villas-studio/01-living-pool-view.png'),
+  local('yucca-villas-studio/02-pool-deck.png'),
+  local('yucca-villas-studio/03-outdoor-dining.png'),
+  local('yucca-villas-studio/04-bedroom.png'),
+  local('yucca-villas-studio/05-bathroom.png'),
+];
+
+const villaKamal = [
+  local('villa-kamal/01-exterior-pool.png'),
+  local('villa-kamal/02-pool-courtyard.png'),
+  local('villa-kamal/03-bedroom-pool-view.png'),
+  local('villa-kamal/04-living-room.png'),
+  local('villa-kamal/05-lounge-chairs.png'),
+];
+
 const villaBocce = [
-  k('e92c2b_0053309285cf422b89160c4a959f0863~mv2.jpg'),
-  k('e92c2b_38f9ffa911d84e5f8527803432aa704a~mv2.jpg'),
-  k('e92c2b_3ce83fc6675b4c3bb06537cf5f3f365f~mv2.jpg'),
-  k('e92c2b_46e703addfa444e0b481bed11cc1a3fb~mv2.jpg'),
-  k('e92c2b_712baad054da4dc984455df1e1349790~mv2.jpg'),
-  k('e92c2b_78dd0e3070134f589f39c2e2337909ec~mv2.jpg'),
+  local('villa-bocce/01-pool-loungers.png'),
+  local('villa-bocce/02-open-living-dining.png'),
+  local('villa-bocce/03-kitchen-dining.png'),
+  local('villa-bocce/04-lounge-dining.png'),
 ];
 
 const galleryFor = (images: string[]) => Array.from({ length: 6 }, (_, i) => images[i % images.length]);
@@ -63,15 +78,15 @@ const galleryFor = (images: string[]) => Array.from({ length: 6 }, (_, i) => ima
 export const projects: Project[] = [
   {
     n: '01',
-    slug: 'mira-hotel',
-    name: 'Mira Hotel',
-    meta: 'Bingin, Bali · Hospitality',
-    location: 'Bingin, Bali',
+    slug: 'yucca-villas-studio',
+    name: 'Yucca Villas Studio',
+    meta: 'Bali · Residential',
+    location: 'Bali',
     year: '2025',
-    type: 'Hospitality',
+    type: 'Residential',
     scope: 'Full Interior',
     file: 'project-01.jpg',
-    demo: pool[2],
+    demo: yuccaVillasStudio[0],
     intro:
       'A boutique hotel above Bingin beach, designed around one idea: arrival should feel like an exhale. Eighteen rooms, a restaurant and a sunset bar — all built from a quiet palette of teak, limestone plaster and hand-woven fibre.',
     body: 'We kept the architecture honest and let the materials do the talking. Local makers produced every piece of loose furniture; the lighting is warm and low, the layouts open to the sea breeze. Nothing decorative, nothing loud — just calm, tactile rooms that age well.',
@@ -82,19 +97,19 @@ export const projects: Project[] = [
       'Every loose piece was made within the island: tables from reclaimed teak beams, light fittings woven by hand in Tabanan, plaster mixed with local limestone. The building will patina in the salt air, and it was specified to do exactly that.',
     ],
     materials: ['Reclaimed teak', 'Limestone plaster', 'Hand-woven fibre', 'Brushed brass'],
-    gallery: galleryFor([pool[2], pool[12], pool[4], pool[6], pool[0], pool[5]]),
+    gallery: galleryFor(yuccaVillasStudio),
   },
   {
     n: '02',
-    slug: 'villa-tanah',
-    name: 'Villa Tanah',
-    meta: 'Uluwatu, Bali · Residential',
-    location: 'Uluwatu, Bali',
+    slug: 'villa-kamal',
+    name: 'Villa Kamal',
+    meta: 'Bali · Residential',
+    location: 'Bali',
     year: '2025',
     type: 'Residential',
     scope: 'Full Interior',
     file: 'project-02.jpg',
-    demo: pool[1],
+    demo: villaKamal[0],
     intro:
       'A clifftop family villa where earth tones meet the horizon. Rammed-earth textures, rattan and warm timber ground the house against the ocean light.',
     body: 'The interior follows the sun — morning rooms face east over the garden, living spaces open west to the sea. Every built-in was drawn by the studio and made within twenty kilometres of the site.',
@@ -105,7 +120,7 @@ export const projects: Project[] = [
     ],
     materials: ['Rammed earth', 'Rattan', 'Warm teak', 'Basalt stone'],
     quote: 'A clifftop house should hold you, not perform for you.',
-    gallery: galleryFor([pool[1], pool[11], pool[3], pool[0], pool[4], pool[6]]),
+    gallery: galleryFor(villaKamal),
   },
   {
     n: '03',
@@ -140,7 +155,7 @@ export const projects: Project[] = [
     type: 'Residential',
     scope: 'Full Interior',
     file: 'project-06.jpg',
-    demo: pool[11],
+    demo: villaBocce[0],
     intro:
       'A guesthouse in the back streets of Seminyak, designed for long stays. Muted green, bone and terracotta — the brand palette, lived in.',
     body: 'Rooms are small but never tight: high ceilings, soft light, one good chair. The shared kitchen is the heart of the house.',
