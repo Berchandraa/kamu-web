@@ -1,23 +1,18 @@
 /**
- * Shop products — single source for the catalog and product pages.
+ * Shop products - single source for the catalog and product pages.
  *
- * Swap slots: product-01.jpg … product-10.jpg in /public/assets/.
- * Categories per the brand PDF web spec: dining table, dining chair,
- * lounge chair, cabinets, lamp pendants.
- *
- * Commerce: frontend cart state now; Shopify Storefront API later.
- * `slug` doubles as the cart line id; `amount` is the numeric price.
+ * Product photos and details come from the KAMU Collection asset set.
+ * Prices are not listed in the supplied PDF, so they stay as request-only.
  */
 
-const u = (id: string, w = 1200) =>
-  `https://images.unsplash.com/photo-${id}?q=80&w=${w}&auto=format&fit=crop`;
+const img = (name: string) => `/assets/products/kamu-collection/${name}`;
 
 export const categories = [
-  { slug: 'dining-table', label: 'Dining Tables' },
-  { slug: 'dining-chair', label: 'Dining Chairs' },
-  { slug: 'lounge-chair', label: 'Lounge Chairs' },
-  { slug: 'cabinets', label: 'Cabinets' },
-  { slug: 'pendants', label: 'Lamp Pendants' },
+  { slug: 'dining-table', label: 'Tables' },
+  { slug: 'dining-chair', label: 'Chairs' },
+  { slug: 'lounge-chair', label: 'Seating' },
+  { slug: 'cabinets', label: 'Storage' },
+  { slug: 'pendants', label: 'Lighting & Decor' },
 ] as const;
 
 export interface Product {
@@ -25,161 +20,115 @@ export interface Product {
   name: string;
   category: (typeof categories)[number]['slug'];
   price: string;
-  /** numeric IDR amount — maps to Shopify price.amount later */
   amount: number;
   file: string;
   demo: string;
   desc: string;
   materials: string;
   dims: string;
-  /** two alternate gallery shots — slots product-NN-alt-01/02.jpg */
   alts: [string, string];
 }
 
-// Detail/texture shot pool for alternate gallery images (verified IDs)
-const altPool = [
-  u('1581539250439-c96689b516dd'),
-  u('1532372320572-cda25653a26d'),
-  u('1567538096630-e0c55bd6374c'),
-  u('1550581190-9c1c48d21d6c'),
-  u('1611464908623-07f19927264e'),
-  u('1505843490538-5133c6c7d0e1'),
-];
-
-const altsFor = (i: number): [string, string] => [
-  altPool[i % altPool.length],
-  altPool[(i + 3) % altPool.length],
-];
+const requestOnly = {
+  price: 'Price on request',
+  amount: 0,
+};
 
 export const products: Product[] = [
   {
-    slug: 'victoria-dining-table',
-    name: 'Victoria Dining Table',
+    ...requestOnly,
+    slug: 'dining-table-01',
+    name: 'Dining Table 01',
     category: 'dining-table',
-    price: 'Rp 14.500.000',
-    amount: 14500000,
-    file: 'product-01.jpg',
-    demo: u('1519710164239-da123dc03ef4'),
-    desc: 'Our signature table. A solid teak top with softened edges on a sculptural pedestal base — seats six without crowding, ages without complaint.',
-    materials: 'Solid reclaimed teak, natural hard-wax oil finish',
-    dims: 'L 220 × W 100 × H 75 cm',
-    alts: altsFor(0),
+    file: 'dining-table-01.png',
+    demo: img('dining-table-01.png'),
+    desc: 'A modern focal dining table combining the earthy allure of travertine with the permanence of stainless steel.',
+    materials: 'Travertine top, stainless steel leg',
+    dims: '220 x 100 x 75 cm',
+    alts: [img('dining-table-02.png'), img('dining-table-03.png')],
   },
   {
-    slug: 'tana-dining-table',
-    name: 'Tana Dining Table',
+    ...requestOnly,
+    slug: 'dining-chair',
+    name: 'Dining Chair',
+    category: 'dining-chair',
+    file: 'dining-chair-01.png',
+    demo: img('dining-chair-01.png'),
+    desc: 'A warm dining chair mixing mid-century restraint with tropical craftsmanship and raw natural texture.',
+    materials: 'See final specification from client',
+    dims: 'See final specification from client',
+    alts: [img('dining-chair-02.png'), img('dining-chair-01.png')],
+  },
+  {
+    ...requestOnly,
+    slug: 'bar-chair-01',
+    name: 'Bar Chair 01',
+    category: 'dining-chair',
+    file: 'bar-chair-01.png',
+    demo: img('bar-chair-01.png'),
+    desc: 'A statement bar chair with a split asymmetric backrest and block-like legs, bridging primitive artistry and refined modern minimalism.',
+    materials: 'Teak wood',
+    dims: '38 x 38 x 95 cm - seat height 65 cm',
+    alts: [img('bar-chair-02.jpg'), img('bar-chair-01.png')],
+  },
+  {
+    ...requestOnly,
+    slug: 'coffee-table-05',
+    name: 'Coffee Table 05',
     category: 'dining-table',
-    price: 'Rp 11.200.000',
-    amount: 11200000,
-    file: 'product-02.jpg',
-    demo: u('1604061986761-d9d0cc41b0d1'),
-    desc: 'A rounder, smaller sibling to the Victoria. Made for slow breakfasts and long dinners in compact rooms.',
-    materials: 'Solid teak, travertine inlay, matte finish',
-    dims: 'Ø 140 × H 75 cm',
-    alts: altsFor(1),
+    file: 'coffee-table-01.png',
+    demo: img('coffee-table-01.png'),
+    desc: 'A sculptural coffee table with a seamless polished metallic finish that anchors contemporary minimalist interiors.',
+    materials: 'Steel',
+    dims: '85 x 60 x 32 cm',
+    alts: [img('coffee-table-02.png'), img('coffee-table-01.png')],
   },
   {
-    slug: 'bold-dining-chair',
-    name: 'Bold Dining Chair',
-    category: 'dining-chair',
-    price: 'Rp 3.400.000',
-    amount: 3400000,
-    file: 'product-03.jpg',
-    demo: u('1503602642458-232111445657'),
-    desc: 'Geometric where it can be, soft where it must be. A confident chair that disappears into daily use.',
-    materials: 'Teak frame, hand-woven paper cord seat',
-    dims: 'W 46 × D 52 × H 78 cm · SH 45 cm',
-    alts: altsFor(2),
+    ...requestOnly,
+    slug: 'side-table-04',
+    name: 'Side Table 04',
+    category: 'dining-table',
+    file: 'side-table-01.png',
+    demo: img('side-table-01.png'),
+    desc: 'A refined sculptural side table designed as a functional accent for high-end contemporary resort interiors.',
+    materials: 'Teak wood, marble top',
+    dims: '30 x 40 x 50 cm',
+    alts: [img('side-table-02.png'), img('side-table-03.png')],
   },
   {
-    slug: 'mira-dining-chair',
-    name: 'Mira Dining Chair',
-    category: 'dining-chair',
-    price: 'Rp 2.900.000',
-    amount: 2900000,
-    file: 'product-04.jpg',
-    demo: u('1577140917170-285929fb55b7'),
-    desc: 'Designed for the Mira Hotel, kept in the collection by request. Curved back, generous seat.',
-    materials: 'Teak frame, natural linen upholstery',
-    dims: 'W 50 × D 54 × H 80 cm · SH 46 cm',
-    alts: altsFor(3),
-  },
-  {
-    slug: 'arc-lounge-chair',
-    name: 'Arc Lounge Chair',
+    ...requestOnly,
+    slug: 'bench-04',
+    name: 'Bench 04',
     category: 'lounge-chair',
-    price: 'Rp 6.800.000',
-    amount: 6800000,
-    file: 'product-05.jpg',
-    demo: u('1592078615290-033ee584e267'),
-    desc: 'A low, deep lounge chair built around one continuous curve. The afternoon happens here.',
-    materials: 'Bent teak laminate, bouclé upholstery',
-    dims: 'W 72 × D 80 × H 68 cm · SH 38 cm',
-    alts: altsFor(4),
+    file: 'bench-01.png',
+    demo: img('bench-01.png'),
+    desc: 'A linear bench with a plush cream boucle seat, suited for an entry, hallway, or the foot of a bed.',
+    materials: 'Cream boucle upholstery',
+    dims: '140 x 70 x 40 cm',
+    alts: [img('bench-02.png'), img('bench-01.png')],
   },
   {
-    slug: 'kelana-lounge-chair',
-    name: 'Kelana Lounge Chair',
-    category: 'lounge-chair',
-    price: 'Rp 5.400.000',
-    amount: 5400000,
-    file: 'product-06.jpg',
-    demo: u('1532372320572-cda25653a26d'),
-    desc: 'An open-frame lounger with a woven seat — light enough to follow the shade around the terrace.',
-    materials: 'Teak frame, hand-woven rattan',
-    dims: 'W 68 × D 76 × H 70 cm · SH 36 cm',
-    alts: altsFor(5),
-  },
-  {
-    slug: 'tana-cabinet',
-    name: 'Tana Cabinet',
+    ...requestOnly,
+    slug: 'console-02',
+    name: 'Console 02',
     category: 'cabinets',
-    price: 'Rp 9.600.000',
-    amount: 9600000,
-    file: 'product-07.jpg',
-    demo: u('1549497538-303791108f95'),
-    desc: 'Quiet storage. Full-height doors on brass pivots, interior shelving in pale wood.',
-    materials: 'Teak veneer, solid brass hardware',
-    dims: 'W 120 × D 45 × H 160 cm',
-    alts: altsFor(6),
+    file: 'console-01.png',
+    demo: img('console-01.png'),
+    desc: 'A Japandi-style console with hidden storage, a light profile, and a raised wood-trim front that creates quiet shadow detail.',
+    materials: 'See final specification from client',
+    dims: '164 x 40 x 80 cm',
+    alts: [img('console-02.png'), img('console-01.png')],
   },
   {
-    slug: 'bingin-sideboard',
-    name: 'Bingin Sideboard',
+    ...requestOnly,
+    slug: 'kitchen-cabinet-02',
+    name: 'Kitchen Cabinet 02',
     category: 'cabinets',
-    price: 'Rp 12.800.000',
-    amount: 12800000,
-    file: 'product-08.jpg',
-    demo: u('1586158291800-2665f07bba79'),
-    desc: 'A long, low sideboard with fluted doors — built to anchor a dining room without shouting.',
-    materials: 'Solid teak, fluted front, brass feet',
-    dims: 'W 200 × D 45 × H 70 cm',
-    alts: altsFor(7),
-  },
-  {
-    slug: 'neo-steel-pendant',
-    name: 'Neo Steel Pendant',
-    category: 'pendants',
-    price: 'Rp 2.400.000',
-    amount: 2400000,
-    file: 'product-09.jpg',
-    demo: u('1507473885765-e6ed057f782c'),
-    desc: 'A spun-steel pendant with a warm powder-coat interior. Direct light, soft edges.',
-    materials: 'Spun steel, powder-coated, E27 fitting',
-    dims: 'Ø 40 × H 28 cm · cable 200 cm',
-    alts: altsFor(8),
-  },
-  {
-    slug: 'uma-rattan-pendant',
-    name: 'Uma Rattan Pendant',
-    category: 'pendants',
-    price: 'Rp 1.900.000',
-    amount: 1900000,
-    file: 'product-10.jpg',
-    demo: u('1513506003901-1e6a229e2d15'),
-    desc: 'Hand-woven rattan shade that throws patterned light across the ceiling at dusk.',
-    materials: 'Hand-woven natural rattan, E27 fitting',
-    dims: 'Ø 55 × H 40 cm · cable 200 cm',
-    alts: altsFor(9),
+    file: 'kitchen-cabinet-01.png',
+    demo: img('kitchen-cabinet-01.png'),
+    desc: 'A cabinet balancing tropical warmth and clean modern style, with woven texture that softens the piece and lets light through.',
+    materials: 'See final specification from client',
+    dims: '100 x 60 x 200 cm',
+    alts: [img('kitchen-cabinet-02.png'), img('kitchen-cabinet-01.png')],
   },
 ];
