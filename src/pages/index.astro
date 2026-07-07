@@ -26,6 +26,28 @@ const projects = [
 ];
 
 const pieces = allProducts.slice(0, 5);
+const lookbook = [
+  {
+    label: '01 / Luxury Lounge Chair',
+    image: '/assets/products/product-collection-02/06.png',
+    alt: 'Luxury Lounge Chair in a curated living space',
+  },
+  {
+    label: '02 / Sculptural Pendant Lamp',
+    image: '/assets/products/product-collection-02/11.png',
+    alt: 'Sculptural pendant lamp',
+  },
+  {
+    label: '03 / Dining Table Study',
+    image: '/assets/products/kamu-collection/dining-table-01.png',
+    alt: 'Dining table by KAMU',
+  },
+  {
+    label: '04 / Side Table Detail',
+    image: '/assets/products/kamu-collection/side-table-01.png',
+    alt: 'Side table detail by KAMU',
+  },
+];
 ---
 
 <Base title="Interior Design Studio, Bali">
@@ -186,6 +208,49 @@ const pieces = allProducts.slice(0, 5);
 
     <div class="collection-foot" data-reveal>
       <a href="/shop/" class="collection-cta">Shop Now</a>
+    </div>
+  </section>
+
+  <section class="lookbook" aria-labelledby="lookbook-title">
+    <header class="lookbook-head">
+      <h2 id="lookbook-title" class="lookbook-title" data-reveal="line">
+        THE LIVING LOOKBOOK
+      </h2>
+      <p class="lookbook-intro" data-reveal data-reveal-delay="0.1">
+        Explore curated spaces designed with architectural intentionality.<br />
+        Discover the pieces that define the KAMU aesthetic.
+      </p>
+    </header>
+
+    <div class="lookbook-stage" data-reveal="media">
+      {
+        lookbook.map((item, i) => (
+          <figure class={`lookbook-slide ${i === 0 ? 'is-active' : ''}`} aria-hidden={i === 0 ? 'false' : 'true'}>
+            <img src={item.image} alt={item.alt} loading={i === 0 ? 'eager' : 'lazy'} />
+            <figcaption class="lookbook-label">{item.label}</figcaption>
+          </figure>
+        ))
+      }
+
+      <button class="lookbook-arrow lookbook-prev" type="button" data-lookbook-prev aria-label="Previous lookbook slide">
+        ‹
+      </button>
+      <button class="lookbook-arrow lookbook-next" type="button" data-lookbook-next aria-label="Next lookbook slide">
+        ›
+      </button>
+
+      <div class="lookbook-dots" aria-label="Lookbook slides">
+        {
+          lookbook.map((_, i) => (
+            <button
+              class={`lookbook-dot ${i === 0 ? 'is-active' : ''}`}
+              type="button"
+              data-lookbook-dot={i}
+              aria-label={`Show lookbook slide ${i + 1}`}
+            />
+          ))
+        }
+      </div>
     </div>
   </section>
 
@@ -644,6 +709,147 @@ const pieces = allProducts.slice(0, 5);
     }
   }
 
+  /* ================= LOOKBOOK ================= */
+  .lookbook {
+    background: var(--c-bone);
+    color: var(--ink);
+    padding-top: clamp(4.5rem, 8vw, 7rem);
+  }
+
+  .lookbook-head {
+    padding-inline: var(--gutter);
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+    text-align: center;
+  }
+
+  .lookbook-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2.25rem, 4.5vw, 3.75rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: 0.04em;
+  }
+
+  .lookbook-intro {
+    max-width: 42rem;
+    margin: 1.4rem auto 0;
+    color: var(--ink-soft);
+    font-size: clamp(0.95rem, 1.15vw, 1.1rem);
+    line-height: 1.45;
+  }
+
+  .lookbook-stage {
+    position: relative;
+    height: clamp(28rem, 55vw, 43rem);
+    overflow: hidden;
+    background: var(--c-black);
+  }
+
+  .lookbook-slide {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-slow) var(--ease-out);
+  }
+
+  .lookbook-slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lookbook-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .lookbook-slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgb(0 0 0 / 0.38), transparent 42%),
+      linear-gradient(0deg, rgb(0 0 0 / 0.25), transparent 34%);
+    pointer-events: none;
+  }
+
+  .lookbook-label {
+    position: absolute;
+    z-index: 2;
+    top: clamp(1.25rem, 2vw, 2rem);
+    left: var(--gutter);
+    color: var(--c-bone);
+    font-size: 0.78rem;
+    font-weight: 650;
+    letter-spacing: 0.01em;
+  }
+
+  .lookbook-arrow {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    color: var(--c-bone);
+    background: rgb(255 255 255 / 0.16);
+    transform: translateY(-50%);
+    backdrop-filter: blur(10px);
+    font-size: 1.8rem;
+    line-height: 1;
+    transition: background-color var(--dur-base) var(--ease-out);
+  }
+
+  .lookbook-arrow:hover {
+    background: rgb(255 255 255 / 0.28);
+  }
+
+  .lookbook-prev {
+    left: clamp(1rem, 2vw, 2rem);
+  }
+
+  .lookbook-next {
+    right: clamp(1rem, 2vw, 2rem);
+  }
+
+  .lookbook-dots {
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    bottom: clamp(1.1rem, 2vw, 1.8rem);
+    display: flex;
+    gap: 0.36rem;
+    transform: translateX(-50%);
+  }
+
+  .lookbook-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.35);
+    transition: background-color var(--dur-base) var(--ease-out);
+  }
+
+  .lookbook-dot.is-active {
+    background: var(--c-bone);
+  }
+
+  @media (max-width: 48rem) {
+    .lookbook-head {
+      margin-bottom: 2.75rem;
+    }
+
+    .lookbook-stage {
+      height: 68vh;
+      min-height: 30rem;
+    }
+  }
+
 </style>
 
 <script>
@@ -717,5 +923,36 @@ const pieces = allProducts.slice(0, 5);
     row.addEventListener('pointerup', endDrag);
     row.addEventListener('pointercancel', endDrag);
   }
+
+  const lookbookSlides = [...document.querySelectorAll<HTMLElement>('.lookbook-slide')];
+  const lookbookDots = [...document.querySelectorAll<HTMLButtonElement>('.lookbook-dot')];
+  let lookbookIndex = 0;
+
+  const setLookbook = (next: number) => {
+    if (!lookbookSlides.length) return;
+    lookbookIndex = (next + lookbookSlides.length) % lookbookSlides.length;
+
+    lookbookSlides.forEach((slide, i) => {
+      const active = i === lookbookIndex;
+      slide.classList.toggle('is-active', active);
+      slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+    });
+
+    lookbookDots.forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === lookbookIndex);
+    });
+  };
+
+  document
+    .querySelector<HTMLButtonElement>('[data-lookbook-prev]')
+    ?.addEventListener('click', () => setLookbook(lookbookIndex - 1));
+
+  document
+    .querySelector<HTMLButtonElement>('[data-lookbook-next]')
+    ?.addEventListener('click', () => setLookbook(lookbookIndex + 1));
+
+  lookbookDots.forEach((dot, i) => {
+    dot.addEventListener('click', () => setLookbook(i));
+  });
 </script>
 
