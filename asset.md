@@ -18,15 +18,15 @@ Current homepage mapping:
 | Selected project 01 | `/assets/home/selected-project-01.jpg` | First project feature image |
 | Selected project 02 | `/assets/home/selected-project-02.jpg` | Second project image |
 | Selected project 03 | `/assets/home/selected-project-03.jpg` | Third project image |
-| Furniture 01 | `/assets/home/furniture-01.png` | Home collection row |
-| Furniture 02 | `/assets/home/furniture-02.png` | Home collection row |
-| Furniture 03 | `/assets/home/furniture-03.png` | Home collection row |
-| Furniture 04 | `/assets/home/furniture-04.png` | Home collection row |
-| Furniture 05 | `/assets/home/furniture-05.png` | Home collection row |
-| Lookbook 01 | `/assets/home/furniture-lookbook-01.png` | Home lookbook slide |
-| Lookbook 02 | `/assets/home/furniture-lookbook-02.png` | Home lookbook slide |
-| Lookbook 03 | `/assets/home/furniture-lookbook-03.png` | Home lookbook slide |
-| Lookbook 04 | `/assets/home/furniture-lookbook-04.png` | Home lookbook slide |
+| Furniture 01 | `/assets/home/furniture-01.jpg` | Home collection row |
+| Furniture 02 | `/assets/home/furniture-02.jpg` | Home collection row |
+| Furniture 03 | `/assets/home/furniture-03.jpg` | Home collection row |
+| Furniture 04 | `/assets/home/furniture-04.jpg` | Home collection row |
+| Furniture 05 | `/assets/home/furniture-05.jpg` | Home collection row |
+| Lookbook 01 | `/assets/home/furniture-lookbook-01.jpg` | Home lookbook slide |
+| Lookbook 02 | `/assets/home/furniture-lookbook-02.jpg` | Home lookbook slide |
+| Lookbook 03 | `/assets/home/furniture-lookbook-03.jpg` | Home lookbook slide |
+| Lookbook 04 | `/assets/home/furniture-lookbook-04.jpg` | Home lookbook slide |
 
 ## Yucca Villas Studio
 
