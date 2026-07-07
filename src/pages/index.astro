@@ -12,39 +12,16 @@ import Base from '../layouts/Base.astro';
 import Preloader from '../components/Preloader.astro';
 import Placeholder from '../components/Placeholder.astro';
 import CTA from '../components/CTA.astro';
+import { projects as allProjects } from '../data/projects';
 
 const u = (id: string, w = 1800) =>
   `https://images.unsplash.com/photo-${id}?q=80&w=${w}&auto=format&fit=crop`;
 
+const projectBySlug = (slug: string) => allProjects.find((project) => project.slug === slug)!;
 const projects = [
-  {
-    name: 'Mira Hotel',
-    loc: 'Bingin, Bali',
-    type: 'Hospitality',
-    file: 'project-01.jpg',
-    demo: u('1600210492486-724fe5c67fb0', 2400),
-  },
-  {
-    name: 'Villa Tanah',
-    loc: 'Uluwatu, Bali',
-    type: 'Residential',
-    file: 'project-02.jpg',
-    demo: u('1586023492125-27b2c045efd7'),
-  },
-  {
-    name: 'Casa Loka',
-    loc: 'Canggu, Bali',
-    type: 'Residential',
-    file: 'project-03.jpg',
-    demo: u('1583847268964-b28dc8f51f92', 1200),
-  },
-  {
-    name: 'Studio Residence',
-    loc: 'Seminyak, Bali',
-    type: 'Workspace',
-    file: 'project-04.jpg',
-    demo: u('1554995207-c18c203602cb'),
-  },
+  projectBySlug('yucca-villas-studio'),
+  projectBySlug('villa-kamal'),
+  projectBySlug('villa-bocce'),
 ];
 
 // Collection row — product shots on plain/neutral backdrops
@@ -139,12 +116,12 @@ const pieces = [
     <header class="work-head grid-12">
       <h2 class="display work-title" data-reveal="line">Selected<br />Work</h2>
       <p class="label work-count" data-reveal>
-        <span class="duo"><span>Projects</span><span class="duo-num">04</span></span>
+        <span class="duo"><span>Projects</span><span class="duo-num">03</span></span>
       </p>
     </header>
 
     <!-- Feature: edge to edge -->
-    <a href="/projects/mira-hotel/" class="feature" data-parallax>
+    <a href={`/projects/${projects[0].slug}/`} class="feature" data-parallax>
       <img
         src={projects[0].demo}
         alt={projects[0].name}
@@ -152,14 +129,14 @@ const pieces = [
       <div class="feature-caption">
         <h3 class="h2">{projects[0].name}</h3>
         <p class="label feature-meta duo">
-          <span>{projects[0].loc}</span><span class="duo-sub">{projects[0].type}</span>
+          <span>{projects[0].location}</span><span class="duo-sub">{projects[0].type}</span>
         </p>
       </div>
     </a>
 
     <!-- Asymmetric split: 62 / 38, right column dropped -->
     <div class="work-split">
-      <a href="/projects/villa-tanah/" class="work-item work-item-a" data-reveal="media">
+      <a href={`/projects/${projects[1].slug}/`} class="work-item work-item-a" data-reveal="media">
         <Placeholder
           name={projects[1].file}
           ratio="4x3"
@@ -169,11 +146,11 @@ const pieces = [
         />
         <div class="work-item-caption">
           <h3 class="h2">{projects[1].name}</h3>
-          <p class="label work-item-meta duo"><span>{projects[1].loc}</span><span class="duo-sub">{projects[1].type}</span></p>
+          <p class="label work-item-meta duo"><span>{projects[1].location}</span><span class="duo-sub">{projects[1].type}</span></p>
         </div>
       </a>
 
-      <a href="/projects/casa-loka/" class="work-item work-item-b" data-reveal="media" data-reveal-delay="0.15">
+      <a href={`/projects/${projects[2].slug}/`} class="work-item work-item-b" data-reveal="media" data-reveal-delay="0.15">
         <Placeholder
           name={projects[2].file}
           ratio="3x4"
@@ -183,24 +160,7 @@ const pieces = [
         />
         <div class="work-item-caption">
           <h3 class="h2">{projects[2].name}</h3>
-          <p class="label work-item-meta duo"><span>{projects[2].loc}</span><span class="duo-sub">{projects[2].type}</span></p>
-        </div>
-      </a>
-    </div>
-
-    <!-- Counterweight: wide image pushed right -->
-    <div class="work-wide">
-      <a href="/projects/studio-residence/" class="work-item" data-reveal="media">
-        <Placeholder
-          name={projects[3].file}
-          ratio="16x9"
-          demo={projects[3].demo}
-          alt={projects[3].name}
-          parallax
-        />
-        <div class="work-item-caption">
-          <h3 class="h2">{projects[3].name}</h3>
-          <p class="label work-item-meta duo"><span>{projects[3].loc}</span><span class="duo-sub">{projects[3].type}</span></p>
+          <p class="label work-item-meta duo"><span>{projects[2].location}</span><span class="duo-sub">{projects[2].type}</span></p>
         </div>
       </a>
     </div>
