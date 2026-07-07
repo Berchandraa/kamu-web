@@ -32,6 +32,12 @@ These appeared on the live site but are not enough by themselves to create full 
 - `Kamu_Concepts_Villa_Bocce_4.webp`
 - `Kamu_Concepts_Villa_Lamer_12.webp`
 
+## Ready Local Asset Sets
+
+| Project | Asset folder | Status |
+| --- | --- | --- |
+| Yucca Villas Studio | `public/assets/projects/yucca-villas-studio/` | 5 detail images ready; see `asset.md`. |
+
 ## Recommended Data Replacement
 
 Current demo project names in `src/data/projects.ts` should be replaced with real client-facing names from the list above.
