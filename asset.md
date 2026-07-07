@@ -105,13 +105,18 @@ Stored folder: `public/assets/products/kamu-collection/`
 | Console 02 | - | `164 x 40 x 80 cm` | - | `/assets/products/kamu-collection/console-01.png`, `/assets/products/kamu-collection/console-02.png` | PDF describes a Japandi-style console with hidden storage and raised wood trim. |
 | Kitchen Cabinet 02 | - | `100 x 60 x 200 cm` | - | `/assets/products/kamu-collection/kitchen-cabinet-01.png`, `/assets/products/kamu-collection/kitchen-cabinet-02.png` | PDF describes a cabinet with tropical warmth, clean modern style, and woven texture. |
 
-PDF items without matching photos in the supplied folder:
+PDF items matched from additional product collection folders:
 
 | Product | SKU | Dimension | Materials | Notes |
 | --- | --- | --- | --- | --- |
-| Pendant Lamp 01 | `DC-LMP-MT-37-008` | `dia. 37 cm` | Aluminum | Listed in PDF, but no matching product photo found in supplied folder. |
-| Lounge Chair 05 | `FR-CHR-WD-79-011` | `73 x 50 x 80 cm`, seat height `40 cm` | Teak wood | Listed in PDF, but no matching product photo found in supplied folder. |
-| Artwork 03 | `DC-ART-ROP-60-003` | `60 x 45 cm` | - | Listed in PDF, but no matching product photo found in supplied folder. |
+| Pendant Lamp 01 | `DC-LMP-MT-37-008` | `dia. 37 cm` | Aluminum | Matched visually with `/assets/products/product-collection-02/11.png` and `/assets/products/product-collection-02/12-2.png`; verify exact material with client. |
+| Lounge Chair 05 | `FR-CHR-WD-79-011` | `73 x 50 x 80 cm`, seat height `40 cm` | Teak wood | Matched visually with `/assets/products/product-collection-02/05.png` and `/assets/products/product-collection-02/06.png`. |
+
+PDF items still without matching photos:
+
+| Product | SKU | Dimension | Materials | Notes |
+| --- | --- | --- | --- | --- |
+| Artwork 03 | `DC-ART-ROP-60-003` | `60 x 45 cm` | - | Listed in PDF, but no matching product photo found in supplied folders. |
 
 ## Product Collection 02
 
