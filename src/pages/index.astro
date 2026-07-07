@@ -13,6 +13,7 @@ import Preloader from '../components/Preloader.astro';
 import Placeholder from '../components/Placeholder.astro';
 import CTA from '../components/CTA.astro';
 import { projects as allProjects } from '../data/projects';
+import { products as allProducts } from '../data/products';
 
 const u = (id: string, w = 1800) =>
   `https://images.unsplash.com/photo-${id}?q=80&w=${w}&auto=format&fit=crop`;
@@ -24,39 +25,7 @@ const projects = [
   projectBySlug('villa-bocce'),
 ];
 
-// Collection row — product shots on plain/neutral backdrops
-const pieces = [
-  {
-    name: 'Victoria Dining Table',
-    price: 'Rp 00.000.000',
-    file: 'shop-01.jpg',
-    demo: u('1519710164239-da123dc03ef4', 1200),
-  },
-  {
-    name: 'Bold Dining Chair',
-    price: 'Rp 0.000.000',
-    file: 'shop-02.jpg',
-    demo: u('1503602642458-232111445657', 1200),
-  },
-  {
-    name: 'Neo Steel Pendant',
-    price: 'Rp 0.000.000',
-    file: 'shop-03.jpg',
-    demo: u('1507473885765-e6ed057f782c', 1200),
-  },
-  {
-    name: 'Arc Lounge Chair',
-    price: 'Rp 0.000.000',
-    file: 'shop-04.jpg',
-    demo: u('1592078615290-033ee584e267', 1200),
-  },
-  {
-    name: 'Tana Cabinet',
-    price: 'Rp 0.000.000',
-    file: 'shop-05.jpg',
-    demo: u('1549497538-303791108f95', 1200),
-  },
-];
+const pieces = allProducts.slice(0, 5);
 ---
 
 <Base title="Interior Design Studio, Bali">
@@ -199,7 +168,7 @@ const pieces = [
       {
         pieces.map((p, i) => (
           <a
-            href="/shop/"
+            href={`/shop/${p.slug}/`}
             class="collection-card"
             data-reveal
             data-reveal-delay={String(i * 0.08)}
@@ -749,3 +718,4 @@ const pieces = [
     row.addEventListener('pointercancel', endDrag);
   }
 </script>
+

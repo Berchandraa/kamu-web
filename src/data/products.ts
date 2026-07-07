@@ -2,7 +2,7 @@
  * Shop products - single source for the catalog and product pages.
  *
  * Product photos and details come from the KAMU Collection asset set.
- * Prices are not listed in the supplied PDF, so they stay as request-only.
+ * Prices are temporary display estimates until the client confirms final pricing.
  */
 
 const img = (name: string) => `/assets/products/kamu-collection/${name}`;
@@ -29,17 +29,13 @@ export interface Product {
   alts: [string, string];
 }
 
-const requestOnly = {
-  price: 'Price on request',
-  amount: 0,
-};
-
 export const products: Product[] = [
   {
-    ...requestOnly,
     slug: 'dining-table-01',
     name: 'Dining Table 01',
     category: 'dining-table',
+    price: 'Rp 18.500.000',
+    amount: 18500000,
     file: 'dining-table-01.png',
     demo: img('dining-table-01.png'),
     desc: 'A modern focal dining table combining the earthy allure of travertine with the permanence of stainless steel.',
@@ -48,10 +44,11 @@ export const products: Product[] = [
     alts: [img('dining-table-02.png'), img('dining-table-03.png')],
   },
   {
-    ...requestOnly,
     slug: 'dining-chair',
     name: 'Dining Chair',
     category: 'dining-chair',
+    price: 'Rp 4.200.000',
+    amount: 4200000,
     file: 'dining-chair-01.png',
     demo: img('dining-chair-01.png'),
     desc: 'A warm dining chair mixing mid-century restraint with tropical craftsmanship and raw natural texture.',
@@ -60,10 +57,11 @@ export const products: Product[] = [
     alts: [img('dining-chair-02.png'), img('dining-chair-01.png')],
   },
   {
-    ...requestOnly,
     slug: 'bar-chair-01',
     name: 'Bar Chair 01',
     category: 'dining-chair',
+    price: 'Rp 3.800.000',
+    amount: 3800000,
     file: 'bar-chair-01.png',
     demo: img('bar-chair-01.png'),
     desc: 'A statement bar chair with a split asymmetric backrest and block-like legs, bridging primitive artistry and refined modern minimalism.',
@@ -72,10 +70,11 @@ export const products: Product[] = [
     alts: [img('bar-chair-02.jpg'), img('bar-chair-01.png')],
   },
   {
-    ...requestOnly,
     slug: 'coffee-table-05',
     name: 'Coffee Table 05',
     category: 'dining-table',
+    price: 'Rp 7.500.000',
+    amount: 7500000,
     file: 'coffee-table-01.png',
     demo: img('coffee-table-01.png'),
     desc: 'A sculptural coffee table with a seamless polished metallic finish that anchors contemporary minimalist interiors.',
@@ -84,10 +83,11 @@ export const products: Product[] = [
     alts: [img('coffee-table-02.png'), img('coffee-table-01.png')],
   },
   {
-    ...requestOnly,
     slug: 'side-table-04',
     name: 'Side Table 04',
     category: 'dining-table',
+    price: 'Rp 4.500.000',
+    amount: 4500000,
     file: 'side-table-01.png',
     demo: img('side-table-01.png'),
     desc: 'A refined sculptural side table designed as a functional accent for high-end contemporary resort interiors.',
@@ -96,10 +96,11 @@ export const products: Product[] = [
     alts: [img('side-table-02.png'), img('side-table-03.png')],
   },
   {
-    ...requestOnly,
     slug: 'bench-04',
     name: 'Bench 04',
     category: 'lounge-chair',
+    price: 'Rp 6.500.000',
+    amount: 6500000,
     file: 'bench-01.png',
     demo: img('bench-01.png'),
     desc: 'A linear bench with a plush cream boucle seat, suited for an entry, hallway, or the foot of a bed.',
@@ -108,10 +109,11 @@ export const products: Product[] = [
     alts: [img('bench-02.png'), img('bench-01.png')],
   },
   {
-    ...requestOnly,
     slug: 'console-02',
     name: 'Console 02',
     category: 'cabinets',
+    price: 'Rp 12.500.000',
+    amount: 12500000,
     file: 'console-01.png',
     demo: img('console-01.png'),
     desc: 'A Japandi-style console with hidden storage, a light profile, and a raised wood-trim front that creates quiet shadow detail.',
@@ -120,10 +122,11 @@ export const products: Product[] = [
     alts: [img('console-02.png'), img('console-01.png')],
   },
   {
-    ...requestOnly,
     slug: 'kitchen-cabinet-02',
     name: 'Kitchen Cabinet 02',
     category: 'cabinets',
+    price: 'Rp 16.500.000',
+    amount: 16500000,
     file: 'kitchen-cabinet-01.png',
     demo: img('kitchen-cabinet-01.png'),
     desc: 'A cabinet balancing tropical warmth and clean modern style, with woven texture that softens the piece and lets light through.',
