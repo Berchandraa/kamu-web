@@ -35,3 +35,27 @@ Suggested gallery array:
 - These images are stored locally in `public/assets/projects/yucca-villas-studio/`.
 - Use these only for Yucca Villas Studio detail content.
 - Other project galleries still need project-specific assets before final cleanup.
+
+## Villa Bocce
+
+Source: user-provided images from PM/client reference.
+
+Recommended use:
+
+| Slot | File | Usage |
+| --- | --- | --- |
+| 01 | `/assets/projects/villa-bocce/01-pool-loungers.png` | Cover / hero image |
+| 02 | `/assets/projects/villa-bocce/02-open-living-dining.png` | Detail gallery |
+| 03 | `/assets/projects/villa-bocce/03-kitchen-dining.png` | Detail gallery |
+| 04 | `/assets/projects/villa-bocce/04-lounge-dining.png` | Detail gallery |
+
+Suggested gallery array:
+
+```ts
+[
+  '/assets/projects/villa-bocce/01-pool-loungers.png',
+  '/assets/projects/villa-bocce/02-open-living-dining.png',
+  '/assets/projects/villa-bocce/03-kitchen-dining.png',
+  '/assets/projects/villa-bocce/04-lounge-dining.png',
+]
+```
