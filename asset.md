@@ -85,3 +85,30 @@ Suggested gallery array:
   '/assets/projects/villa-kamal/05-lounge-chairs.png',
 ]
 ```
+
+## KAMU Collection Product Photos
+
+Source photos: `D:/Portfolio Berchandraa/MANA Projects/KAMU Concpets/Birangin Projectts/foto product/`
+
+Description source: `KAMU Collection - Description Furniture List.pdf`
+
+Stored folder: `public/assets/products/kamu-collection/`
+
+| Product | SKU | Dimension | Materials | Photos | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Dining Table 01 | `FR-DTB-MT-220-001` | `220 x 100 x 75 cm` | Travertine top, stainless steel leg | `/assets/products/kamu-collection/dining-table-01.png`, `/assets/products/kamu-collection/dining-table-02.png`, `/assets/products/kamu-collection/dining-table-03.png` | PDF describes it as a modern focal dining table combining travertine and stainless steel. |
+| Dining Chair | - | - | - | `/assets/products/kamu-collection/dining-chair-01.png`, `/assets/products/kamu-collection/dining-chair-02.png` | PDF describes a mid-century and tropical craft inspired armchair for dining or living spaces. |
+| Bar Chair 01 | `FR-CHR-WD-79-012` | `38 x 38 x 95 cm`, seat height `65 cm` | Teak wood | `/assets/products/kamu-collection/bar-chair-01.png`, `/assets/products/kamu-collection/bar-chair-02.jpg` | PDF describes a dramatic asymmetric backrest with block-like legs. |
+| Coffee Table 05 | `FR-CTB-WD-120-005` | `85 x 60 x 32 cm` | Steel | `/assets/products/kamu-collection/coffee-table-01.png`, `/assets/products/kamu-collection/coffee-table-02.png` | PDF describes a polished sculptural table for contemporary minimalist interiors. |
+| Side Table 04 | `FR-STB-WD-35-004` | `30 x 40 x 50 cm` | Teak wood, marble top | `/assets/products/kamu-collection/side-table-01.png`, `/assets/products/kamu-collection/side-table-02.png`, `/assets/products/kamu-collection/side-table-03.png` | PDF describes a refined sculptural accent table. |
+| Bench 04 | - | `140 x 70 x 40 cm` | Cream boucle upholstery | `/assets/products/kamu-collection/bench-01.png`, `/assets/products/kamu-collection/bench-02.png` | PDF describes a soft linear bench for entry, hallway, or bedroom use. |
+| Console 02 | - | `164 x 40 x 80 cm` | - | `/assets/products/kamu-collection/console-01.png`, `/assets/products/kamu-collection/console-02.png` | PDF describes a Japandi-style console with hidden storage and raised wood trim. |
+| Kitchen Cabinet 02 | - | `100 x 60 x 200 cm` | - | `/assets/products/kamu-collection/kitchen-cabinet-01.png`, `/assets/products/kamu-collection/kitchen-cabinet-02.png` | PDF describes a cabinet with tropical warmth, clean modern style, and woven texture. |
+
+PDF items without matching photos in the supplied folder:
+
+| Product | SKU | Dimension | Materials | Notes |
+| --- | --- | --- | --- | --- |
+| Pendant Lamp 01 | `DC-LMP-MT-37-008` | `dia. 37 cm` | Aluminum | Listed in PDF, but no matching product photo found in supplied folder. |
+| Lounge Chair 05 | `FR-CHR-WD-79-011` | `73 x 50 x 80 cm`, seat height `40 cm` | Teak wood | Listed in PDF, but no matching product photo found in supplied folder. |
+| Artwork 03 | `DC-ART-ROP-60-003` | `60 x 45 cm` | - | Listed in PDF, but no matching product photo found in supplied folder. |
