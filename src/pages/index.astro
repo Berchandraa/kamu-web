@@ -113,6 +113,37 @@ const lookbook = [
     </div>
   </section>
 
+  <section class="studio-panel" aria-labelledby="studio-panel-title">
+    <figure class="studio-panel-media" data-reveal="media">
+      <img src="/assets/home/cover-page.jpg" alt="KAMU Concepts interior studio mood" loading="lazy" />
+      <figcaption>KAMU Concepts Studio</figcaption>
+    </figure>
+
+    <div class="studio-panel-copy" data-reveal>
+      <p class="label studio-panel-eyebrow">About Us</p>
+      <h2 id="studio-panel-title" class="studio-panel-title">KAMU Concepts</h2>
+      <p class="label studio-panel-subtitle">Studio and Design</p>
+      <span class="studio-panel-rule" aria-hidden="true"></span>
+      <p class="studio-panel-text">
+        We design homes around the way people actually live: calm proportions,
+        natural materials, and details that feel personal rather than
+        decorative. From spatial planning to bespoke furniture, each project is
+        shaped through conversation, restraint, and craft.
+      </p>
+
+      <div class="studio-panel-values" aria-label="KAMU Concepts values">
+        <span><small>01</small>Craft</span>
+        <span><small>02</small>Material</span>
+        <span><small>03</small>Living</span>
+      </div>
+
+      <a href="/about/" class="studio-panel-link">
+        <span>Read more about us</span>
+        <span aria-hidden="true">+</span>
+      </a>
+    </div>
+  </section>
+
   <!-- ============ SELECTED WORK — Bureau: full-bleed, asymmetric ============ -->
   <section class="work">
     <header class="work-head grid-12">
@@ -412,6 +443,143 @@ const lookbook = [
 
     .manifesto-body {
       grid-column: 2 / -1;
+    }
+  }
+
+  /* ================= STUDIO PANEL ================= */
+  .studio-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    min-height: min(58rem, 92svh);
+    background: var(--bg-alt);
+  }
+
+  .studio-panel-media {
+    position: relative;
+    min-height: 42rem;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .studio-panel-media img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .studio-panel-media figcaption {
+    position: absolute;
+    left: var(--gutter);
+    bottom: var(--space-m);
+    color: var(--c-bone);
+    font-size: 0.72rem;
+  }
+
+  .studio-panel-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(4rem, 8vw, 8rem) var(--gutter);
+  }
+
+  .studio-panel-eyebrow,
+  .studio-panel-subtitle {
+    color: var(--ink-soft);
+  }
+
+  .studio-panel-title {
+    margin-top: var(--space-s);
+    color: var(--ink);
+    font-size: clamp(2.25rem, 4vw, 4.25rem);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+
+  .studio-panel-subtitle {
+    margin-top: var(--space-s);
+  }
+
+  .studio-panel-rule {
+    width: 3.25rem;
+    height: 1px;
+    margin-top: var(--space-l);
+    background: var(--accent-soft);
+  }
+
+  .studio-panel-text {
+    max-width: 34rem;
+    margin-top: var(--space-l);
+    color: var(--ink);
+    font-size: clamp(1.1rem, 1.45vw, 1.45rem);
+    line-height: 1.45;
+  }
+
+  .studio-panel-values {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-s);
+    max-width: 34rem;
+    margin-top: var(--space-l);
+  }
+
+  .studio-panel-values span {
+    display: flex;
+    min-height: 3.5rem;
+    flex-direction: column;
+    justify-content: end;
+    gap: 0.55rem;
+    border-right: 1px solid color-mix(in srgb, var(--ink-soft) 26%, transparent);
+    color: var(--ink);
+    font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  }
+
+  .studio-panel-values span:last-child {
+    border-right: 0;
+  }
+
+  .studio-panel-values small {
+    color: var(--accent);
+    font-size: 0.66rem;
+  }
+
+  .studio-panel-link {
+    display: inline-flex;
+    width: max-content;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-top: var(--space-l);
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--ink);
+    color: var(--ink);
+    font-size: 0.82rem;
+    font-weight: 650;
+  }
+
+  @media (max-width: 56rem) {
+    .studio-panel {
+      grid-template-columns: 1fr;
+    }
+
+    .studio-panel-media {
+      min-height: 65vh;
+    }
+
+    .studio-panel-copy {
+      padding-block: var(--space-xl);
+    }
+
+    .studio-panel-values {
+      grid-template-columns: 1fr;
+      gap: var(--space-xs);
+    }
+
+    .studio-panel-values span {
+      border-right: 0;
+      border-bottom: 1px solid color-mix(in srgb, var(--ink-soft) 22%, transparent);
+      padding-bottom: var(--space-xs);
     }
   }
 
