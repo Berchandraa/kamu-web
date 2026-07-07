@@ -15,9 +15,6 @@ import CTA from '../components/CTA.astro';
 import { projects as allProjects } from '../data/projects';
 import { products as allProducts } from '../data/products';
 
-const u = (id: string, w = 1800) =>
-  `https://images.unsplash.com/photo-${id}?q=80&w=${w}&auto=format&fit=crop`;
-
 const projectBySlug = (slug: string) => allProjects.find((project) => project.slug === slug)!;
 const projects = [
   projectBySlug('yucca-villas-studio'),
@@ -25,27 +22,41 @@ const projects = [
   projectBySlug('villa-bocce'),
 ];
 
-const pieces = allProducts.slice(0, 5);
+const homeProjectImages = [
+  '/assets/home/selected-project-01.jpg',
+  '/assets/home/selected-project-02.jpg',
+  '/assets/home/selected-project-03.jpg',
+];
+const homePieceImages = [
+  '/assets/home/furniture-01.png',
+  '/assets/home/furniture-05.png',
+  '/assets/home/furniture-03.png',
+  '/assets/home/furniture-04.png',
+  '/assets/home/furniture-02.png',
+];
+const pieces = allProducts
+  .slice(0, 5)
+  .map((product, i) => ({ ...product, demo: homePieceImages[i] ?? product.demo }));
 const lookbook = [
   {
     label: '01 / Luxury Lounge Chair',
-    image: '/assets/products/product-collection-02/06.png',
+    image: '/assets/home/furniture-lookbook-01.png',
     alt: 'Luxury Lounge Chair in a curated living space',
   },
   {
-    label: '02 / Sculptural Pendant Lamp',
-    image: '/assets/products/product-collection-02/11.png',
-    alt: 'Sculptural pendant lamp',
+    label: '02 / Coastal Lounge Setting',
+    image: '/assets/home/furniture-lookbook-02.png',
+    alt: 'Coastal lounge setting',
   },
   {
     label: '03 / Dining Table Study',
-    image: '/assets/products/kamu-collection/dining-table-01.png',
-    alt: 'Dining table by KAMU',
+    image: '/assets/home/furniture-lookbook-03.png',
+    alt: 'Dining table study by KAMU',
   },
   {
-    label: '04 / Side Table Detail',
-    image: '/assets/products/kamu-collection/side-table-01.png',
-    alt: 'Side table detail by KAMU',
+    label: '04 / Dining Room Edit',
+    image: '/assets/home/furniture-lookbook-04.png',
+    alt: 'Dining room edit by KAMU',
   },
 ];
 ---
@@ -56,9 +67,9 @@ const lookbook = [
   <!-- ============ HERO — full-bleed video, text floats on it ============ -->
   <section class="hero" data-nav-invert>
     <div class="hero-media">
-      {/* poster shows the real image now; add src="/assets/hero-video.mp4" when the film lands */}
+      {/* poster shows the home asset now; add src="/assets/hero-video.mp4" when the film lands */}
       <video
-        poster={u('1600210492486-724fe5c67fb0', 2400)}
+        poster="/assets/home/cover-page.jpg"
         data-swap="hero-video.mp4"
         autoplay
         muted
@@ -114,7 +125,7 @@ const lookbook = [
     <!-- Feature: edge to edge -->
     <a href={`/projects/${projects[0].slug}/`} class="feature" data-parallax>
       <img
-        src={projects[0].demo}
+        src={homeProjectImages[0]}
         alt={projects[0].name}
       />
       <div class="feature-caption">
@@ -131,7 +142,7 @@ const lookbook = [
         <Placeholder
           name={projects[1].file}
           ratio="4x3"
-          demo={projects[1].demo}
+          demo={homeProjectImages[1]}
           alt={projects[1].name}
           parallax
         />
@@ -145,7 +156,7 @@ const lookbook = [
         <Placeholder
           name={projects[2].file}
           ratio="3x4"
-          demo={projects[2].demo}
+          demo={homeProjectImages[2]}
           alt={projects[2].name}
           parallax
         />

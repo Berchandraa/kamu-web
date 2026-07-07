@@ -4,6 +4,30 @@ Last updated: 2026-07-07
 
 This file tracks project assets that are ready to map into `src/data/projects.ts`.
 
+## Home Page Assets
+
+Source folder: `D:/Portfolio Berchandraa/MANA Projects/Photo Assset/`
+
+Stored folder: `public/assets/home/`
+
+Current homepage mapping:
+
+| Slot | File | Usage |
+| --- | --- | --- |
+| Hero | `/assets/home/cover-page.jpg` | Home hero poster |
+| Selected project 01 | `/assets/home/selected-project-01.jpg` | First project feature image |
+| Selected project 02 | `/assets/home/selected-project-02.jpg` | Second project image |
+| Selected project 03 | `/assets/home/selected-project-03.jpg` | Third project image |
+| Furniture 01 | `/assets/home/furniture-01.png` | Home collection row |
+| Furniture 02 | `/assets/home/furniture-02.png` | Home collection row |
+| Furniture 03 | `/assets/home/furniture-03.png` | Home collection row |
+| Furniture 04 | `/assets/home/furniture-04.png` | Home collection row |
+| Furniture 05 | `/assets/home/furniture-05.png` | Home collection row |
+| Lookbook 01 | `/assets/home/furniture-lookbook-01.png` | Home lookbook slide |
+| Lookbook 02 | `/assets/home/furniture-lookbook-02.png` | Home lookbook slide |
+| Lookbook 03 | `/assets/home/furniture-lookbook-03.png` | Home lookbook slide |
+| Lookbook 04 | `/assets/home/furniture-lookbook-04.png` | Home lookbook slide |
+
 ## Yucca Villas Studio
 
 Source: user-provided images from PM/client reference.
