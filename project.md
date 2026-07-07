@@ -40,6 +40,15 @@ These appeared on the live site but are not enough by themselves to create full 
 | Villa Bocce | `public/assets/projects/villa-bocce/` | 4 detail images ready; see `asset.md`. |
 | Villa Kamal | `public/assets/projects/villa-kamal/` | 5 detail images ready; see `asset.md`. |
 
+## Ready Product Asset Sets
+
+| Collection | Asset folder | Status |
+| --- | --- | --- |
+| KAMU Collection Product Photos | `public/assets/products/kamu-collection/` | 18 product images mapped with partial PDF details; see `asset.md`. |
+| Product Collection 02 | `public/assets/products/product-collection-02/` | 15 product images ready; product details still need confirmation. |
+| Product Collection 03 | `public/assets/products/product-collection-03/` | 15 product images ready; product details still need confirmation. |
+| Product Collection 04 | `public/assets/products/product-collection-04/` | 10 product images ready; product details still need confirmation. |
+
 ## Recommended Data Replacement
 
 Current demo project names in `src/data/projects.ts` should be replaced with real client-facing names from the list above.

@@ -112,3 +112,51 @@ PDF items without matching photos in the supplied folder:
 | Pendant Lamp 01 | `DC-LMP-MT-37-008` | `dia. 37 cm` | Aluminum | Listed in PDF, but no matching product photo found in supplied folder. |
 | Lounge Chair 05 | `FR-CHR-WD-79-011` | `73 x 50 x 80 cm`, seat height `40 cm` | Teak wood | Listed in PDF, but no matching product photo found in supplied folder. |
 | Artwork 03 | `DC-ART-ROP-60-003` | `60 x 45 cm` | - | Listed in PDF, but no matching product photo found in supplied folder. |
+
+## Product Collection 02
+
+Source folder: `D:/Portfolio Berchandraa/MANA Projects/Product Collection 02/`
+
+Stored folder: `public/assets/products/product-collection-02/`
+
+Status: photos ready. Product names, SKU, dimensions, materials, price, and descriptions are not included in this folder and still need confirmation.
+
+Files:
+
+`01.png`, `02.png`, `03.png`, `04.png`, `05.png`, `06.png`, `07.png`, `08.png`, `09.png`, `10.png`, `11.png`, `12-2.png`, `33.png`, `40.png`, `41.png`
+
+Suggested paths:
+
+`/assets/products/product-collection-02/01.png`
+
+## Product Collection 03
+
+Source folder: `D:/Portfolio Berchandraa/MANA Projects/Product Collection 03/`
+
+Stored folder: `public/assets/products/product-collection-03/`
+
+Status: photos ready. Product names, SKU, dimensions, materials, price, and descriptions are not included in this folder and still need confirmation.
+
+Files:
+
+`12.png`, `13.png`, `14.png`, `15.png`, `16.png`, `17.png`, `18.png`, `19.png`, `20.png`, `21.png`, `22.png`, `23.png`, `24.png`, `25-2.png`, `26-2.png`
+
+Suggested paths:
+
+`/assets/products/product-collection-03/12.png`
+
+## Product Collection 04
+
+Source folder: `D:/Portfolio Berchandraa/MANA Projects/Product Collection 04/`
+
+Stored folder: `public/assets/products/product-collection-04/`
+
+Status: photos ready. Product names, SKU, dimensions, materials, price, and descriptions are not included in this folder and still need confirmation.
+
+Files:
+
+`25-1.png`, `25.png`, `26-1.png`, `26.png`, `27.png`, `28.png`, `29.png`, `30.png`, `31.png`, `32.png`
+
+Suggested paths:
+
+`/assets/products/product-collection-04/25.png`
