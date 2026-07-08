@@ -934,7 +934,22 @@ const lookbook = [
     pointer-events: auto;
   }
 
+  .lookbook-slide:nth-child(2) {
+    background: url('/assets/home/furniture-lookbook-02.jpg') center bottom / cover;
+  }
+
+  .lookbook-slide:nth-child(2)::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    filter: blur(24px) brightness(0.72);
+    transform: scale(1.08);
+  }
+
   .lookbook-slide img {
+    position: relative;
+    z-index: 1;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -950,6 +965,7 @@ const lookbook = [
     content: '';
     position: absolute;
     inset: 0;
+    z-index: 1;
     background:
       linear-gradient(90deg, rgb(0 0 0 / 0.38), transparent 42%),
       linear-gradient(0deg, rgb(0 0 0 / 0.25), transparent 34%);
