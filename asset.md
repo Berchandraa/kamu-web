@@ -30,7 +30,6 @@ Current homepage mapping:
 | Lookbook 01 | `/assets/home/furniture-lookbook-01.jpg` | Home lookbook slide |
 | Lookbook 02 | `/assets/home/furniture-lookbook-02.jpg` | Home lookbook slide |
 | Lookbook 03 | `/assets/home/furniture-lookbook-03.jpg` | Home lookbook slide |
-| Lookbook 04 | `/assets/home/furniture-lookbook-04.jpg` | Home lookbook slide |
 
 ## Yucca Villas Studio
 
