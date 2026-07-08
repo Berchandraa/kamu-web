@@ -39,6 +39,7 @@ These appeared on the live site but are not enough by themselves to create full 
 | Yucca Villas Studio | `public/assets/projects/yucca-villas-studio/` | 5 detail images ready; see `asset.md`. |
 | Villa Bocce | `public/assets/projects/villa-bocce/` | 4 detail images ready; see `asset.md`. |
 | Villa Kamal | `public/assets/projects/villa-kamal/` | 5 detail images ready; see `asset.md`. |
+| Lavi & Savi | `public/assets/projects/lavi-savi/` | 12 images stored; first 6 mapped to project detail; copy is drafted placeholder. |
 
 ## Ready Product Asset Sets
 
@@ -82,8 +83,28 @@ Use the existing `src/data/projects.ts` values for now, only as demo placeholder
 | Intro/body/story/copy | Existing project copy | Use as temporary editorial copy; replace when client gives real case-study text. |
 | Materials/quote/gallery | Existing values | Keep for demo richness; not verified against the live projects. |
 
+## Draft Project: Lavi & Savi
+
+Source folder: `D:/Portfolio Berchandraa/MANA Projects/Lavi&Savi Project/`
+
+Live route after deploy: `/projects/lavi-savi/`
+
+Current drafted fields in `src/data/projects.ts`:
+
+| Field | Value |
+| --- | --- |
+| Name | Lavi & Savi |
+| Type | Residential |
+| Location | Bali |
+| Year | 2026 |
+| Scope | Interior Styling & FF&E |
+| Main idea | A calm residential setting built around quiet rituals, filtered daylight, tactile materials, and lived-in furniture composition. |
+
+Copy status: drafted for demo presentation only. Replace with client-approved location, year, scope, and case-study copy once confirmed.
+
 ## Still Needs Confirmation
 
 - Whether missing portfolio numbers 05 and 08 are intentionally hidden, deleted, or unpublished
 - Whether all website image assets are approved for use in the new demo
 - Final client-approved case-study copy before production
+- Final Lavi & Savi location, year, scope, and exact project story

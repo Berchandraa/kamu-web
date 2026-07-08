@@ -73,6 +73,15 @@ const villaBocce = [
   local('villa-bocce/04-lounge-dining.png'),
 ];
 
+const laviSavi = [
+  local('lavi-savi/01-shot-02.jpg'),
+  local('lavi-savi/02-shot-03.jpg'),
+  local('lavi-savi/03-shot-04.jpg'),
+  local('lavi-savi/04-shot-05.jpg'),
+  local('lavi-savi/05-shot-08.jpg'),
+  local('lavi-savi/06-shot-09.jpg'),
+];
+
 const galleryFor = (images: string[]) => Array.from({ length: 6 }, (_, i) => images[i % images.length]);
 
 export const projects: Project[] = [
@@ -236,5 +245,28 @@ export const projects: Project[] = [
     materials: ['Polished concrete', 'Teak frame', 'Rattan', 'Linen'],
     quote: 'The rice field is the largest room in the house.',
     gallery: galleryFor([pool[9], pool[3], pool[11], pool[0], pool[5], pool[6]]),
+  },
+  {
+    n: '08',
+    slug: 'lavi-savi',
+    name: 'Lavi & Savi',
+    meta: 'Bali · Residential',
+    location: 'Bali',
+    year: '2026',
+    type: 'Residential',
+    scope: 'Interior Styling & FF&E',
+    file: 'project-08.jpg',
+    demo: laviSavi[0],
+    intro:
+      'A soft residential setting shaped around quiet rituals, filtered daylight and pieces that feel collected rather than staged. Lavi & Savi reads as a calm home first, then a design statement second.',
+    body: 'The palette stays warm and tactile: pale upholstery, woven texture, dark timber notes and natural light doing most of the work. Furniture is arranged for easy conversation, slow mornings and rooms that can breathe between objects.',
+    storyTitle: 'A home with a slower rhythm',
+    story: [
+      'The direction is intentionally restrained. Instead of filling each corner, the rooms rely on generous negative space, natural textures and a few strong silhouettes to carry the mood.',
+      'Every setting is composed to feel lived-in: a chair close to the light, a table with room around it, soft materials against harder architectural lines. The result is quiet, personal and easy to inhabit.',
+    ],
+    materials: ['Natural timber', 'Textured upholstery', 'Woven fibre', 'Warm plaster'],
+    quote: 'The strongest rooms leave space for daily life to happen.',
+    gallery: galleryFor(laviSavi),
   },
 ];

@@ -113,6 +113,42 @@ Suggested gallery array:
 ]
 ```
 
+## Lavi & Savi
+
+Source folder: `D:/Portfolio Berchandraa/MANA Projects/Lavi&Savi Project/`
+
+Stored folder: `public/assets/projects/lavi-savi/`
+
+Recommended use:
+
+| Slot | File | Usage |
+| --- | --- | --- |
+| 01 | `/assets/projects/lavi-savi/01-shot-02.jpg` | Cover / hero image |
+| 02 | `/assets/projects/lavi-savi/02-shot-03.jpg` | Detail gallery |
+| 03 | `/assets/projects/lavi-savi/03-shot-04.jpg` | Detail gallery |
+| 04 | `/assets/projects/lavi-savi/04-shot-05.jpg` | Detail gallery |
+| 05 | `/assets/projects/lavi-savi/05-shot-08.jpg` | Detail gallery |
+| 06 | `/assets/projects/lavi-savi/06-shot-09.jpg` | Detail gallery |
+| 07 | `/assets/projects/lavi-savi/07-shot-17.jpg` | Reserve asset |
+| 08 | `/assets/projects/lavi-savi/08-shot-18.jpg` | Reserve asset |
+| 09 | `/assets/projects/lavi-savi/09-shot-19.jpg` | Reserve asset |
+| 10 | `/assets/projects/lavi-savi/10-shot-31.jpg` | Reserve asset |
+| 11 | `/assets/projects/lavi-savi/11-shot-40.jpg` | Reserve asset |
+| 12 | `/assets/projects/lavi-savi/12-shot-41.jpg` | Reserve asset |
+
+Suggested gallery array:
+
+```ts
+[
+  '/assets/projects/lavi-savi/01-shot-02.jpg',
+  '/assets/projects/lavi-savi/02-shot-03.jpg',
+  '/assets/projects/lavi-savi/03-shot-04.jpg',
+  '/assets/projects/lavi-savi/04-shot-05.jpg',
+  '/assets/projects/lavi-savi/05-shot-08.jpg',
+  '/assets/projects/lavi-savi/06-shot-09.jpg',
+]
+```
+
 ## KAMU Collection Product Photos
 
 Source photos: `D:/Portfolio Berchandraa/MANA Projects/KAMU Concpets/Birangin Projectts/foto product/`
