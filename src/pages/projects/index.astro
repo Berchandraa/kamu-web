@@ -194,13 +194,18 @@ const ratioFor = (i: number) => ratios[i % ratios.length];
 
   .pj-logo-reveal {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 50%;
     display: grid;
     place-items: center;
+    width: clamp(8rem, 34%, 14rem);
+    aspect-ratio: 2 / 1;
     opacity: 0;
-    background: rgb(0 0 0 / 0.22);
-    transform: scale(0.98);
-    transform-origin: center;
+    background: rgb(0 0 0 / 0.38);
+    border-radius: 0 0 999px 999px;
+    backdrop-filter: blur(8px);
+    transform: translate(-50%, -100%);
+    transform-origin: top center;
     transition:
       opacity var(--dur-base) var(--ease-out),
       transform var(--dur-base) var(--ease-out);
@@ -208,18 +213,7 @@ const ratioFor = (i: number) => ratios[i % ratios.length];
 
   .pj-logo-reveal::before {
     content: '';
-    width: clamp(5.5rem, 12vw, 9rem);
-    aspect-ratio: 1;
-    border: 1px solid color-mix(in srgb, var(--c-bone) 70%, transparent);
-    border-radius: 999px;
-    background: rgb(0 0 0 / 0.18);
-    backdrop-filter: blur(8px);
-  }
-
-  .pj-logo-reveal::after {
-    content: '';
-    position: absolute;
-    width: clamp(2.8rem, 6vw, 4.6rem);
+    width: clamp(2.4rem, 32%, 4rem);
     aspect-ratio: 1;
     background: var(--c-bone);
     -webkit-mask: url('/assets/asset-1.svg') no-repeat center / 62%;
@@ -229,7 +223,7 @@ const ratioFor = (i: number) => ratios[i % ratios.length];
   .pj-card:hover .pj-logo-reveal,
   .pj-card:focus-visible .pj-logo-reveal {
     opacity: 1;
-    transform: scale(1);
+    transform: translate(-50%, 0);
   }
 
   /* ----- minimal caption: name + location ----- */
