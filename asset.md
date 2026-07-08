@@ -16,6 +16,7 @@ Current homepage mapping:
 | --- | --- | --- |
 | Hero | `/assets/home/cover-page.jpg` | Home hero poster |
 | CEO / Founder | `/assets/home/ceo-picture.jpg` | Home About Us section |
+| CEO / Founder fill crop | `/assets/home/ceo-picture-fill.jpg` | Home About Us and About Vision sections |
 | Team | `/assets/home/team-picture.jpg` | About Vision / Mission section |
 | CTA interior | `/assets/home/cta-interior.jpg` | Shared closing CTA section |
 | Selected project 01 | `/assets/home/selected-project-01.jpg` | First project feature image |
