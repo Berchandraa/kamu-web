@@ -68,6 +68,36 @@ const values = [
     </div>
   </section>
 
+  <!-- ============ VISION / MISSION ============ -->
+  <section class="ab-vm" aria-label="Vision and Mission">
+    <article class="ab-vm-row" data-reveal>
+      <figure class="ab-vm-media">
+        <img src="/assets/home/cover-page.jpg" alt="Calm interior mood by KAMU Concepts" loading="lazy" />
+      </figure>
+      <div class="ab-vm-copy">
+        <p class="label ab-vm-label">/ Vision</p>
+        <p class="ab-vm-text">
+          To be a leading interior design studio known for timeless, modern,
+          and luxury aesthetics with a strong commitment to quality and
+          attention to detail.
+        </p>
+      </div>
+    </article>
+
+    <article class="ab-vm-row ab-vm-row-reverse" data-reveal data-reveal-delay="0.12">
+      <div class="ab-vm-copy">
+        <p class="label ab-vm-label">/ Mission</p>
+        <p class="ab-vm-text">
+          To create innovative and personalized interior design solutions that
+          reflect our clients&rsquo; unique lifestyles and aspirations.
+        </p>
+      </div>
+      <figure class="ab-vm-media">
+        <img src="/assets/home/selected-project-03.jpg" alt="Warm living space designed by KAMU Concepts" loading="lazy" />
+      </figure>
+    </article>
+  </section>
+
   <!-- ============ VALUES — dark band ============ -->
   <section class="ab-values">
     <div class="ab-values-inner">
@@ -83,25 +113,6 @@ const values = [
           ))
         }
       </ol>
-    </div>
-  </section>
-
-  <!-- ============ VISION / MISSION — offset pair ============ -->
-  <section class="ab-vm grid-12">
-    <div class="ab-vm-block ab-vision" data-reveal>
-      <p class="label ab-vm-label">Vision</p>
-      <p class="sub ab-vm-text">
-        To be a leading interior design studio known for timeless, modern, and
-        luxury aesthetics with a strong commitment to quality and attention to
-        detail.
-      </p>
-    </div>
-    <div class="ab-vm-block ab-mission" data-reveal data-reveal-delay="0.15">
-      <p class="label ab-vm-label">Mission</p>
-      <p class="sub ab-vm-text">
-        To create innovative and personalized interior design solutions that
-        reflect our clients’ unique lifestyles and aspirations.
-      </p>
     </div>
   </section>
 
@@ -241,38 +252,73 @@ const values = [
 
   /* ================= VISION / MISSION ================= */
   .ab-vm {
-    padding-block: var(--space-2xl);
-    row-gap: var(--space-xl);
+    padding-block: var(--space-xl) var(--space-2xl);
+    background: var(--bg);
   }
 
-  .ab-vm-block {
+  .ab-vm-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    min-height: clamp(32rem, 58vw, 44rem);
+  }
+
+  .ab-vm-media {
+    min-height: inherit;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .ab-vm-media img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .ab-vm-copy {
+    min-height: inherit;
     display: flex;
     flex-direction: column;
-    gap: var(--space-s);
-  }
-
-  .ab-vision {
-    grid-column: 2 / 7;
-  }
-
-  .ab-mission {
-    grid-column: 7 / 12;
-    margin-top: var(--space-xl);
+    justify-content: space-between;
+    padding: clamp(3rem, 6vw, 6rem) var(--gutter);
   }
 
   .ab-vm-label {
-    color: var(--ink);
+    color: var(--ink-soft);
   }
 
   .ab-vm-text {
-    font-family: var(--font-serif);
+    max-width: 32rem;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: clamp(1.35rem, 2.4vw, 2rem);
+    font-weight: 650;
+    line-height: 1.14;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
   }
 
   @media (max-width: 56rem) {
-    .ab-vision,
-    .ab-mission {
-      grid-column: 1 / -1;
-      margin-top: 0;
+    .ab-vm {
+      padding-block: var(--space-l) var(--space-xl);
+    }
+
+    .ab-vm-row {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    .ab-vm-row-reverse .ab-vm-media {
+      order: -1;
+    }
+
+    .ab-vm-media {
+      min-height: 60vh;
+    }
+
+    .ab-vm-copy {
+      min-height: 24rem;
+      gap: var(--space-xl);
     }
   }
 
