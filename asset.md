@@ -15,6 +15,7 @@ Current homepage mapping:
 | Slot | File | Usage |
 | --- | --- | --- |
 | Hero | `/assets/home/cover-page.jpg` | Home hero poster |
+| CEO / Founder | `/assets/home/ceo-picture.jpg` | Home About Us section |
 | Selected project 01 | `/assets/home/selected-project-01.jpg` | First project feature image |
 | Selected project 02 | `/assets/home/selected-project-02.jpg` | Second project image |
 | Selected project 03 | `/assets/home/selected-project-03.jpg` | Third project image |
