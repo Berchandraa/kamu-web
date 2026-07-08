@@ -68,7 +68,6 @@ const ratioFor = (i: number) => ratios[i % ratios.length];
           <div class={`media frame-${ratioFor(i)} pj-media`}>
             <img src={p.demo} alt={p.name} loading="lazy" />
             <span class="pj-logo-reveal" aria-hidden="true">
-              <img src={p.demo} alt="" loading="lazy" />
             </span>
           </div>
           <div class="pj-cap">
@@ -196,30 +195,41 @@ const ratioFor = (i: number) => ratios[i % ratios.length];
   .pj-logo-reveal {
     position: absolute;
     inset: 0;
+    display: grid;
+    place-items: center;
     opacity: 0;
-    transform: scale(0.9);
+    background: rgb(0 0 0 / 0.22);
+    transform: scale(0.98);
     transform-origin: center;
-    -webkit-mask: url('/assets/asset-1.svg') no-repeat left center / 330% auto;
-    mask: url('/assets/asset-1.svg') no-repeat left center / 330% auto;
     transition:
       opacity var(--dur-base) var(--ease-out),
-      transform var(--dur-slow) var(--ease-out);
+      transform var(--dur-base) var(--ease-out);
   }
 
-  .pj-logo-reveal img {
-    filter: saturate(1.08) contrast(1.04);
-    transform: scale(1.16);
+  .pj-logo-reveal::before {
+    content: '';
+    width: clamp(5.5rem, 12vw, 9rem);
+    aspect-ratio: 1;
+    border: 1px solid color-mix(in srgb, var(--c-bone) 70%, transparent);
+    border-radius: 999px;
+    background: rgb(0 0 0 / 0.18);
+    backdrop-filter: blur(8px);
+  }
+
+  .pj-logo-reveal::after {
+    content: '';
+    position: absolute;
+    width: clamp(2.8rem, 6vw, 4.6rem);
+    aspect-ratio: 1;
+    background: var(--c-bone);
+    -webkit-mask: url('/assets/asset-1.svg') no-repeat center / 62%;
+    mask: url('/assets/asset-1.svg') no-repeat center / 62%;
   }
 
   .pj-card:hover .pj-logo-reveal,
   .pj-card:focus-visible .pj-logo-reveal {
     opacity: 1;
     transform: scale(1);
-  }
-
-  .pj-card:hover .pj-logo-reveal img,
-  .pj-card:focus-visible .pj-logo-reveal img {
-    transform: scale(1.24);
   }
 
   /* ----- minimal caption: name + location ----- */
