@@ -7,6 +7,15 @@
  *   data-reveal            → fade-up on scroll into view
  *   data-reveal="line"     → clip-reveal upward (headlines)
  *   data-reveal="media"    → slow fade + subtle scale (images/video)
+---
+/**
+ * Base layout — fonts, tokens, navbar, footer, smooth scroll,
+ * and the shared scroll-reveal system.
+ *
+ * Reveal API (used on every page):
+ *   data-reveal            → fade-up on scroll into view
+ *   data-reveal="line"     → clip-reveal upward (headlines)
+ *   data-reveal="media"    → slow fade + subtle scale (images/video)
  *   data-reveal-delay="0.2"→ optional stagger offset in seconds
  */
 import '@fontsource/montserrat/400.css';
@@ -19,12 +28,8 @@ import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import CartDrawer from '../components/CartDrawer.astro';
+import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
 import Cursor from '../components/Cursor.astro';
-
-interface Props {
-  title: string;
-  description?: string;
-}
 
 const {
   title,
@@ -52,6 +57,7 @@ const footerLogo = Astro.url.pathname.startsWith('/shop/') ? 'by-kamu' : 'main';
       <slot />
     </main>
     <Footer logoVariant={footerLogo} />
+    <FloatingWhatsApp />
     <CartDrawer />
     <Cursor />
 

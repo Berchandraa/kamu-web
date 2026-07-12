@@ -44,10 +44,10 @@
   --fs-h1: clamp(2.5rem, 5.5vw, 4.5rem);       /* Headline Large */
   --fs-h2: clamp(1.5rem, 3vw, 2.5rem);         /* Headline Small */
   --fs-sub: clamp(1.125rem, 1.6vw, 1.5rem);    /* Subheading */
-  --fs-body: clamp(1rem, 1.15vw, 1.125rem);    /* Body copy */
-  --fs-quote: clamp(1.25rem, 2vw, 1.75rem);    /* Pull quotes */
-  --fs-caption: 0.8125rem;                      /* Captions */
-  --fs-label: 0.6875rem;                        /* nav / eyebrow labels */
+  --fs-body: clamp(1.0625rem, 1.22vw, 1.25rem); /* Body copy */
+  --fs-quote: clamp(1.35rem, 2.1vw, 1.875rem);  /* Pull quotes */
+  --fs-caption: clamp(0.95rem, 0.9vw, 1.05rem); /* Captions */
+  --fs-label: clamp(0.9rem, 0.82vw, 1rem);      /* nav / eyebrow labels */
 
   --lh-tight: 1.0;
   --lh-snug: 1.1;
@@ -58,7 +58,7 @@
   --ls-snug: -0.02em;    /* small headlines / subheads */
   --ls-none: 0;          /* body */
   --ls-wide: 0.02em;     /* captions */
-  --ls-label: 0.14em;    /* uppercase labels / nav */
+  --ls-label: 0.12em;    /* uppercase labels / nav */
 
   /* ----- Spacing ----- */
   --space-2xs: 0.5rem;

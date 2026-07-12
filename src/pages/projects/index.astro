@@ -15,12 +15,8 @@ const filters = [
   { key: 'all', label: 'All' },
   { key: 'residential', label: 'Residential' },
   { key: 'hospitality', label: 'Hospitality' },
-  { key: 'workspace', label: 'Workspace' },
 ];
 
-// Aspect pattern keeps the masonry lively (tall / wide / square mix)
-const ratios = ['3x4', '4x3', '1x1', '3x4', '4x3', '4x3', '3x4'];
-const ratioFor = (i: number) => ratios[i % ratios.length];
 ---
 
 <Base
@@ -58,17 +54,15 @@ const ratioFor = (i: number) => ratios[i % ratios.length];
   <!-- ============ MASONRY GRID ============ -->
   <div class="pj-grid" id="pj-grid">
     {
-      projects.map((p, i) => (
+      projects.map((p) => (
         <a
           href={`/projects/${p.slug}/`}
           class="pj-card"
           data-type={p.type.toLowerCase()}
           data-reveal="media"
         >
-          <div class={`media frame-${ratioFor(i)} pj-media`}>
-            <img src={p.demo} alt={p.name} loading="lazy" />
-            <span class="pj-logo-reveal" aria-hidden="true">
-            </span>
+          <div class="media frame-4x3 pj-media">
+            <img src={p.gallery[1] ?? p.demo} alt={p.name} loading="lazy" />
           </div>
           <div class="pj-cap">
             <h2 class="pj-name">{p.name}</h2>
@@ -162,18 +156,17 @@ const ratioFor = (i: number) => ratios[i % ratios.length];
     transform-origin: left;
   }
 
-  /* ================= MASONRY GRID ================= */
+  /* ================= PROJECT GRID ================= */
   .pj-grid {
-    columns: 3;
-    column-gap: 0.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
     padding-inline: var(--gutter);
     margin-top: var(--space-l);
   }
 
   .pj-card {
     display: block;
-    break-inside: avoid;
-    margin-bottom: 0.5rem;
   }
 
   .pj-card.is-hidden {
@@ -181,9 +174,20 @@ const ratioFor = (i: number) => ratios[i % ratios.length];
   }
 
   .pj-media {
+    position: relative;
     background: var(--bg-alt);
     overflow: hidden;
     transition: border-radius var(--dur-base) var(--ease-out);
+  }
+
+  .pj-media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgb(0 0 0 / 0.42);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-base) var(--ease-out);
   }
 
   .pj-media img {
@@ -199,33 +203,9 @@ const ratioFor = (i: number) => ratios[i % ratios.length];
     transform: scale(1.05);
   }
 
-  .pj-logo-reveal {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    opacity: 0;
-    background: rgb(0 0 0 / 0.18);
-    transform: scale(0.98);
-    transform-origin: center;
-    transition:
-      opacity var(--dur-base) var(--ease-out),
-      transform var(--dur-base) var(--ease-out);
-  }
-
-  .pj-logo-reveal::before {
-    content: '';
-    width: clamp(2.8rem, 8vw, 4.8rem);
-    aspect-ratio: 1;
-    background: var(--c-bone);
-    -webkit-mask: url('/assets/asset-1.svg') no-repeat center / 62%;
-    mask: url('/assets/asset-1.svg') no-repeat center / 62%;
-  }
-
-  .pj-card:hover .pj-logo-reveal,
-  .pj-card:focus-visible .pj-logo-reveal {
+  .pj-card:hover .pj-media::after,
+  .pj-card:focus-visible .pj-media::after {
     opacity: 1;
-    transform: scale(1);
   }
 
   /* ----- minimal caption: name + location ----- */
@@ -257,13 +237,13 @@ const ratioFor = (i: number) => ratios[i % ratios.length];
   /* ================= RESPONSIVE ================= */
   @media (max-width: 64rem) {
     .pj-grid {
-      columns: 2;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   @media (max-width: 40rem) {
     .pj-grid {
-      columns: 1;
+      grid-template-columns: 1fr;
     }
 
     .pj-cap {
@@ -280,8 +260,7 @@ const ratioFor = (i: number) => ratios[i % ratios.length];
     color: var(--ink);
   }
 
-  .nav:not(.is-condensed) .nav-link,
-  .nav:not(.is-condensed) .nav-bag {
+  .nav:not(.is-condensed) .nav-link {
     opacity: 1;
   }
 

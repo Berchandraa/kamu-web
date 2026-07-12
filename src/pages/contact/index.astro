@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Placeholder from '../../components/Placeholder.astro';
+import SocialLinks from '../../components/SocialLinks.astro';
 
 const demo =
   'https://images.unsplash.com/photo-1540574163026-643ea20ade25?q=80&w=1600&auto=format&fit=crop';
@@ -31,6 +32,14 @@ const demo =
           parallax
         />
       </div>
+    </div>
+
+    <div class="ct-main">
+      <aside class="ct-note" data-reveal data-reveal-delay="0.2">
+        <p class="label">Project Enquiry</p>
+        <p>For new interiors, collaborations, or bespoke furniture, use Let's Talk.</p>
+        <a href="/lets-talk/" class="ct-note-link">Start a project</a>
+      </aside>
 
       <div class="ct-rows" data-reveal data-reveal-delay="0.15">
         <p class="label ct-section-label">Studio Contact</p>
@@ -44,8 +53,9 @@ const demo =
         <div class="ct-row">
           <p class="label ct-key">Direct</p>
           <p class="ct-val">
-            <a href="mailto:hello@kamuconcepts.com">hello@kamuconcepts.com</a><br />
-            <a href="tel:+6282338888971">+62 823 3888 8971</a>
+            <a href="mailto:hello@kamuconcepts.com">hello@kamuconcepts.com</a>
+            <br />
+            <a href="https://wa.me/6282338888971">+62 823 3888 8971</a>
           </p>
         </div>
         <div class="ct-row">
@@ -60,20 +70,12 @@ const demo =
         </div>
         <div class="ct-row">
           <p class="label ct-key">Social</p>
-          <p class="ct-val ct-social">
-            <a href="https://instagram.com/kamuconcepts" target="_blank" rel="noopener">Instagram</a>
-            <a href="https://tiktok.com/@kamuconcepts" target="_blank" rel="noopener">TikTok</a>
-            <a href="https://pinterest.com/kamuconcepts" target="_blank" rel="noopener">Pinterest</a>
-          </p>
+          <div class="ct-val ct-social">
+            <SocialLinks />
+          </div>
         </div>
       </div>
     </div>
-
-    <aside class="ct-note" data-reveal data-reveal-delay="0.2">
-      <p class="label">Project Enquiry</p>
-      <p>For new interiors, collaborations, or bespoke furniture, use Let's Talk.</p>
-      <a href="/lets-talk/" class="ct-note-link">Start a project</a>
-    </aside>
   </section>
 </Base>
 
@@ -88,9 +90,14 @@ const demo =
     margin-top: clamp(3rem, 8vh, 6rem);
   }
 
-  .ct-note {
+  .ct-main {
     grid-column: 7 / 13;
-    align-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
+  }
+
+  .ct-note {
     padding: var(--space-l);
     border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
     border-radius: 1.5rem;
@@ -108,8 +115,8 @@ const demo =
     margin-top: var(--space-m);
     font-family: var(--font-sans);
     font-weight: 500;
-    font-size: 0.6875rem;
-    letter-spacing: 0.22em;
+    font-size: var(--fs-label);
+    letter-spacing: var(--ls-label);
     text-transform: uppercase;
     padding: 1.2em 3.2em;
     background: var(--ink);
@@ -169,12 +176,12 @@ const demo =
 
   .ct-social {
     display: flex;
-    gap: var(--space-s);
+    align-items: center;
   }
 
   @media (max-width: 56rem) {
     .ct-side,
-    .ct-note {
+    .ct-main {
       grid-column: 1 / -1;
     }
 

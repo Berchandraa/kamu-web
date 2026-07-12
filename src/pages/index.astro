@@ -11,7 +11,6 @@
 import Base from '../layouts/Base.astro';
 import Preloader from '../components/Preloader.astro';
 import Placeholder from '../components/Placeholder.astro';
-import CTA from '../components/CTA.astro';
 import { projects as allProjects } from '../data/projects';
 import { products as allProducts } from '../data/products';
 
@@ -144,7 +143,7 @@ const lookbook = [
     <header class="work-head grid-12">
       <h2 class="display work-title" data-reveal="line">Selected<br />Work</h2>
       <p class="label work-count" data-reveal>
-        <span class="duo"><span>Projects</span><span class="duo-num">03</span></span>
+        <span class="duo"><span>Project</span><span class="duo-num">01</span></span>
       </p>
     </header>
 
@@ -162,39 +161,8 @@ const lookbook = [
       </div>
     </a>
 
-    <!-- Asymmetric split: 62 / 38, right column dropped -->
-    <div class="work-split">
-      <a href={`/projects/${projects[1].slug}/`} class="work-item work-item-a" data-reveal="media">
-        <Placeholder
-          name={projects[1].file}
-          ratio="4x3"
-          demo={homeProjectImages[1]}
-          alt={projects[1].name}
-          parallax
-        />
-        <div class="work-item-caption">
-          <h3 class="h2">{projects[1].name}</h3>
-          <p class="label work-item-meta duo"><span>{projects[1].location}</span><span class="duo-sub">{projects[1].type}</span></p>
-        </div>
-      </a>
-
-      <a href={`/projects/${projects[2].slug}/`} class="work-item work-item-b" data-reveal="media" data-reveal-delay="0.15">
-        <Placeholder
-          name={projects[2].file}
-          ratio="3x4"
-          demo={homeProjectImages[2]}
-          alt={projects[2].name}
-          parallax
-        />
-        <div class="work-item-caption">
-          <h3 class="h2">{projects[2].name}</h3>
-          <p class="label work-item-meta duo"><span>{projects[2].location}</span><span class="duo-sub">{projects[2].type}</span></p>
-        </div>
-      </a>
-    </div>
-
     <div class="work-all grid-12">
-      <a href="/projects/" class="text-link label" data-reveal>All projects</a>
+      <a href="/projects/" class="work-button label" data-reveal>See All Projects</a>
     </div>
   </section>
 
@@ -290,8 +258,6 @@ const lookbook = [
       <a href="/shop/" class="collection-cta">Shop Now</a>
     </div>
   </section>
-
-  <CTA />
 </Base>
 
 <style>
@@ -347,7 +313,10 @@ const lookbook = [
 
   .hero-eyebrow {
     margin-bottom: var(--space-s);
-    color: color-mix(in srgb, var(--c-bone) 80%, transparent);
+    color: var(--c-bone);
+    font-size: clamp(1rem, 1vw, 1.125rem);
+    font-weight: 700;
+    text-shadow: 0 1px 18px rgb(0 0 0 / 0.42);
   }
 
   .hero-headline {
@@ -642,56 +611,31 @@ const lookbook = [
     opacity: 0.8;
   }
 
-  /* Asymmetric split — minimal gap, right column dropped */
-  .work-split {
-    display: grid;
-    grid-template-columns: 62fr 38fr;
-    gap: 0.25rem;
-    margin-top: 0.25rem;
-  }
-
-  .work-item {
-    display: block;
-  }
-
-  .work-item-b {
-    margin-top: clamp(4rem, 12vh, 9rem);
-  }
-
-  .work-item-caption {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-s);
-    padding: 1rem var(--gutter) 0;
-  }
-
-  .work-item-caption .h2 {
-    font-size: clamp(1.125rem, 1.8vw, 1.5rem);
-  }
-
-  .work-item-meta {
-    color: var(--ink-soft);
-    white-space: nowrap;
-  }
-
-  /* Wide counterweight, pushed right */
-  .work-wide {
-    margin-top: var(--space-xl);
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-  }
-
-  .work-wide .work-item {
-    grid-column: 4 / 13;
-  }
-
   .work-all {
     margin-top: var(--space-l);
+    align-items: center;
   }
 
-  .work-all .text-link {
-    grid-column: 1 / 4;
+  .work-button {
+    grid-column: 1 / -1;
+    justify-self: center;
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.8rem;
+    padding-inline: 1.25rem;
+    border: 1px solid color-mix(in srgb, var(--ink) 24%, transparent);
+    border-radius: 999px;
+    color: var(--ink);
+    transition:
+      background-color var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out),
+      transform var(--dur-base) var(--ease-out);
+  }
+
+  .work-button:hover {
+    background: var(--ink);
+    color: var(--c-bone);
+    transform: translateY(-0.15rem);
   }
 
   @media (max-width: 56rem) {
@@ -709,18 +653,7 @@ const lookbook = [
       height: 70svh;
     }
 
-    .work-split {
-      grid-template-columns: 1fr;
-      gap: var(--space-l);
-    }
-
-    .work-item-b {
-      margin-top: 0;
-      width: 78%;
-      margin-left: auto;
-    }
-
-    .work-wide .work-item {
+    .work-button {
       grid-column: 1 / -1;
     }
   }

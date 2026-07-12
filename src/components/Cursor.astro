@@ -129,10 +129,17 @@
 
     // Delegate hover state so dynamically-added nodes work too
     document.addEventListener('mouseover', (e) => {
-      if ((e.target as Element)?.closest?.(interactive)) ring.classList.add('is-active');
+      const target = e.target as Element;
+      if (target?.closest?.('[data-cursor-ignore]')) {
+        ring.classList.remove('is-active');
+        return;
+      }
+      if (target?.closest?.(interactive)) ring.classList.add('is-active');
     });
     document.addEventListener('mouseout', (e) => {
-      if ((e.target as Element)?.closest?.(interactive)) ring.classList.remove('is-active');
+      const target = e.target as Element;
+      if (target?.closest?.('[data-cursor-ignore]')) return;
+      if (target?.closest?.(interactive)) ring.classList.remove('is-active');
     });
 
     // Eased trail — lerp toward the pointer each frame
@@ -145,3 +152,5 @@
     tick();
   }
 </script>
+
+

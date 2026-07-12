@@ -106,8 +106,8 @@ const labelFor = (slug: string) =>
     gap: 0.625em;
     font-family: var(--font-sans);
     font-weight: 500;
-    font-size: 0.6875rem;
-    letter-spacing: 0.16em;
+    font-size: var(--fs-label);
+    letter-spacing: var(--ls-label);
     text-transform: uppercase;
     color: var(--ink);
     padding: 0.8em 1.5em;
@@ -152,7 +152,7 @@ const labelFor = (slug: string) =>
   /* ================= GRID ================= */
   .sh-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     column-gap: var(--space-m);
     row-gap: var(--space-xl);
     padding-inline: var(--gutter);
@@ -215,8 +215,8 @@ const labelFor = (slug: string) =>
   .sh-name {
     font-family: var(--font-sans);
     font-weight: 500;
-    font-size: 0.875rem;
-    letter-spacing: 0.1em;
+    font-size: var(--fs-label);
+    letter-spacing: var(--ls-label);
     text-transform: uppercase;
     transition: color var(--dur-fast) var(--ease-out);
   }

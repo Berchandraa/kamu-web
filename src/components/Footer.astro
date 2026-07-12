@@ -8,6 +8,7 @@
  * All content per brand PDF p.42–43.
  */
 const year = new Date().getFullYear();
+import SocialLinks from './SocialLinks.astro';
 
 interface Props {
   logoVariant?: 'main' | 'by-kamu';
@@ -48,8 +49,7 @@ const isByKamu = logoVariant === 'by-kamu';
         Badung 80361, Bali, Indonesia
       </address>
       <p class="caption f-direct">
-        <a href="mailto:hello@kamuconcepts.com">hello@kamuconcepts.com</a><br />
-        <a href="tel:+6282338888971">+62 823 3888 8971</a>
+        <a href="mailto:hello@kamuconcepts.com">hello@kamuconcepts.com</a>
       </p>
     </div>
 
@@ -73,9 +73,7 @@ const isByKamu = logoVariant === 'by-kamu';
       <span class="label f-key">
         <span class="duo"><span>Follow</span><span class="duo-sub">@kamuconcepts</span></span>
       </span>
-      <a href="https://instagram.com/kamuconcepts" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://tiktok.com/@kamuconcepts" target="_blank" rel="noopener">TikTok</a>
-      <a href="https://pinterest.com/kamuconcepts" target="_blank" rel="noopener">Pinterest</a>
+      <SocialLinks />
     </nav>
   </div>
 
@@ -253,12 +251,12 @@ const isByKamu = logoVariant === 'by-kamu';
     margin-bottom: 0.625rem;
   }
 
-  .f-col a {
+  .f-col > a {
     width: fit-content;
     position: relative;
   }
 
-  .f-col a::after {
+  .f-col > a::after {
     content: '';
     position: absolute;
     left: 0;
@@ -271,7 +269,7 @@ const isByKamu = logoVariant === 'by-kamu';
     transition: transform var(--dur-base) var(--ease-out);
   }
 
-  .f-col a:hover::after {
+  .f-col > a:hover::after {
     transform: scaleX(1);
     transform-origin: left;
   }

@@ -27,33 +27,34 @@ const shopMega = [
   {
     key: 'By Collection',
     links: [
-      { label: 'Signature Collection', href: '/shop/' },
-      { label: 'The Bali Series', href: '/shop/' },
-      { label: 'New Arrivals', href: '/shop/' },
-      { label: 'Lookbook 2026', href: '/shop/' },
+      { label: 'Victoria Collection', href: '/shop/' },
+      { label: 'Isabelle Collection', href: '/shop/' },
+      { label: 'Agatha Collection', href: '/shop/' },
+      { label: 'Kiki Collection', href: '/shop/' },
     ],
   },
   {
     key: 'By Area',
     links: [
-      { label: 'Living Room', href: '/shop/' },
-      { label: 'Dining Room', href: '/shop/' },
-      { label: 'Bedroom', href: '/shop/' },
+      { label: 'Indoor', href: '/shop/' },
       { label: 'Outdoor', href: '/shop/' },
     ],
   },
   {
     key: 'By Type',
     links: [
-      { label: 'Dining Tables', href: '/shop/' },
-      { label: 'Dining Chairs', href: '/shop/' },
-      { label: 'Lounge Chairs', href: '/shop/' },
-      { label: 'Cabinets', href: '/shop/' },
-      { label: 'Lamp Pendants', href: '/shop/' },
+      { label: 'Coffee Table', href: '/shop/' },
+      { label: 'Side Table', href: '/shop/' },
+      { label: 'Bar Chair', href: '/shop/' },
+      { label: 'Artwork', href: '/shop/' },
+      { label: 'Console', href: '/shop/' },
+      { label: 'Bench', href: '/shop/' },
+      { label: 'Wardrobe', href: '/shop/' },
     ],
   },
 ];
 ---
+
 
 <header class="nav" id="nav">
   <div class="nav-inner">
@@ -90,8 +91,13 @@ const shopMega = [
           </a>
         ))
       }
-      <button class="nav-bag" aria-label="Open shopping bag">
-        Bag<sup class="nav-bag-n">0</sup>
+      <button class="nav-cart" type="button" aria-label="Open cart">
+        <svg class="nav-cart-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h6.9a2 2 0 0 0 1.9-1.4L20.5 9H7.1" />
+          <path d="M10 20h.01" />
+          <path d="M17 20h.01" />
+        </svg>
+        <span class="nav-cart-n">0</span>
       </button>
       <a href="/lets-talk/" class="nav-cta">
         Let&rsquo;s Talk <span class="nav-cta-plus" aria-hidden="true">+</span>
@@ -99,9 +105,6 @@ const shopMega = [
     </div>
 
     <div class="nav-compact">
-      <button class="nav-bag" aria-label="Open shopping bag">
-        Bag<sup class="nav-bag-n">0</sup>
-      </button>
       <button
         class="nav-toggle"
         id="nav-toggle"
@@ -207,8 +210,8 @@ const shopMega = [
   .nav-link {
     font-family: var(--font-sans);
     font-weight: 400;
-    font-size: 0.6875rem;
-    letter-spacing: 0.22em;
+    font-size: var(--fs-label);
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     position: relative;
     padding-block: 0.375rem;
@@ -335,7 +338,7 @@ const shopMega = [
      scrolled bone bar — with no per-state filter hacks. */
   .nav-logo {
     display: block;
-    height: 1.5rem;
+    height: 2.25rem;
     aspect-ratio: 648.07 / 144;
     width: auto;
     background-color: currentColor;
@@ -347,7 +350,7 @@ const shopMega = [
   }
 
   .nav.is-condensed .nav-logo {
-    height: 1.2rem;
+    height: 1.75rem;
   }
 
   /* ----- Pill CTA ----- */
@@ -357,8 +360,8 @@ const shopMega = [
     gap: 0.625rem;
     font-family: var(--font-sans);
     font-weight: 400;
-    font-size: 0.6875rem;
-    letter-spacing: 0.22em;
+    font-size: var(--fs-label);
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     padding: 0.7em 1.6em;
     border: 1px solid color-mix(in srgb, currentColor 55%, transparent);
@@ -386,32 +389,67 @@ const shopMega = [
     transform: rotate(90deg);
   }
 
-  /* ----- Bag ----- */
-  .nav-bag {
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: 0.6875rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    padding-block: 0.375rem;
-    opacity: 0.92;
-    transition: opacity var(--dur-fast) var(--ease-out);
-  }
-
-  .nav-bag:hover {
-    opacity: 1;
-  }
-
-  .nav-bag sup {
-    font-family: var(--font-serif);
-    font-size: 0.8em;
-    letter-spacing: 0;
-    margin-left: 0.35em;
+  /* ----- Cart Button ----- */
+  .nav-cart {
+    position: relative;
+    display: grid;
+    width: 2.75rem;
+    aspect-ratio: 1;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+    border-radius: 50%;
     color: currentColor;
-    opacity: 0.55;
+    background: transparent;
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      background-color var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out);
+    margin-left: 1rem;
+    margin-right: -1rem; /* tight coupling with CTA */
   }
 
-  /* ----- Compact cluster (bag + menu on small screens) ----- */
+  .nav-cart:hover {
+    transform: translateY(-0.15rem);
+    background: var(--ink);
+    color: var(--c-bone);
+    border-color: var(--ink);
+  }
+
+  .nav.is-inverted .nav-cart:hover {
+    background: var(--c-bone);
+    color: var(--ink);
+    border-color: var(--c-bone);
+  }
+
+  .nav-cart-icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.45;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .nav-cart-n {
+    position: absolute;
+    top: -0.2rem;
+    right: -0.2rem;
+    display: grid;
+    min-width: 1rem;
+    height: 1rem;
+    place-items: center;
+    padding-inline: 0.2rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--c-bone);
+    font-family: var(--font-serif);
+    font-size: 0.65rem;
+    line-height: 1;
+  }
+
+  /* ----- Compact menu on small screens ----- */
   .nav-compact {
     display: none;
     grid-column: 3;
@@ -426,8 +464,8 @@ const shopMega = [
     padding: 0.5rem 0;
     font-family: var(--font-sans);
     font-weight: 400;
-    font-size: 0.6875rem;
-    letter-spacing: 0.22em;
+    font-size: var(--fs-label);
+    letter-spacing: 0.18em;
     text-transform: uppercase;
   }
 
@@ -541,7 +579,7 @@ const shopMega = [
     }
 
     .nav-logo {
-      height: 1.3rem;
+      height: 1.75rem;
     }
   }
 </style>
@@ -553,17 +591,6 @@ const shopMega = [
   const toggle = document.getElementById('nav-toggle');
   const overlay = document.getElementById('nav-overlay');
   const darkHero = document.querySelector('[data-nav-invert]');
-
-  // Bag buttons + live count
-  const syncBag = () => {
-    const n = String(cart.count());
-    document.querySelectorAll('.nav-bag-n').forEach((el) => (el.textContent = n));
-  };
-  document.querySelectorAll('.nav-bag').forEach((btn) => {
-    btn.addEventListener('click', openCart);
-  });
-  window.addEventListener('cart:updated', syncBag);
-  syncBag();
 
   const onScroll = () => {
     const condensed = window.scrollY > 40;
@@ -634,4 +661,16 @@ const shopMega = [
     });
     toggle?.addEventListener('click', () => closeMega(true));
   }
+
+  // ----- Cart Logic -----
+  const cartBtn = document.querySelector<HTMLButtonElement>('.nav-cart');
+  const cartCount = document.querySelector<HTMLElement>('.nav-cart-n');
+
+  const syncCart = () => {
+    if (cartCount) cartCount.textContent = String(cart.count());
+  };
+
+  cartBtn?.addEventListener('click', openCart);
+  window.addEventListener('cart:updated', syncCart);
+  syncCart();
 </script>

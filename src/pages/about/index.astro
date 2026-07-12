@@ -6,17 +6,32 @@
  */
 import Base from '../../layouts/Base.astro';
 import Placeholder from '../../components/Placeholder.astro';
-import CTA from '../../components/CTA.astro';
 
 const u = (id: string, w = 1800) =>
   `https://images.unsplash.com/photo-${id}?q=80&w=${w}&auto=format&fit=crop`;
 
-// Values per the brand guidelines (p.4) — names only, exactly as written.
+// Values per the brand guidelines (p.4); descriptions are short site copy.
 const values = [
-  { n: '01', name: 'Creativity & Innovation' },
-  { n: '02', name: 'Quality & Precision' },
-  { n: '03', name: 'Client-Centric Approach' },
-  { n: '04', name: 'Sustainability & Ethical Sourcing' },
+  {
+    n: '01',
+    name: 'Creativity & Innovation',
+    desc: 'We shape each brief with fresh thinking, thoughtful problem solving, and a clear sense of how the space should feel.',
+  },
+  {
+    n: '02',
+    name: 'Quality & Precision',
+    desc: 'Every proportion, material junction, and finish is considered so the final space feels calm, durable, and resolved.',
+  },
+  {
+    n: '03',
+    name: 'Client-Centric Approach',
+    desc: 'We begin with the way our clients live, then translate their routines, taste, and aspirations into a personal design language.',
+  },
+  {
+    n: '04',
+    name: 'Sustainability & Ethical Sourcing',
+    desc: 'We prefer honest materials, responsible sourcing, and long-lasting pieces that age with the home rather than chase trends.',
+  },
 ];
 ---
 
@@ -70,36 +85,51 @@ const values = [
 
   <!-- ============ VISION / MISSION ============ -->
   <section class="ab-vm" aria-label="Vision and Mission">
-    <article class="ab-vm-row" data-reveal>
-      <figure class="ab-vm-media">
-        <img src="/assets/home/ceo-picture-fill.jpg" alt="KAMU Concepts founder portrait" loading="lazy" />
-      </figure>
-      <div class="ab-vm-copy">
-        <p class="label ab-vm-label">/ Vision</p>
-        <p class="ab-vm-text">
-          To be a leading interior design studio known for timeless, modern,
-          and luxury aesthetics with a strong commitment to quality and
-          attention to detail.
-        </p>
+    <article class="ab-vm-story" data-reveal>
+      <div class="ab-vm-stack" aria-hidden="true">
+        <figure class="ab-vm-card is-active" data-vm-card="belief">
+          <img src="/assets/home/ceo-picture-fill.jpg" alt="" loading="lazy" />
+        </figure>
+        <figure class="ab-vm-card" data-vm-card="work">
+          <img src="/assets/home/team-picture.jpg" alt="" loading="lazy" />
+        </figure>
       </div>
-    </article>
-
-    <article class="ab-vm-row ab-vm-row-reverse" data-reveal data-reveal-delay="0.12">
       <div class="ab-vm-copy">
-        <p class="label ab-vm-label">/ Mission</p>
-        <p class="ab-vm-text">
-          To create innovative and personalized interior design solutions that
-          reflect our clients&rsquo; unique lifestyles and aspirations.
-        </p>
+        <div class="ab-vm-step" data-vm-step="belief">
+          <p class="label ab-vm-label">Our Belief</p>
+          <h2 class="ab-vm-title">
+            At Kamu Concepts, we believe that a well-designed space is never just
+            about aesthetics. It&rsquo;s a reflection of the people who live in it.
+          </h2>
+          <p>
+            This belief has shaped our vision from the very beginning, to become a
+            leading interior design studio recognized for timeless, modern, and
+            luxury aesthetics, built on an unwavering commitment to quality and
+            attention to detail.
+          </p>
+          <blockquote>True luxury lives in the details often left unnoticed.</blockquote>
+        </div>
+        <div class="ab-vm-step" data-vm-step="work">
+          <p class="label ab-vm-label">How We Work</p>
+          <h2 class="ab-vm-title">
+            We don&rsquo;t believe in one-size-fits-all design.
+          </h2>
+          <p>
+            Our mission is to craft innovative and personalized interior solutions
+            that speak to each client&rsquo;s unique lifestyle and aspirations, spaces
+            that don&rsquo;t just look beautiful, but feel like home.
+          </p>
+          <p>
+            It&rsquo;s this dedication to understanding people first, and design second,
+            that continues to guide everything we create at Kamu Concepts.
+          </p>
+        </div>
       </div>
-      <figure class="ab-vm-media">
-        <img src="/assets/home/team-picture.jpg" alt="KAMU Concepts team portrait" loading="lazy" />
-      </figure>
     </article>
   </section>
 
   <!-- ============ VALUES — dark band ============ -->
-  <section class="ab-values">
+  <section class="ab-values" data-cursor-ignore>
     <div class="ab-values-inner">
       <h2 class="ab-values-title" data-reveal="line">What we hold onto</h2>
 
@@ -108,7 +138,10 @@ const values = [
           values.map((v, i) => (
             <li class="ab-value" data-reveal data-reveal-delay={String(i * 0.08)}>
               <span class="ab-value-n">{v.n}</span>
-              <span class="ab-value-name">{v.name}</span>
+              <button class="ab-value-toggle" type="button" aria-expanded="false">
+                <span class="ab-value-name">{v.name}</span>
+              </button>
+              <p class="ab-value-desc">{v.desc}</p>
             </li>
           ))
         }
@@ -116,28 +149,11 @@ const values = [
     </div>
   </section>
 
-  <!-- ============ STUDIO — asymmetric split ============ -->
+  <!-- ============ STUDIO — image ============ -->
   <section class="ab-studio">
-    <div class="ab-studio-split">
-      <div data-reveal="media">
-        <Placeholder
-          name="about-02.jpg"
-          ratio="4x3"
-          demo={u('1556911220-bff31c812dba')}
-          alt="The KAMU workshop"
-          parallax
-        />
-      </div>
-      <div class="ab-studio-dropped" data-reveal="media" data-reveal-delay="0.15">
-        <Placeholder
-          name="about-03.jpg"
-          ratio="3x4"
-          demo={u('1493809842364-78817add7ffb', 1200)}
-          alt="Material studies"
-          parallax
-        />
-      </div>
-    </div>
+    <figure class="ab-studio-image" data-reveal="media">
+      <img src="/assets/home/cta-interior.jpg" alt="Warm interior detail by KAMU Concepts" loading="lazy" />
+    </figure>
     <div class="grid-12 ab-studio-foot">
       <p class="quote ab-studio-quote" data-reveal="line">
         From statement furniture to curated home pieces, every collection is
@@ -146,7 +162,37 @@ const values = [
     </div>
   </section>
 
-  <CTA />
+  <script is:inline>
+    document.querySelectorAll('.ab-value-toggle').forEach((button) => {
+      button.addEventListener('click', () => {
+        const item = button.closest('.ab-value');
+        const isOpen = item?.classList.toggle('is-open') ?? false;
+        button.setAttribute('aria-expanded', String(isOpen));
+      });
+    });
+
+    const vmSteps = document.querySelectorAll('[data-vm-step]');
+    const vmCards = document.querySelectorAll('[data-vm-card]');
+
+    if (vmSteps.length && vmCards.length && 'IntersectionObserver' in window) {
+      const setActiveCard = (id) => {
+        vmCards.forEach((card) => {
+          card.classList.toggle('is-active', card.getAttribute('data-vm-card') === id);
+        });
+      };
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) setActiveCard(entry.target.getAttribute('data-vm-step'));
+          });
+        },
+        { rootMargin: '-35% 0px -45% 0px' },
+      );
+
+      vmSteps.forEach((step) => observer.observe(step));
+    }
+  </script>
 </Base>
 
 <style>
@@ -200,14 +246,14 @@ const values = [
   }
 
   .ab-values-title {
-    font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: var(--fs-h2);
-    line-height: var(--lh-snug);
-    letter-spacing: var(--ls-snug);
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(1.375rem, 2.4vw, 2rem);
+    line-height: var(--lh-body);
+    letter-spacing: 0;
     color: var(--c-bone);
     margin-bottom: var(--space-xl);
-    max-width: 22ch;
+    max-width: 26ch;
   }
 
   /* Each value is a full-width row: index + name, generous breathing
@@ -218,7 +264,7 @@ const values = [
 
   .ab-value {
     display: grid;
-    grid-template-columns: 4rem 1fr;
+    grid-template-columns: 4rem minmax(0, 1fr);
     align-items: baseline;
     gap: clamp(1.5rem, 4vw, 4rem);
     padding-block: clamp(1.75rem, 3.5vw, 3rem);
@@ -233,6 +279,17 @@ const values = [
     color: var(--accent-soft);
   }
 
+  .ab-value-toggle {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    cursor: default;
+  }
+
   .ab-value-name {
     font-family: var(--font-sans);
     font-weight: 500;
@@ -243,32 +300,86 @@ const values = [
     text-wrap: balance;
   }
 
+  .ab-value-toggle:focus-visible {
+    outline: 1px solid color-mix(in srgb, var(--c-bone) 60%, transparent);
+    outline-offset: 0.35rem;
+  }
+
+  .ab-value-desc {
+    grid-column: 2;
+    max-width: 38rem;
+    margin-top: var(--space-s);
+    color: color-mix(in srgb, var(--c-bone) 70%, transparent);
+    display: none;
+    opacity: 0;
+    transform: translateY(0.4rem);
+    transition:
+      opacity var(--dur-base) var(--ease-out),
+      transform var(--dur-base) var(--ease-out);
+  }
+
+  .ab-value.is-open .ab-value-desc {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   @media (max-width: 40rem) {
     .ab-value {
       grid-template-columns: 2.5rem 1fr;
       gap: var(--space-s);
     }
+
+    .ab-value-desc {
+      grid-column: 2;
+    }
   }
 
   /* ================= VISION / MISSION ================= */
   .ab-vm {
-    padding-block: var(--space-xl) var(--space-2xl);
     background: var(--bg);
+    padding: 0 var(--gutter) var(--space-2xl);
   }
 
-  .ab-vm-row {
+  .ab-vm-story {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    min-height: clamp(32rem, 58vw, 44rem);
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: start;
+    min-height: 140vh;
+    background: color-mix(in srgb, var(--bg) 86%, white);
   }
 
-  .ab-vm-media {
-    min-height: inherit;
+  .ab-vm-stack {
+    position: sticky;
+    top: 12vh;
+    min-height: 76vh;
+    display: grid;
+    place-items: center;
+  }
+
+  .ab-vm-card {
+    grid-area: 1 / 1;
+    width: min(100%, 44rem);
+    height: min(76vh, 46rem);
     margin: 0;
     overflow: hidden;
+    background: var(--bg);
+    opacity: 0;
+    transform: translateY(2rem) scale(0.96);
+    transition:
+      opacity 700ms var(--ease-out),
+      transform 700ms var(--ease-out);
   }
 
-  .ab-vm-media img {
+  .ab-vm-card.is-active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    z-index: 1;
+    box-shadow: 0 2rem 5rem rgb(0 0 0 / 0.12);
+  }
+
+  .ab-vm-card img {
     width: 100%;
     height: 100%;
     display: block;
@@ -276,61 +387,86 @@ const values = [
   }
 
   .ab-vm-copy {
-    min-height: inherit;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: clamp(3rem, 6vw, 6rem) var(--gutter);
+    padding: clamp(4rem, 10vw, 10rem) clamp(2rem, 5vw, 5rem);
+  }
+
+  .ab-vm-step {
+    min-height: 76vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-s);
   }
 
   .ab-vm-label {
     color: var(--ink-soft);
   }
 
-  .ab-vm-text {
+  .ab-vm-title {
+    max-width: 36rem;
+    margin: 0 0 var(--space-s);
+    font-family: var(--font-serif);
+    font-size: clamp(1.65rem, 2.6vw, 3rem);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+
+  .ab-vm-copy p {
     max-width: 32rem;
+    color: var(--ink-soft);
+  }
+
+  .ab-vm-copy blockquote {
+    max-width: 25rem;
+    margin: var(--space-m) 0 0;
+    padding-left: var(--space-s);
+    border-left: 1px solid var(--accent);
     color: var(--ink);
-    font-family: var(--font-sans);
-    font-size: clamp(1.35rem, 2.4vw, 2rem);
-    font-weight: 650;
-    line-height: 1.14;
-    letter-spacing: -0.03em;
-    text-wrap: balance;
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 2.4vw, 2.4rem);
+    font-style: italic;
+    line-height: 1.12;
   }
 
   @media (max-width: 56rem) {
-    .ab-vm {
-      padding-block: var(--space-l) var(--space-xl);
-    }
-
-    .ab-vm-row {
+    .ab-vm-story {
       grid-template-columns: 1fr;
       min-height: auto;
     }
 
-    .ab-vm-row-reverse .ab-vm-media {
-      order: -1;
-    }
-
-    .ab-vm-media {
+    .ab-vm-stack {
+      position: relative;
+      top: auto;
       min-height: 60vh;
     }
 
+    .ab-vm-card {
+      height: 58vh;
+    }
+
     .ab-vm-copy {
-      min-height: 24rem;
-      gap: var(--space-xl);
+      padding: var(--space-l);
     }
   }
 
   /* ================= STUDIO ================= */
-  .ab-studio-split {
-    display: grid;
-    grid-template-columns: 58fr 42fr;
-    gap: 0.25rem;
+  .ab-studio {
+    padding-top: clamp(4rem, 10vw, 8rem);
   }
 
-  .ab-studio-dropped {
-    margin-top: clamp(4rem, 12vh, 9rem);
+  .ab-studio-image {
+    height: 100svh;
+    overflow: hidden;
+  }
+
+  .ab-studio-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
   }
 
   .ab-studio-foot {
@@ -355,15 +491,8 @@ const values = [
   }
 
   @media (max-width: 56rem) {
-    .ab-studio-split {
-      grid-template-columns: 1fr;
-      gap: var(--space-l);
-    }
-
-    .ab-studio-dropped {
-      margin-top: 0;
-      width: 80%;
-      margin-left: auto;
+    .ab-studio-image {
+      height: 100svh;
     }
 
     .ab-studio-quote,
@@ -372,3 +501,5 @@ const values = [
     }
   }
 </style>
+
+
