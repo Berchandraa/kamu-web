@@ -63,12 +63,12 @@ const filters = [
         >
           <div class="media frame-4x3 pj-media">
             <img src={p.gallery[1] ?? p.demo} alt={p.name} loading="lazy" />
-          </div>
-          <div class="pj-cap">
-            <h2 class="pj-name">{p.name}</h2>
-            <p class="caption pj-loc duo">
-              <span>{p.location}</span><span class="duo-sub">{p.type}</span>
-            </p>
+            <div class="pj-hover-content">
+              <h2 class="pj-name">{p.name}</h2>
+              <p class="caption pj-loc duo">
+                <span>{p.location}</span><span class="duo-sub">{p.type}</span>
+              </p>
+            </div>
           </div>
         </a>
       ))
@@ -184,7 +184,8 @@ const filters = [
     content: '';
     position: absolute;
     inset: 0;
-    background: rgb(0 0 0 / 0.42);
+    z-index: 1;
+    background: rgb(0 0 0 / 0.65);
     opacity: 0;
     pointer-events: none;
     transition: opacity var(--dur-base) var(--ease-out);
@@ -208,24 +209,41 @@ const filters = [
     opacity: 1;
   }
 
-  /* ----- minimal caption: name + location ----- */
-  .pj-cap {
+  /* ----- hover content ----- */
+  .pj-hover-content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-s);
-    padding: 0.85rem 0.1rem var(--space-m);
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-xs);
+    padding: var(--space-m);
+    padding-bottom: var(--space-l);
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+    pointer-events: none;
+  }
+
+  .pj-card:hover .pj-hover-content,
+  .pj-card:focus-visible .pj-hover-content {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .pj-name {
     font-family: var(--font-sans);
     font-weight: 500;
-    font-size: clamp(0.95rem, 1.4vw, 1.125rem);
-    letter-spacing: 0.01em;
+    font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+    letter-spacing: 0.02em;
+    color: var(--c-bone);
   }
 
   .pj-loc {
-    color: var(--ink-soft);
+    color: color-mix(in srgb, var(--c-bone) 85%, transparent);
     white-space: nowrap;
   }
 
