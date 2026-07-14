@@ -23,6 +23,7 @@ export interface Project {
   scope: string;
   file: string;
   demo: string;
+  logo?: string;
   intro: string;
   body: string;
   /** mid-gallery editorial block */
@@ -96,7 +97,8 @@ export const projects: Project[] = [
     type: 'Residential',
     scope: 'Full Interior',
     file: 'project-01.jpg',
-    demo: yuccaVillasStudio[0],
+    demo: yuccaVillasStudio[1],
+    logo: local('yucca-villas-studio/logo-yucca-villa.png'),
     intro:
       'A boutique hotel above Bingin beach, designed around one idea: arrival should feel like an exhale. Eighteen rooms, a restaurant and a sunset bar — all built from a quiet palette of teak, limestone plaster and hand-woven fibre.',
     body: 'We kept the architecture honest and let the materials do the talking. Local makers produced every piece of loose furniture; the lighting is warm and low, the layouts open to the sea breeze. Nothing decorative, nothing loud — just calm, tactile rooms that age well.',

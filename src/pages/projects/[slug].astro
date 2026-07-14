@@ -44,6 +44,9 @@ const { project: p, next } = Astro.props;
     <p class="label intro-label" data-reveal>Concept</p>
     <p class="sub intro-lead" data-reveal="line">{p.intro}</p>
     <p class="intro-body" data-reveal data-reveal-delay="0.15">{p.body}</p>
+    {p.logo && (
+      <img class="intro-logo" src={p.logo} alt={`${p.name} logo`} loading="lazy" data-reveal />
+    )}
   </section>
 
   <!-- ============ META ROW ============ -->
@@ -204,6 +207,16 @@ const { project: p, next } = Astro.props;
     color: var(--ink-soft);
   }
 
+  .intro-logo {
+    grid-column: 9 / 12;
+    grid-row: 2 / 4;
+    align-self: start;
+    justify-self: center;
+    width: min(10.5rem, 100%);
+    margin-top: clamp(1.5rem, 3vw, 2.75rem);
+    opacity: 0.9;
+  }
+
   @media (max-width: 56rem) {
     .intro-label,
     .intro-lead {
@@ -212,6 +225,13 @@ const { project: p, next } = Astro.props;
 
     .intro-body {
       grid-column: 2 / -1;
+    }
+
+    .intro-logo {
+      grid-column: 2 / -1;
+      grid-row: auto;
+      justify-self: start;
+      width: 11rem;
     }
   }
 
