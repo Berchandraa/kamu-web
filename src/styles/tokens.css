@@ -17,8 +17,8 @@
   --c-sand: #d2b9a2;
 
   /* Semantic roles (colour weighting, PDF p.18) */
-  --bg: var(--c-bone);          /* lightest — creates space */
-  --bg-alt: #efeeea;            /* bone lifted ~3% for subtle banding */
+  --bg: #e0e0e0;                /* Yodezeen-style warm grey base */
+  --bg-alt: #f2f0f0;            /* lighter banding for section contrast */
   --ink: var(--c-black);        /* structural anchor */
   --ink-soft: var(--c-taupe);   /* grounding neutral, supporting text */
   --accent: var(--c-terracotta);/* signature accent — use sparingly */
