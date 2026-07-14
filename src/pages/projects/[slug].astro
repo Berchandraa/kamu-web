@@ -23,7 +23,7 @@ const { project: p, next } = Astro.props;
 <Base title={p.name} description={`${p.name} â€” ${p.meta}. ${p.intro}`}>
   <!-- ============ HERO â€” full-bleed, caption bottom-left ============ -->
   <section class="hero" data-nav-invert>
-    <div class="hero-media" data-parallax>
+    <div class="hero-media">
       <img
         src={p.demo}
         alt={p.name}
@@ -142,6 +142,7 @@ const { project: p, next } = Astro.props;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
   }
 
   .hero-scrim {
@@ -174,6 +175,8 @@ const { project: p, next } = Astro.props;
   }
 
   .hero-name {
+    max-width: calc(100vw - (var(--gutter) * 2));
+    overflow-wrap: break-word;
     text-transform: uppercase;
   }
 
