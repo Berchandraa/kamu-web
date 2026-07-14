@@ -35,12 +35,6 @@ const demo =
     </div>
 
     <div class="ct-main">
-      <aside class="ct-note" data-reveal data-reveal-delay="0.2">
-        <p class="label">Project Enquiry</p>
-        <p>For new interiors, collaborations, or bespoke furniture, use Let's Talk.</p>
-        <a href="/lets-talk/" class="ct-note-link">Start a project</a>
-      </aside>
-
       <div class="ct-rows" data-reveal data-reveal-delay="0.15">
         <p class="label ct-section-label">Studio Contact</p>
         <div class="ct-row">
@@ -75,6 +69,54 @@ const demo =
           </div>
         </div>
       </div>
+
+      <section class="ct-enquiry" data-reveal data-reveal-delay="0.2">
+        <div class="ct-enquiry-copy">
+          <p class="label">Project Enquiry</p>
+          <p>
+            Tell the studio what you are planning, where it is, and what kind of
+            support you need.
+          </p>
+        </div>
+
+        <form class="ct-form" action="#" method="post">
+          <div class="ct-fld">
+            <label class="label ct-fld-label" for="lt-name">
+              <span class="duo"><span class="duo-num">01</span><span>Name</span></span>
+            </label>
+            <input type="text" id="lt-name" name="name" autocomplete="name" required />
+          </div>
+
+          <div class="ct-pair">
+            <div class="ct-fld">
+              <label class="label ct-fld-label" for="lt-email">
+                <span class="duo"><span class="duo-num">02</span><span>Email</span></span>
+              </label>
+              <input type="email" id="lt-email" name="email" autocomplete="email" required />
+            </div>
+            <div class="ct-fld">
+              <label class="label ct-fld-label" for="lt-phone">
+                <span class="duo"><span class="duo-num">03</span><span>Phone</span></span>
+              </label>
+              <input type="tel" id="lt-phone" name="phone" autocomplete="tel" />
+            </div>
+          </div>
+
+          <div class="ct-fld">
+            <label class="label ct-fld-label" for="lt-message">
+              <span class="duo"><span class="duo-num">04</span><span>Project brief</span></span>
+            </label>
+            <textarea id="lt-message" name="message" rows="5" required></textarea>
+          </div>
+
+          <div class="ct-actions">
+            <button type="submit" class="ct-send">Send Enquiry</button>
+            <p class="caption ct-privacy">
+              The form is visual only for this static preview.
+            </p>
+          </div>
+        </form>
+      </section>
     </div>
   </section>
 </Base>
@@ -97,40 +139,8 @@ const demo =
     gap: var(--space-l);
   }
 
-  .ct-note {
-    padding: var(--space-l);
-    border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
-    border-radius: 1.5rem;
-  }
-
-  .ct-note p:not(.label) {
-    margin-top: var(--space-s);
-    font-family: var(--font-serif);
-    font-size: clamp(1.25rem, 2vw, 1.625rem);
-    line-height: var(--lh-body);
-  }
-
-  .ct-note-link {
-    display: inline-flex;
-    margin-top: var(--space-m);
-    font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: var(--fs-label);
-    letter-spacing: var(--ls-label);
-    text-transform: uppercase;
-    padding: 1.2em 3.2em;
-    background: var(--ink);
-    color: var(--c-bone);
-    border-radius: 999px;
-    transition: background-color var(--dur-base) var(--ease-out);
-  }
-
-  .ct-note-link:hover {
-    background: var(--accent);
-  }
-
   .ct-rows {
-    margin-top: var(--space-m);
+    margin-top: 0;
   }
 
   .ct-section-label {
@@ -179,6 +189,87 @@ const demo =
     align-items: center;
   }
 
+  .ct-enquiry {
+    margin-top: var(--space-m);
+    padding: var(--space-l);
+    border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+    border-radius: 1.5rem;
+  }
+
+  .ct-enquiry-copy p:not(.label) {
+    margin-top: var(--space-s);
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 2vw, 1.625rem);
+    line-height: var(--lh-body);
+  }
+
+  .ct-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
+    margin-top: var(--space-l);
+  }
+
+  .ct-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-l);
+  }
+
+  .ct-fld {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 28%, transparent);
+  }
+
+  .ct-fld-label {
+    color: var(--ink-soft);
+  }
+
+  .ct-fld input,
+  .ct-fld textarea {
+    background: none;
+    border: none;
+    outline: none;
+    border-radius: 0;
+    padding: 0 0 0.875rem;
+    font-family: var(--font-serif);
+    font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+    color: var(--ink);
+    resize: vertical;
+  }
+
+  .ct-actions {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-s);
+    flex-wrap: wrap;
+  }
+
+  .ct-send {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: var(--fs-label);
+    letter-spacing: var(--ls-label);
+    text-transform: uppercase;
+    padding: 1.2em 3.2em;
+    background: var(--ink);
+    color: var(--c-bone);
+    border-radius: 999px;
+    transition: background-color var(--dur-base) var(--ease-out);
+  }
+
+  .ct-send:hover {
+    background: var(--accent);
+  }
+
+  .ct-privacy {
+    max-width: 16rem;
+    text-align: right;
+  }
+
   @media (max-width: 56rem) {
     .ct-side,
     .ct-main {
@@ -187,6 +278,16 @@ const demo =
 
     .ct-side {
       margin-top: 0;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .ct-pair {
+      grid-template-columns: 1fr;
+    }
+
+    .ct-privacy {
+      text-align: left;
     }
   }
 </style>

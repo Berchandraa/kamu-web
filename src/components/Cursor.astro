@@ -11,13 +11,7 @@
  */
 ---
 
-<div class="cursor" id="cursor" aria-hidden="true">
-  <svg class="cursor-mark" viewBox="0 0 135.87 144" focusable="false">
-    <path d="M133.91.03c-38.24,1.05-68.93,32.87-68.93,71.97s31.74,72,70.89,72V0C135.21,0,134.56.01,133.91.03Z" />
-    <path d="M0,72v72h70.89c0-39.76-31.74-72-70.89-72Z" />
-    <path d="M0,72C39.15,72,70.89,39.76,70.89,0H0v72Z" />
-  </svg>
-</div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
 
 <style>
   .cursor {
@@ -45,16 +39,6 @@
       opacity 0.3s var(--ease-out);
   }
 
-  .cursor-mark {
-    width: 52%;
-    height: 52%;
-    fill: var(--c-bone);
-    opacity: 0.82;
-    transition:
-      opacity var(--dur-fast) var(--ease-out),
-      transform var(--dur-fast) var(--ease-out);
-  }
-
   /* Over an interactive target: grow + faint fill */
   .cursor.is-active {
     width: 52px;
@@ -63,20 +47,11 @@
     background: color-mix(in srgb, var(--c-bone) 18%, transparent);
   }
 
-  .cursor.is-active .cursor-mark {
-    opacity: 1;
-    transform: scale(0.92);
-  }
-
   /* Pressed: a small confident contraction */
   .cursor.is-down {
     width: 22px;
     height: 22px;
     margin: -11px 0 0 -11px;
-  }
-
-  .cursor.is-down .cursor-mark {
-    opacity: 0;
   }
 
   /* Only ever shown on fine-pointer desktops with motion allowed */

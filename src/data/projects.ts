@@ -30,7 +30,7 @@ export interface Project {
   story: [string, string];
   materials: string[];
   quote: string;
-  gallery: string[]; // 6 demo URLs, mapped to detail slots 01–06
+  gallery: string[];
 }
 
 // Shared real asset pool from kamuconcepts.com.
@@ -51,11 +51,12 @@ const pool = [
 ];
 
 const yuccaVillasStudio = [
-  local('yucca-villas-studio/01-living-pool-view.png'),
-  local('yucca-villas-studio/02-pool-deck.png'),
-  local('yucca-villas-studio/03-outdoor-dining.png'),
-  local('yucca-villas-studio/04-bedroom.png'),
-  local('yucca-villas-studio/05-bathroom.png'),
+  local('yucca-villas-studio/00-hero-logo.jpg'),
+  local('yucca-villas-studio/01-living-pool-view.jpg'),
+  local('yucca-villas-studio/02-pool-deck.jpg'),
+  local('yucca-villas-studio/03-outdoor-dining.jpg'),
+  local('yucca-villas-studio/04-bedroom.jpg'),
+  local('yucca-villas-studio/05-bathroom.jpg'),
 ];
 
 const villaKamal = [
@@ -106,7 +107,7 @@ export const projects: Project[] = [
       'Every loose piece was made within the island: tables from reclaimed teak beams, light fittings woven by hand in Tabanan, plaster mixed with local limestone. The building will patina in the salt air, and it was specified to do exactly that.',
     ],
     materials: ['Reclaimed teak', 'Limestone plaster', 'Hand-woven fibre', 'Brushed brass'],
-    gallery: galleryFor(yuccaVillasStudio),
+    gallery: yuccaVillasStudio.slice(1),
   },
   {
     n: '02',

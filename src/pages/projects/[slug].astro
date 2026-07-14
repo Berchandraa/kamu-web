@@ -1,14 +1,13 @@
----
+﻿---
 /**
- * Project Details — one route per project, generated from
+ * Project Details â€” one route per project, generated from
  * src/data/projects.ts. Bureau model: image-led, asymmetric
  * gallery rhythm, generous whitespace, slow motion.
  *
  * Swap slots: hero = project-NN.jpg (same file as the index),
- * gallery = project-NN-detail-01.jpg … -06.jpg.
+ * gallery = project-NN-detail-01.jpg â€¦ -06.jpg.
  */
 import Base from '../../layouts/Base.astro';
-import Placeholder from '../../components/Placeholder.astro';
 import { projects } from '../../data/projects';
 
 export function getStaticPaths() {
@@ -19,11 +18,10 @@ export function getStaticPaths() {
 }
 
 const { project: p, next } = Astro.props;
-const detail = (i: number) => `${p.file.replace('.jpg', '')}-detail-0${i}.jpg`;
 ---
 
-<Base title={p.name} description={`${p.name} — ${p.meta}. ${p.intro}`}>
-  <!-- ============ HERO — full-bleed, caption bottom-left ============ -->
+<Base title={p.name} description={`${p.name} â€” ${p.meta}. ${p.intro}`}>
+  <!-- ============ HERO â€” full-bleed, caption bottom-left ============ -->
   <section class="hero" data-nav-invert>
     <div class="hero-media" data-parallax>
       <img
@@ -41,7 +39,7 @@ const detail = (i: number) => `${p.file.replace('.jpg', '')}-detail-0${i}.jpg`;
     </div>
   </section>
 
-  <!-- ============ INTRO — concept, materials, approach ============ -->
+  <!-- ============ INTRO â€” concept, materials, approach ============ -->
   <section class="intro grid-12">
     <p class="label intro-label" data-reveal>Concept</p>
     <p class="sub intro-lead" data-reveal="line">{p.intro}</p>
@@ -68,22 +66,13 @@ const detail = (i: number) => `${p.file.replace('.jpg', '')}-detail-0${i}.jpg`;
     </div>
   </section>
 
-  <!-- ============ GALLERY — Bureau rhythm ============ -->
+  <!-- ============ GALLERY â€” Bureau rhythm ============ -->
   <section class="gallery">
-    <!-- G1: full bleed -->
-    <div class="g-full" data-reveal="media">
-      <Placeholder name={detail(1)} ratio="16x9" demo={p.gallery[0]} alt={p.name} parallax class="g-noratio" />
-    </div>
-
-    <!-- G2 | G3: split 58/42, right dropped -->
-    <div class="g-split">
-      <div data-reveal="media">
-        <Placeholder name={detail(2)} ratio="4x3" demo={p.gallery[1]} alt={p.name} parallax />
+    {p.gallery.slice(0, 2).map((image, i) => (
+      <div class="g-long" data-reveal="media">
+        <img src={image} alt={i === 0 ? p.name : `${p.name} detail`} loading="lazy" />
       </div>
-      <div class="g-dropped" data-reveal="media" data-reveal-delay="0.15">
-        <Placeholder name={detail(3)} ratio="3x4" demo={p.gallery[2]} alt={p.name} parallax />
-      </div>
-    </div>
+    ))}
 
     <!-- Editorial beat: the written middle of the gallery -->
     <div class="story grid-12">
@@ -108,20 +97,11 @@ const detail = (i: number) => `${p.file.replace('.jpg', '')}-detail-0${i}.jpg`;
       </blockquote>
     </div>
 
-    <!-- G4: wide, pushed right -->
-    <div class="g-wide" data-reveal="media">
-      <Placeholder name={detail(4)} ratio="16x9" demo={p.gallery[3]} alt={p.name} parallax />
-    </div>
-
-    <!-- G5 | G6: detail shots, reversed split, left dropped -->
-    <div class="g-split g-split-rev">
-      <div class="g-dropped" data-reveal="media">
-        <Placeholder name={detail(5)} ratio="1x1" demo={p.gallery[4]} alt={`${p.name} — detail`} parallax />
+    {p.gallery.slice(2).map((image) => (
+      <div class="g-long" data-reveal="media">
+        <img src={image} alt={`${p.name} detail`} loading="lazy" />
       </div>
-      <div data-reveal="media" data-reveal-delay="0.15">
-        <Placeholder name={detail(6)} ratio="4x3" demo={p.gallery[5]} alt={`${p.name} — detail`} parallax />
-      </div>
-    </div>
+    ))}
   </section>
 
   <!-- ============ NEXT PROJECT ============ -->
@@ -134,7 +114,7 @@ const detail = (i: number) => `${p.file.replace('.jpg', '')}-detail-0${i}.jpg`;
     <div class="next-text">
       <p class="label next-label" data-reveal>Next Project</p>
       <p class="display next-name" data-reveal="line">
-        {next.name}&nbsp;<span class="next-arrow">→</span>
+        {next.name}&nbsp;<span class="next-arrow">â†’</span>
       </p>
       <p class="label next-meta duo" data-reveal data-reveal-delay="0.15">
         <span>{next.location}</span><span class="duo-sub">{next.type}</span>
@@ -249,6 +229,7 @@ const detail = (i: number) => `${p.file.replace('.jpg', '')}-detail-0${i}.jpg`;
 
   .meta-key {
     color: var(--ink-soft);
+    letter-spacing: 0.02em;
     margin-bottom: 0.625rem;
   }
 
@@ -266,29 +247,23 @@ const detail = (i: number) => `${p.file.replace('.jpg', '')}-detail-0${i}.jpg`;
   }
 
   /* ================= GALLERY ================= */
-  .g-full {
+  .gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .g-long {
     width: 100%;
+    overflow: hidden;
+    background: var(--bg-alt);
   }
 
-  /* full-bleed slot: let the frame stretch viewport-tall on large screens */
-  .g-full :global(.media) {
-    max-height: 92svh;
-  }
-
-  .g-split {
-    display: grid;
-    grid-template-columns: 58fr 42fr;
-    gap: 0.25rem;
-    margin-top: 0.25rem;
-  }
-
-  .g-split-rev {
-    grid-template-columns: 42fr 58fr;
-    margin-top: var(--space-xl);
-  }
-
-  .g-dropped {
-    margin-top: clamp(4rem, 12vh, 9rem);
+  .g-long img {
+    display: block;
+    width: 100%;
+    height: min(92svh, 56rem);
+    object-fit: cover;
   }
 
   /* ----- the written middle ----- */
@@ -359,45 +334,10 @@ const detail = (i: number) => `${p.file.replace('.jpg', '')}-detail-0${i}.jpg`;
     }
   }
 
-  .g-wide {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-  }
-
-  .g-wide > :global(.media) {
-    grid-column: 5 / 13;
-  }
-
-  /* if no quote precedes it, keep breathing room */
-  .g-split + .g-wide {
-    margin-top: var(--space-xl);
-  }
-
   @media (max-width: 56rem) {
-    .g-split,
-    .g-split-rev {
-      grid-template-columns: 1fr;
-      gap: var(--space-l);
-      margin-top: var(--space-l);
-    }
-
-    .g-dropped {
-      margin-top: 0;
-      width: 80%;
-      margin-left: auto;
-    }
-
-    .g-split-rev .g-dropped {
-      margin-left: 0;
-      margin-right: auto;
-    }
-
-    .g-quote .quote {
-      grid-column: 1 / -1;
-    }
-
-    .g-wide {
-      display: block;
+    .g-long img {
+      height: auto;
+      min-height: 60svh;
     }
   }
 

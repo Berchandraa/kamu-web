@@ -61,7 +61,7 @@ const filters = [
           data-type={p.type.toLowerCase()}
           data-reveal="media"
         >
-          <div class="media frame-4x3 pj-media">
+          <div class="media frame-2x3 pj-media">
             <img src={p.gallery[1] ?? p.demo} alt={p.name} loading="lazy" />
             <div class="pj-hover-content">
               <h2 class="pj-name">{p.name}</h2>
@@ -177,7 +177,13 @@ const filters = [
     position: relative;
     background: var(--bg-alt);
     overflow: hidden;
+    border-radius: 0;
     transition: border-radius var(--dur-base) var(--ease-out);
+  }
+
+  .pj-card:hover .pj-media,
+  .pj-card:focus-visible .pj-media {
+    border-radius: 999px 999px 0 0;
   }
 
   .pj-media::after {
@@ -193,11 +199,6 @@ const filters = [
 
   .pj-media img {
     transition: transform var(--dur-slow) var(--ease-out);
-  }
-
-  .pj-card:hover .pj-media,
-  .pj-card:focus-visible .pj-media {
-    border-radius: 999px 999px 0 0;
   }
 
   .pj-card:hover .pj-media img {
