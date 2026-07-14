@@ -39,6 +39,7 @@ const yuccaVillasStudio = [
   local('yucca-villas-studio/03-outdoor-dining.jpg'),
   local('yucca-villas-studio/04-bedroom.jpg'),
   local('yucca-villas-studio/05-bathroom.jpg'),
+  local('yucca-villas-studio/06-bathroom.jpg'),
 ];
 
 const villaKamal = [
