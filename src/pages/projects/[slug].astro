@@ -117,7 +117,10 @@ const { project: p, next } = Astro.props;
     <div class="next-text">
       <p class="label next-label" data-reveal>Next Project</p>
       <p class="display next-name" data-reveal="line">
-        {next.name}&nbsp;<span class="next-arrow">â†’</span>
+        {next.name}
+        <svg class="next-arrow" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 12h13m-5-5 5 5-5 5" />
+        </svg>
       </p>
       <p class="label next-meta duo" data-reveal data-reveal-delay="0.15">
         <span>{next.location}</span><span class="duo-sub">{next.type}</span>
@@ -414,6 +417,16 @@ const { project: p, next } = Astro.props;
 
   .next-arrow {
     display: inline-block;
+    width: 0.72em !important;
+    height: 0.72em !important;
+    max-width: none;
+    vertical-align: middle;
+    margin-left: 0.18em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
     transition: transform var(--dur-base) var(--ease-out);
   }
 
