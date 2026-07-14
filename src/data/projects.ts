@@ -4,7 +4,6 @@
  * Text stays from the Railway demo. Images use live KAMU Concepts assets.
  */
 
-const k = (id: string) => `https://static.wixstatic.com/media/${id}`;
 const local = (path: string) => `/assets/projects/${path}`;
 
 export interface GalleryShot {
@@ -34,25 +33,7 @@ export interface Project {
   gallery: string[];
 }
 
-// Shared real asset pool from kamuconcepts.com.
-const pool = [
-  k('e92c2b_6ffafe8eceac48188ee806ed589a2c1c~mv2.jpg'),
-  k('e92c2b_aaf4c027b96049db95689eb6276d73ea~mv2.jpg'),
-  k('e92c2b_c322971dd9314b0f8e697dcfde961ad0~mv2.jpg'),
-  k('e92c2b_0dd3fe348a3940e6bfd160afb5a33a4e~mv2.jpg'),
-  k('e92c2b_4058e21f91bb4e44b11a0f5ecf6b89c2~mv2.jpg'),
-  k('e92c2b_77ae12fe528a474cb908c605e78cc930~mv2.jpg'),
-  k('e92c2b_5a0b09562d72477f8cbd379956132426~mv2.jpg'),
-  k('e92c2b_9abe6224de5b4d78aabc7648c968cf6c~mv2.jpg'),
-  k('e92c2b_910bb3824a6f4daab7787dfff2e62dc8~mv2.jpg'),
-  k('e92c2b_01b12db1eb9d42b392b173ff3a65e84d~mv2.jpg'),
-  k('e92c2b_b3019e5960be40e9b1ffbe9589ec9e96~mv2.jpg'),
-  k('e92c2b_1d986e1f70c547ecaee9953bf6b2786a~mv2.jpg'),
-  k('e92c2b_b0019a4cd10545caa138a62efa96be21~mv2.jpg'),
-];
-
 const yuccaVillasStudio = [
-  local('yucca-villas-studio/00-hero-logo.jpg'),
   local('yucca-villas-studio/01-living-pool-view.jpg'),
   local('yucca-villas-studio/02-pool-deck.jpg'),
   local('yucca-villas-studio/03-outdoor-dining.jpg'),
@@ -61,30 +42,66 @@ const yuccaVillasStudio = [
 ];
 
 const villaKamal = [
-  local('villa-kamal/01-exterior-pool.png'),
-  local('villa-kamal/02-pool-courtyard.png'),
-  local('villa-kamal/03-bedroom-pool-view.png'),
-  local('villa-kamal/04-living-room.png'),
-  local('villa-kamal/05-lounge-chairs.png'),
+  local('villa-kamal/thumbnail.jpg'),
+  local('villa-kamal/01.jpg'),
+  local('villa-kamal/02.jpg'),
+  local('villa-kamal/03.jpg'),
+  local('villa-kamal/04.jpg'),
+];
+
+const villaLamer = [
+  local('villa-lamer/thumbnail.jpg'),
+  local('villa-lamer/01.jpg'),
+  local('villa-lamer/02.jpg'),
+  local('villa-lamer/03.jpg'),
 ];
 
 const villaBocce = [
-  local('villa-bocce/01-pool-loungers.png'),
-  local('villa-bocce/02-open-living-dining.png'),
-  local('villa-bocce/03-kitchen-dining.png'),
-  local('villa-bocce/04-lounge-dining.png'),
+  local('villa-bocce/thumbnail.jpg'),
+  local('villa-bocce/01.jpg'),
+  local('villa-bocce/02.jpg'),
+  local('villa-bocce/03.jpg'),
+];
+
+const camayaBali = [
+  local('camaya-bali/thumbnail.jpg'),
+  local('camaya-bali/01.jpg'),
+  local('camaya-bali/02.jpg'),
+  local('camaya-bali/03.jpg'),
+  local('camaya-bali/04.jpg'),
+  local('camaya-bali/05.jpg'),
+  local('camaya-bali/06.jpg'),
+  local('camaya-bali/07.jpg'),
+  local('camaya-bali/08.jpg'),
+  local('camaya-bali/09.jpg'),
+  local('camaya-bali/10.jpg'),
+];
+
+const mahiMahi = [
+  local('mahi-mahi/thumbnail.jpg'),
+  local('mahi-mahi/01.jpg'),
+  local('mahi-mahi/02.jpg'),
+  local('mahi-mahi/03.jpg'),
+  local('mahi-mahi/04.jpg'),
+];
+
+const noRushVilla = [
+  local('no-rush-villa/thumbnail.jpg'),
+  local('no-rush-villa/01.jpg'),
+  local('no-rush-villa/02.jpg'),
+  local('no-rush-villa/03.jpg'),
+  local('no-rush-villa/04.jpg'),
+  local('no-rush-villa/05.jpg'),
 ];
 
 const laviSavi = [
-  local('lavi-savi/01-shot-02.jpg'),
-  local('lavi-savi/02-shot-03.jpg'),
-  local('lavi-savi/03-shot-04.jpg'),
-  local('lavi-savi/04-shot-05.jpg'),
-  local('lavi-savi/05-shot-08.jpg'),
-  local('lavi-savi/06-shot-09.jpg'),
+  local('lavi-savi/thumbnail.jpg'),
+  local('lavi-savi/01.jpg'),
+  local('lavi-savi/02.jpg'),
+  local('lavi-savi/03.jpg'),
+  local('lavi-savi/04.jpg'),
+  local('lavi-savi/05.jpg'),
 ];
-
-const galleryFor = (images: string[]) => Array.from({ length: 6 }, (_, i) => images[i % images.length]);
 
 export const projects: Project[] = [
   {
@@ -97,7 +114,7 @@ export const projects: Project[] = [
     type: 'Residential',
     scope: 'Full Interior',
     file: 'project-01.jpg',
-    demo: yuccaVillasStudio[1],
+    demo: yuccaVillasStudio[0],
     logo: local('yucca-villas-studio/logo-yucca-villa.png'),
     intro:
       'A boutique hotel above Bingin beach, designed around one idea: arrival should feel like an exhale. Eighteen rooms, a restaurant and a sunset bar — all built from a quiet palette of teak, limestone plaster and hand-woven fibre.',
@@ -109,7 +126,7 @@ export const projects: Project[] = [
       'Every loose piece was made within the island: tables from reclaimed teak beams, light fittings woven by hand in Tabanan, plaster mixed with local limestone. The building will patina in the salt air, and it was specified to do exactly that.',
     ],
     materials: ['Reclaimed teak', 'Limestone plaster', 'Hand-woven fibre', 'Brushed brass'],
-    gallery: yuccaVillasStudio.slice(1),
+    gallery: yuccaVillasStudio,
   },
   {
     n: '02',
@@ -122,6 +139,7 @@ export const projects: Project[] = [
     scope: 'Full Interior',
     file: 'project-02.jpg',
     demo: villaKamal[0],
+    logo: local('villa-kamal/logo.png'),
     intro:
       'A clifftop family villa where earth tones meet the horizon. Rammed-earth textures, rattan and warm timber ground the house against the ocean light.',
     body: 'The interior follows the sun — morning rooms face east over the garden, living spaces open west to the sea. Every built-in was drawn by the studio and made within twenty kilometres of the site.',
@@ -132,7 +150,7 @@ export const projects: Project[] = [
     ],
     materials: ['Rammed earth', 'Rattan', 'Warm teak', 'Basalt stone'],
     quote: 'A clifftop house should hold you, not perform for you.',
-    gallery: galleryFor(villaKamal),
+    gallery: villaKamal.slice(1),
   },
   {
     n: '03',
@@ -144,7 +162,8 @@ export const projects: Project[] = [
     type: 'Residential',
     scope: 'Concept & FF&E',
     file: 'project-05.jpg',
-    demo: pool[10],
+    demo: villaLamer[0],
+    logo: local('villa-lamer/logo.png'),
     intro:
       'A renovation of a 90s villa into a slow, light-filled home. We stripped it back to structure and rebuilt the atmosphere with plaster, linen and pale teak.',
     body: 'The clients asked for fewer things, better made. The result is a house with almost nothing in it — and everything it needs.',
@@ -155,7 +174,7 @@ export const projects: Project[] = [
     ],
     materials: ['Lime plaster', 'Pale teak', 'Linen', 'Terrazzo'],
     quote: 'Fewer things, better made.',
-    gallery: galleryFor([pool[10], pool[0], pool[5], pool[6], pool[12], pool[3]]),
+    gallery: villaLamer.slice(1),
   },
   {
     n: '04',
@@ -168,6 +187,7 @@ export const projects: Project[] = [
     scope: 'Full Interior',
     file: 'project-06.jpg',
     demo: villaBocce[0],
+    logo: local('villa-bocce/logo.png'),
     intro:
       'A guesthouse in the back streets of Seminyak, designed for long stays. Muted green, bone and terracotta — the brand palette, lived in.',
     body: 'Rooms are small but never tight: high ceilings, soft light, one good chair. The shared kitchen is the heart of the house.',
@@ -178,76 +198,79 @@ export const projects: Project[] = [
     ],
     materials: ['Mist green limewash', 'Terracotta tile', 'Bone linen', 'Teak'],
     quote: 'Generosity is a section drawing, not a square-metre count.',
-    gallery: galleryFor(villaBocce),
+    gallery: villaBocce.slice(1),
   },
   {
     n: '05',
-    slug: 'casa-loka',
-    name: 'Casa Loka',
-    meta: 'Canggu, Bali · Residential',
-    location: 'Canggu, Bali',
-    year: '2023',
-    type: 'Residential',
-    scope: 'Full Interior',
-    file: 'project-03.jpg',
-    demo: pool[7],
+    slug: 'camaya-bali',
+    name: 'Camaya Bali',
+    meta: 'Bali - Hospitality',
+    location: 'Bali',
+    year: '2024',
+    type: 'Hospitality',
+    scope: 'Interior Styling & FF&E',
+    file: 'project-05.jpg',
+    demo: camayaBali[0],
+    logo: local('camaya-bali/logo.png'),
     intro:
-      'A dark, grounded townhouse for a couple who work from home. Deep mist green, smoked oak and black steel — calm with weight.',
-    body: 'Daylight is managed, not maximised: deep reveals, sheer linen, pools of warm lamplight. A house for thinking.',
-    storyTitle: 'Daylight, managed',
+      'A quiet hillside retreat shaped around open air, soft timber and views that do most of the talking. Camaya Bali is designed to feel private without feeling closed.',
+    body: 'The styling keeps the rooms light and tactile: woven details, warm wood, natural linen and small moments of shadow. Every piece is placed to frame the landscape, not compete with it.',
+    storyTitle: 'A retreat shaped by the view',
     story: [
-      'Most tropical houses chase brightness. This one curates it. Deep window reveals, sheer linen layers and dark surfaces let the couple work at screens all day without glare, then read by lamplight pools at night.',
-      "Smoked oak and black steel carry the weight; deep mist green softens it. It is the studio's darkest interior to date and the one most often asked about — proof that calm and dim are not the same thing as gloomy.",
+      'The experience begins with distance from the noise. Furniture sits low, sightlines stay open, and the palette is kept warm enough to make the surrounding green feel even deeper.',
+      'Details are intentionally restrained: woven fibre for texture, timber for warmth, and simple linen layers to soften the light. The project works because nothing tries to outshine the site.',
     ],
-    materials: ['Smoked oak', 'Black steel', 'Deep mist green', 'Wool bouclé'],
-    quote: 'A house for thinking needs shadows to think in.',
-    gallery: galleryFor([pool[7], pool[0], pool[4], pool[12], pool[6], pool[5]]),
+    materials: ['Warm timber', 'Woven fibre', 'Natural linen', 'Handmade ceramics'],
+    quote: 'The view is the main material.',
+    gallery: camayaBali.slice(1),
   },
   {
     n: '06',
-    slug: 'studio-residence',
-    name: 'Studio Residence',
-    meta: 'Seminyak, Bali · Workspace',
-    location: 'Seminyak, Bali',
-    year: '2023',
-    type: 'Workspace',
-    scope: 'Concept & FF&E',
-    file: 'project-04.jpg',
-    demo: pool[8],
+    slug: 'mahi-mahi',
+    name: 'Mahi Mahi',
+    meta: 'Bali - Hospitality',
+    location: 'Bali',
+    year: '2024',
+    type: 'Hospitality',
+    scope: 'Interior Styling & FF&E',
+    file: 'project-06.jpg',
+    demo: mahiMahi[0],
+    logo: local('mahi-mahi/logo.png'),
     intro:
-      'Our own studio — part workshop, part showroom, part argument for working slower. Every prototype lives here first.',
-    body: 'Material samples on every wall, one long communal table, and the first run of every "by KAMU" piece in daily use.',
-    storyTitle: 'A working argument',
+      'A relaxed tropical stay built around breezy rooms, natural surfaces and a palette that feels close to the coast. Mahi Mahi is casual, warm and easy to live in.',
+    body: 'The interior direction balances resort comfort with residential softness. Texture leads the project: timber grain, woven seating, pale fabric and daylight moving through the space.',
+    storyTitle: 'Casual comfort, carefully held',
     story: [
-      "The studio is our laboratory: every wall finish, every hinge and every chair here is a prototype being lived with before a client ever sees it. If a sample can't survive our daily use, it doesn't get specified.",
-      'One long communal table runs the length of the main room — meetings, lunch, drawing and sanding all happen on the same teak surface. The mess is part of the method; the calm is the result.',
+      'The rooms are composed to feel effortless, but the restraint is deliberate. Each setting gives guests what they need first: a place to rest, a place to gather, and enough breathing room between objects.',
+      'Materials stay honest and practical for daily hospitality use. Durable timber, woven texture and light fabrics create an atmosphere that feels calm without becoming precious.',
     ],
-    materials: ['Teak', 'Raw steel', 'Canvas', 'Paper cord'],
-    quote: 'We test everything on ourselves first.',
-    gallery: galleryFor([pool[8], pool[4], pool[0], pool[6], pool[5], pool[12]]),
+    materials: ['Timber', 'Woven rattan', 'Light linen', 'Textured plaster'],
+    quote: 'A relaxed room still needs discipline.',
+    gallery: mahiMahi.slice(1),
   },
   {
     n: '07',
-    slug: 'pererenan-loft',
-    name: 'Pererenan Loft',
-    meta: 'Pererenan, Bali · Residential',
-    location: 'Pererenan, Bali',
-    year: '2026',
+    slug: 'no-rush-villa',
+    name: 'No Rush Villa',
+    meta: 'Bali - Residential',
+    location: 'Bali',
+    year: '2025',
     type: 'Residential',
     scope: 'Full Interior',
     file: 'project-07.jpg',
-    demo: pool[9],
+    demo: noRushVilla[0],
+    logo: local('no-rush-villa/logo.png'),
     intro:
-      'A single open volume above a rice field — one room to live a whole life in. Currently on site.',
-    body: 'The palette is the view: green, bone, wet earth. Completion expected late 2026.',
-    storyTitle: 'One room, whole life',
+      'A villa designed around the feeling its name suggests: slower mornings, fewer distractions and rooms that let the day unfold gently.',
+    body: 'The palette is quiet and grounded, with soft upholstery, timber, natural fibre and warm neutral surfaces. The project avoids decorative noise in favour of calm proportion and useful comfort.',
+    storyTitle: 'A slower way through the day',
     story: [
-      'A single volume above a rice field asks one question: how little separation does a life actually need? Sleeping, cooking, working and resting share the same air, zoned by level changes and light instead of walls.',
-      'The palette is borrowed directly from the view — green, bone, wet earth. Construction is underway; the polished concrete floor was poured in the dry season and the teak frame is rising now.',
+      'No Rush Villa is arranged as a sequence of pauses. The furniture leaves room around itself, circulation stays open, and the lighting keeps every room soft rather than sharp.',
+      'Natural materials carry the atmosphere: timber for weight, woven details for tactility, and pale upholstery to keep the interiors breathable. It is simple, but not empty.',
     ],
-    materials: ['Polished concrete', 'Teak frame', 'Rattan', 'Linen'],
-    quote: 'The rice field is the largest room in the house.',
-    gallery: galleryFor([pool[9], pool[3], pool[11], pool[0], pool[5], pool[6]]),
+    materials: ['Natural timber', 'Woven fibre', 'Soft upholstery', 'Warm plaster'],
+    quote: 'The luxury is not having to hurry.',
+    gallery: noRushVilla.slice(1),
   },
   {
     n: '08',
@@ -270,6 +293,7 @@ export const projects: Project[] = [
     ],
     materials: ['Natural timber', 'Textured upholstery', 'Woven fibre', 'Warm plaster'],
     quote: 'The strongest rooms leave space for daily life to happen.',
-    gallery: galleryFor(laviSavi),
+    logo: local('lavi-savi/logo.png'),
+    gallery: laviSavi.slice(1),
   },
 ];
