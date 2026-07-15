@@ -278,7 +278,11 @@ const values = [
     display: grid;
     grid-template-columns: 4rem minmax(0, 1fr);
     align-items: baseline;
-    gap: clamp(1.5rem, 4vw, 4rem);
+    /* column-gap only — a shorthand `gap` would also add row-gap between
+       the title row and the (collapsed) description row, leaving dead space
+       below the title. Row spacing is handled by the desc's own margin. */
+    column-gap: clamp(1.5rem, 4vw, 4rem);
+    row-gap: 0;
     padding-block: clamp(1.75rem, 3.5vw, 3rem);
     border-bottom: 1px solid color-mix(in srgb, var(--c-bone) 16%, transparent);
   }
@@ -366,7 +370,8 @@ const values = [
   @media (max-width: 40rem) {
     .ab-value {
       grid-template-columns: 2.5rem 1fr;
-      gap: var(--space-s);
+      column-gap: var(--space-s);
+      row-gap: 0;
     }
 
     .ab-value-desc {
