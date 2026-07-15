@@ -127,9 +127,30 @@ const demo =
     row-gap: var(--space-xl);
   }
 
+  /* Sticky image column: the figure fills the viewport height and centres
+     the image within it, so it pins (vertically centred, clear of the
+     navbar) while the contact rows + enquiry form scroll past, unpinning
+     once .ct-main ends. Same approach as the About vm section. */
   .ct-side {
     grid-column: 1 / 6;
-    margin-top: clamp(3rem, 8vh, 6rem);
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100svh;
+    display: grid;
+    place-items: center;
+  }
+
+  .ct-side > div {
+    width: 100%;
+  }
+
+  /* Override the 3:4 aspect box with a viewport-relative height so the
+     image reads as centred and clears the nav (~11vh headroom). */
+  .ct-side :global(.media) {
+    width: 100%;
+    height: min(78vh, 42rem);
+    aspect-ratio: auto;
   }
 
   .ct-main {
@@ -276,8 +297,32 @@ const demo =
       grid-column: 1 / -1;
     }
 
+    /* Stack: image above the content, no pinning. */
     .ct-side {
+      position: static;
+      height: auto;
+      display: block;
       margin-top: 0;
+    }
+
+    .ct-side :global(.media) {
+      height: auto;
+      aspect-ratio: 3 / 4;
+    }
+  }
+
+  /* Reduced motion: no pinning — the image flows statically above/beside
+     the content. */
+  @media (prefers-reduced-motion: reduce) {
+    .ct-side {
+      position: static;
+      height: auto;
+      display: block;
+    }
+
+    .ct-side :global(.media) {
+      height: auto;
+      aspect-ratio: 3 / 4;
     }
   }
 

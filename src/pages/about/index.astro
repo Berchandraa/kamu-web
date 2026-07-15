@@ -84,18 +84,23 @@ const values = [
   </section>
 
   <!-- ============ VISION / MISSION ============
-       Left portrait pins (position: sticky, vertically centred below the
-       navbar) while the right column scrolls through both text blocks —
-       "Our Belief" then "How We Work" — and unpins once the last block
-       has passed. Pure CSS sticky; stacks on mobile. -->
+       The image column pins (position: sticky, vertically centred) while the
+       right column scrolls through both text blocks — "Our Belief" then
+       "How We Work" — unpinning once the last block has passed. Two images
+       stacked inside the pinned figure cross-fade as each block enters view:
+       the portrait for "Our Belief", the team photo for "How We Work".
+       Entrance is staggered — the image reveals first, then the copy. -->
   <section class="ab-vm" aria-label="Vision and Mission">
     <div class="ab-vm-story">
-      <figure class="ab-vm-media" aria-hidden="true">
-        <img src="/assets/home/ceo-picture-fill.jpg" alt="" loading="lazy" />
+      <figure class="ab-vm-media" aria-hidden="true" data-reveal="media">
+        <img class="ab-vm-img is-active" data-vm-card="belief"
+          src="/assets/home/ceo-picture-2.png" alt="" loading="lazy" />
+        <img class="ab-vm-img" data-vm-card="work"
+          src="/assets/home/team-picture.jpg" alt="" loading="lazy" />
       </figure>
       <div class="ab-vm-copy">
-        <div class="ab-vm-step">
-          <div class="ab-vm-step-card">
+        <div class="ab-vm-step" data-vm-step="belief">
+          <div class="ab-vm-step-card" data-reveal data-reveal-delay="0.5">
             <p class="label ab-vm-label">Our Belief</p>
             <h2 class="ab-vm-title">
               At Kamu Concepts, we believe that a well-designed space is never just
@@ -110,8 +115,8 @@ const values = [
             <blockquote>True luxury lives in the details often left unnoticed.</blockquote>
           </div>
         </div>
-        <div class="ab-vm-step">
-          <div class="ab-vm-step-card">
+        <div class="ab-vm-step" data-vm-step="work">
+          <div class="ab-vm-step-card" data-reveal>
             <p class="label ab-vm-label">How We Work</p>
             <h2 class="ab-vm-title">
               We don&rsquo;t believe in one-size-fits-all design.
@@ -144,7 +149,7 @@ const values = [
               <button class="ab-value-toggle" type="button" aria-expanded="false">
                 <span class="ab-value-name">{v.name}</span>
               </button>
-              <p class="ab-value-desc">{v.desc}</p>
+              <div class="ab-value-desc"><p>{v.desc}</p></div>
             </li>
           ))
         }
@@ -173,6 +178,32 @@ const values = [
         button.setAttribute('aria-expanded', String(isOpen));
       });
     });
+
+    // Vision/Mission: cross-fade the pinned image between the portrait
+    // ("Our Belief") and the team photo ("How We Work") as each block
+    // enters the viewport's centre band. The sticky container stays put;
+    // only the image inside swaps.
+    const vmSteps = document.querySelectorAll('[data-vm-step]');
+    const vmImgs = document.querySelectorAll('[data-vm-card]');
+
+    if (vmSteps.length && vmImgs.length && 'IntersectionObserver' in window) {
+      const setActive = (id) => {
+        vmImgs.forEach((img) => {
+          img.classList.toggle('is-active', img.getAttribute('data-vm-card') === id);
+        });
+      };
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) setActive(entry.target.getAttribute('data-vm-step'));
+          });
+        },
+        { rootMargin: '-40% 0px -45% 0px' },
+      );
+
+      vmSteps.forEach((step) => observer.observe(step));
+    }
   </script>
 </Base>
 
@@ -257,7 +288,9 @@ const values = [
     font-weight: 500;
     font-size: var(--fs-label);
     letter-spacing: var(--ls-label);
-    color: var(--accent-soft);
+    /* muted monochrome on the dark band — bone tint, not sand */
+    color: color-mix(in srgb, var(--c-bone) 55%, transparent);
+    transition: color var(--dur-base) var(--ease-out);
   }
 
   .ab-value-toggle {
@@ -268,6 +301,7 @@ const values = [
     background: transparent;
     color: inherit;
     text-align: left;
+    transition: transform var(--dur-base) var(--ease-out);
   }
 
   .ab-value-name {
@@ -278,6 +312,22 @@ const values = [
     letter-spacing: -0.01em;
     color: var(--c-bone);
     text-wrap: balance;
+    transition: color var(--dur-base) var(--ease-out);
+  }
+
+  /* Hover: the row nudges right, the name warms to the on-dark accent
+     tone, and the index brightens. Terracotta reads too dark on the
+     ink band, so the sand accent (accent-soft) carries the hover here. */
+  .ab-value:hover .ab-value-toggle {
+    transform: translateX(0.5rem);
+  }
+
+  .ab-value:hover .ab-value-name {
+    color: var(--accent-soft);
+  }
+
+  .ab-value:hover .ab-value-n {
+    color: var(--c-bone);
   }
 
   .ab-value-toggle:focus-visible {
@@ -285,23 +335,32 @@ const values = [
     outline-offset: 0.35rem;
   }
 
+  /* Accordion body: animate open/close by transitioning the grid row
+     from 0fr → 1fr (to the exact content height, no clipping), with the
+     copy fading and the top margin easing in. Slow, power-style ease. */
   .ab-value-desc {
     grid-column: 2;
-    max-width: 38rem;
-    margin-top: var(--space-s);
-    color: color-mix(in srgb, var(--c-bone) 70%, transparent);
-    display: none;
+    display: grid;
+    grid-template-rows: 0fr;
+    margin-top: 0;
     opacity: 0;
-    transform: translateY(0.4rem);
     transition:
-      opacity var(--dur-base) var(--ease-out),
-      transform var(--dur-base) var(--ease-out);
+      grid-template-rows var(--dur-slow) var(--ease-out),
+      margin-top var(--dur-slow) var(--ease-out),
+      opacity var(--dur-base) var(--ease-out);
+  }
+
+  .ab-value-desc > p {
+    overflow: hidden;
+    min-height: 0;
+    max-width: 38rem;
+    color: color-mix(in srgb, var(--c-bone) 70%, transparent);
   }
 
   .ab-value.is-open .ab-value-desc {
-    display: block;
+    grid-template-rows: 1fr;
+    margin-top: var(--space-s);
     opacity: 1;
-    transform: translateY(0);
   }
 
   @media (max-width: 40rem) {
@@ -333,12 +392,12 @@ const values = [
     align-items: start;
   }
 
-  /* Sticky portrait: the figure spans the full viewport height and centres
-     the image within it, so the portrait reads as vertically centred while
+  /* Sticky image column: the figure spans the full viewport height and
+     centres the image within it, so it reads as vertically centred while
      pinned. Centring (rather than a top-anchored offset) keeps it well clear
      of the fixed navbar — the image sits ~100px below the nav at its highest.
      Container height comes from .ab-vm-copy; the trailing space there keeps
-     the portrait pinned until the last text block has scrolled past. */
+     it pinned until the last text block has scrolled past. */
   .ab-vm-media {
     position: sticky;
     top: 0;
@@ -349,12 +408,23 @@ const values = [
     place-items: center;
   }
 
-  .ab-vm-media img {
+  /* Two images stacked in the same grid cell; only the active one is
+     visible. The swap is a slow opacity cross-fade as the copy scrolls
+     from "Our Belief" (portrait) to "How We Work" (team photo). */
+  .ab-vm-img {
+    grid-area: 1 / 1;
     width: 100%;
     height: min(74vh, 42rem);
     display: block;
     object-fit: cover;
     box-shadow: 0 2rem 5rem rgb(0 0 0 / 0.12);
+    opacity: 0;
+    transition: opacity 900ms var(--ease-out);
+    will-change: opacity;
+  }
+
+  .ab-vm-img.is-active {
+    opacity: 1;
   }
 
   .ab-vm-copy {

@@ -15,13 +15,14 @@
   --c-taupe: #92857b;
   --c-terracotta: #a34e29;
   --c-sand: #d2b9a2;
+  --c-grey: #5c5c5c;            /* neutral grey — secondary/muted text */
 
   /* Semantic roles (colour weighting, PDF p.18) */
   --bg: #e0e0e0;                /* Yodezeen-style warm grey base */
   --bg-alt: #f2f0f0;            /* lighter banding for section contrast */
   --ink: var(--c-black);        /* structural anchor */
-  --ink-soft: var(--c-taupe);   /* grounding neutral, supporting text */
-  --accent: var(--c-terracotta);/* signature accent — use sparingly */
+  --ink-soft: var(--c-grey);    /* secondary/muted text — monochrome grey, never brown */
+  --accent: var(--c-terracotta);/* signature accent — hover states, borders, fills (never resting body text) */
   --accent-soft: var(--c-sand); /* transitional warmth */
   --natural: var(--c-mist);     /* calm natural tone */
 

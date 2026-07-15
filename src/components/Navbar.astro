@@ -431,19 +431,16 @@ const shopMega = [
   }
 
   .nav-cart-n {
+    /* Clean number only — no ring or fill (the cart button already has its
+       own circle). Sits at the icon's top-right, inheriting the nav's ink
+       (or bone when inverted) via currentColor. */
     position: absolute;
-    top: -0.2rem;
-    right: -0.2rem;
-    display: grid;
-    min-width: 1rem;
-    height: 1rem;
-    place-items: center;
-    padding-inline: 0.2rem;
-    border-radius: 999px;
-    background: var(--accent);
-    color: var(--c-bone);
-    font-family: var(--font-serif);
-    font-size: 0.65rem;
+    top: -0.15rem;
+    right: -0.1rem;
+    color: currentColor;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.62rem;
     line-height: 1;
   }
 
