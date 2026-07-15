@@ -83,21 +83,18 @@ const values = [
     </div>
   </section>
 
-  <!-- ============ VISION / MISSION ============ -->
+  <!-- ============ VISION / MISSION ============
+       Left portrait pins (position: sticky, vertically centred below the
+       navbar) while the right column scrolls through both text blocks —
+       "Our Belief" then "How We Work" — and unpins once the last block
+       has passed. Pure CSS sticky; stacks on mobile. -->
   <section class="ab-vm" aria-label="Vision and Mission">
-    <article class="ab-vm-story">
-      <div class="ab-vm-stack" aria-hidden="true">
-        <div class="ab-vm-pin">
-          <figure class="ab-vm-card is-active" data-vm-card="belief">
-            <img src="/assets/home/ceo-picture-fill.jpg" alt="" loading="lazy" />
-          </figure>
-          <figure class="ab-vm-card" data-vm-card="work">
-            <img src="/assets/home/team-picture.jpg" alt="" loading="lazy" />
-          </figure>
-        </div>
-      </div>
+    <div class="ab-vm-story">
+      <figure class="ab-vm-media" aria-hidden="true">
+        <img src="/assets/home/ceo-picture-fill.jpg" alt="" loading="lazy" />
+      </figure>
       <div class="ab-vm-copy">
-        <div class="ab-vm-step" data-vm-step="belief">
+        <div class="ab-vm-step">
           <div class="ab-vm-step-card">
             <p class="label ab-vm-label">Our Belief</p>
             <h2 class="ab-vm-title">
@@ -113,7 +110,7 @@ const values = [
             <blockquote>True luxury lives in the details often left unnoticed.</blockquote>
           </div>
         </div>
-        <div class="ab-vm-step" data-vm-step="work">
+        <div class="ab-vm-step">
           <div class="ab-vm-step-card">
             <p class="label ab-vm-label">How We Work</p>
             <h2 class="ab-vm-title">
@@ -131,7 +128,7 @@ const values = [
           </div>
         </div>
       </div>
-    </article>
+    </div>
   </section>
 
   <!-- ============ VALUES — dark band ============ -->
@@ -176,28 +173,6 @@ const values = [
         button.setAttribute('aria-expanded', String(isOpen));
       });
     });
-
-    const vmSteps = document.querySelectorAll('[data-vm-step]');
-    const vmCards = document.querySelectorAll('[data-vm-card]');
-
-    if (vmSteps.length && vmCards.length && 'IntersectionObserver' in window) {
-      const setActiveCard = (id) => {
-        vmCards.forEach((card) => {
-          card.classList.toggle('is-active', card.getAttribute('data-vm-card') === id);
-        });
-      };
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) setActiveCard(entry.target.getAttribute('data-vm-step'));
-          });
-        },
-        { rootMargin: '-35% 0px -45% 0px' },
-      );
-
-      vmSteps.forEach((step) => observer.observe(step));
-    }
   </script>
 </Base>
 
@@ -340,7 +315,12 @@ const values = [
     }
   }
 
-  /* ================= VISION / MISSION ================= */
+  /* ================= VISION / MISSION =================
+     Two-column sticky-scroll: the portrait pins and stays vertically
+     centred in the viewport (below the navbar) while both text blocks
+     scroll past, then unpins once the copy column ends. Pure CSS —
+     the sticky element resolves against the viewport now that `body`
+     no longer carries overflow-x (see global.css). */
   .ab-vm {
     background: var(--bg);
     padding: 0 var(--gutter) var(--space-2xl);
@@ -351,80 +331,43 @@ const values = [
     grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
     gap: clamp(2rem, 5vw, 6rem);
     align-items: start;
-    min-height: 200vh;
   }
 
-  .ab-vm-stack {
+  /* Sticky portrait: the figure spans the full viewport height and centres
+     the image within it, so the portrait reads as vertically centred while
+     pinned. Centring (rather than a top-anchored offset) keeps it well clear
+     of the fixed navbar — the image sits ~100px below the nav at its highest.
+     Container height comes from .ab-vm-copy; the trailing space there keeps
+     the portrait pinned until the last text block has scrolled past. */
+  .ab-vm-media {
     position: sticky;
-    top: 12vh;
+    top: 0;
     align-self: start;
-    height: 76vh;
-    display: grid;
-    place-items: center;
-  }
-
-  .ab-vm-pin {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: grid;
-    place-items: center;
-    isolation: isolate;
-  }
-
-  .ab-vm-card {
-    grid-area: 1 / 1;
-    width: min(100%, 44rem);
-    height: min(76vh, 46rem);
+    height: 100svh;
     margin: 0;
-    background: var(--bg);
-    opacity: 0;
-    transform: translateY(2rem) scale(0.96);
-    transition:
-      opacity 700ms var(--ease-out),
-      transform 700ms var(--ease-out),
-      clip-path 700ms var(--ease-out);
-    will-change: opacity, transform, clip-path;
-    box-shadow: 0 2rem 5rem rgb(0 0 0 / 0.12);
+    display: grid;
+    place-items: center;
   }
 
-  .ab-vm-card.is-active {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    z-index: 1;
-  }
-
-  .ab-vm-card[data-vm-card='belief']:not(.is-active) {
-    opacity: 0.28;
-    transform: scale(0.96);
-  }
-
-  .ab-vm-card[data-vm-card='work'] {
-    z-index: 2;
-    transform: translateY(4rem) scale(0.94);
-    clip-path: inset(100% 0 0 0);
-  }
-
-  .ab-vm-card[data-vm-card='work'].is-active {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    clip-path: inset(0 0 0 0);
-  }
-
-  .ab-vm-card img {
+  .ab-vm-media img {
     width: 100%;
-    height: 100%;
+    height: min(74vh, 42rem);
     display: block;
     object-fit: cover;
+    box-shadow: 0 2rem 5rem rgb(0 0 0 / 0.12);
   }
 
   .ab-vm-copy {
     display: flex;
     flex-direction: column;
     gap: 0;
-    padding: 0 clamp(2rem, 5vw, 5rem);
+    /* Trailing space extends the sticky container past the final block so
+       the portrait unpins only after "…everything we create" has passed. */
+    padding: 0 clamp(2rem, 5vw, 5rem) 34vh;
   }
 
+  /* Each block is tall enough to give the pinned portrait generous
+     travel; the copy centres within its own viewport-height slice. */
   .ab-vm-step {
     display: flex;
     flex-direction: column;
@@ -469,6 +412,7 @@ const values = [
     line-height: 1.12;
   }
 
+  /* Mobile / narrow: single column, portrait above the text, no pinning. */
   @media (max-width: 56rem) {
     .ab-vm {
       padding: 0 0 var(--space-2xl);
@@ -476,24 +420,21 @@ const values = [
     .ab-vm-story {
       grid-template-columns: 1fr;
       gap: 0;
-      min-height: auto;
-      padding-bottom: 0;
     }
-    .ab-vm-stack {
+    .ab-vm-media {
       position: relative;
       top: auto;
-      min-height: 60vh;
+      height: auto;
+      padding-inline: var(--gutter);
+      margin-bottom: var(--space-l);
     }
-    .ab-vm-pin {
-      position: relative;
-      top: auto;
-      height: 60vh;
-    }
-    .ab-vm-card {
-      transform: none;
+    .ab-vm-media img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 5;
     }
     .ab-vm-copy {
-      padding: var(--space-l);
+      padding: 0 var(--gutter);
     }
     .ab-vm-step {
       min-height: auto;
@@ -501,6 +442,30 @@ const values = [
     }
     .ab-vm-step-card {
       gap: var(--space-s);
+    }
+  }
+
+  /* Reduced motion: no pinning — flow the portrait above the copy so the
+     page reads as a calm, static stack. */
+  @media (prefers-reduced-motion: reduce) {
+    .ab-vm-story {
+      grid-template-columns: 1fr;
+      gap: var(--space-l);
+    }
+    .ab-vm-media {
+      position: static;
+      height: auto;
+    }
+    .ab-vm-media img {
+      height: auto;
+      aspect-ratio: 4 / 5;
+    }
+    .ab-vm-copy {
+      padding-bottom: 0;
+    }
+    .ab-vm-step {
+      min-height: auto;
+      padding-block: var(--space-l);
     }
   }
 

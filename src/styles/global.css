@@ -27,8 +27,10 @@ body {
   letter-spacing: var(--ls-none);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
   min-height: 100vh;
+  /* NB: no overflow-x here. `html` already clips horizontal bleed at the
+     viewport; setting overflow on `body` makes it a scroll container and
+     breaks `position: sticky` for descendants (e.g. the About vm section). */
 }
 
 img,
