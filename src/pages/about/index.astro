@@ -85,44 +85,50 @@ const values = [
 
   <!-- ============ VISION / MISSION ============ -->
   <section class="ab-vm" aria-label="Vision and Mission">
-    <article class="ab-vm-story" data-reveal>
+    <article class="ab-vm-story">
       <div class="ab-vm-stack" aria-hidden="true">
-        <figure class="ab-vm-card is-active" data-vm-card="belief">
-          <img src="/assets/home/ceo-picture-fill.jpg" alt="" loading="lazy" />
-        </figure>
-        <figure class="ab-vm-card" data-vm-card="work">
-          <img src="/assets/home/team-picture.jpg" alt="" loading="lazy" />
-        </figure>
+        <div class="ab-vm-pin">
+          <figure class="ab-vm-card is-active" data-vm-card="belief">
+            <img src="/assets/home/ceo-picture-fill.jpg" alt="" loading="lazy" />
+          </figure>
+          <figure class="ab-vm-card" data-vm-card="work">
+            <img src="/assets/home/team-picture.jpg" alt="" loading="lazy" />
+          </figure>
+        </div>
       </div>
       <div class="ab-vm-copy">
         <div class="ab-vm-step" data-vm-step="belief">
-          <p class="label ab-vm-label">Our Belief</p>
-          <h2 class="ab-vm-title">
-            At Kamu Concepts, we believe that a well-designed space is never just
-            about aesthetics. It&rsquo;s a reflection of the people who live in it.
-          </h2>
-          <p>
-            This belief has shaped our vision from the very beginning, to become a
-            leading interior design studio recognized for timeless, modern, and
-            luxury aesthetics, built on an unwavering commitment to quality and
-            attention to detail.
-          </p>
-          <blockquote>True luxury lives in the details often left unnoticed.</blockquote>
+          <div class="ab-vm-step-card">
+            <p class="label ab-vm-label">Our Belief</p>
+            <h2 class="ab-vm-title">
+              At Kamu Concepts, we believe that a well-designed space is never just
+              about aesthetics. It&rsquo;s a reflection of the people who live in it.
+            </h2>
+            <p>
+              This belief has shaped our vision from the very beginning, to become a
+              leading interior design studio recognized for timeless, modern, and
+              luxury aesthetics, built on an unwavering commitment to quality and
+              attention to detail.
+            </p>
+            <blockquote>True luxury lives in the details often left unnoticed.</blockquote>
+          </div>
         </div>
         <div class="ab-vm-step" data-vm-step="work">
-          <p class="label ab-vm-label">How We Work</p>
-          <h2 class="ab-vm-title">
-            We don&rsquo;t believe in one-size-fits-all design.
-          </h2>
-          <p>
-            Our mission is to craft innovative and personalized interior solutions
-            that speak to each client&rsquo;s unique lifestyle and aspirations, spaces
-            that don&rsquo;t just look beautiful, but feel like home.
-          </p>
-          <p>
-            It&rsquo;s this dedication to understanding people first, and design second,
-            that continues to guide everything we create at Kamu Concepts.
-          </p>
+          <div class="ab-vm-step-card">
+            <p class="label ab-vm-label">How We Work</p>
+            <h2 class="ab-vm-title">
+              We don&rsquo;t believe in one-size-fits-all design.
+            </h2>
+            <p>
+              Our mission is to craft innovative and personalized interior solutions
+              that speak to each client&rsquo;s unique lifestyle and aspirations, spaces
+              that don&rsquo;t just look beautiful, but feel like home.
+            </p>
+            <p>
+              It&rsquo;s this dedication to understanding people first, and design second,
+              that continues to guide everything we create at Kamu Concepts.
+            </p>
+          </div>
         </div>
       </div>
     </article>
@@ -345,38 +351,63 @@ const values = [
     grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
     gap: clamp(2rem, 5vw, 6rem);
     align-items: start;
-    min-height: 140vh;
-    background: color-mix(in srgb, var(--bg) 86%, white);
-    transform: none !important;
   }
 
   .ab-vm-stack {
     position: sticky;
-    top: 12vh;
-    min-height: 76vh;
+    top: 6vh;
+    align-self: start;
+    height: 88vh;
     display: grid;
     place-items: center;
+  }
+
+  .ab-vm-pin {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    isolation: isolate;
   }
 
   .ab-vm-card {
     grid-area: 1 / 1;
     width: min(100%, 44rem);
-    height: min(76vh, 46rem);
+    height: min(88vh, 46rem);
     margin: 0;
-    overflow: hidden;
     background: var(--bg);
     opacity: 0;
     transform: translateY(2rem) scale(0.96);
     transition:
       opacity 700ms var(--ease-out),
-      transform 700ms var(--ease-out);
+      transform 700ms var(--ease-out),
+      clip-path 700ms var(--ease-out);
+    will-change: opacity, transform, clip-path;
+    box-shadow: 0 2rem 5rem rgb(0 0 0 / 0.12);
   }
 
   .ab-vm-card.is-active {
     opacity: 1;
     transform: translateY(0) scale(1);
     z-index: 1;
-    box-shadow: 0 2rem 5rem rgb(0 0 0 / 0.12);
+  }
+
+  .ab-vm-card[data-vm-card='belief']:not(.is-active) {
+    opacity: 0.28;
+    transform: scale(0.96);
+  }
+
+  .ab-vm-card[data-vm-card='work'] {
+    z-index: 2;
+    transform: translateY(4rem) scale(0.94);
+    clip-path: inset(100% 0 0 0);
+  }
+
+  .ab-vm-card[data-vm-card='work'].is-active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    clip-path: inset(0 0 0 0);
   }
 
   .ab-vm-card img {
@@ -389,14 +420,18 @@ const values = [
   .ab-vm-copy {
     display: flex;
     flex-direction: column;
-    padding: clamp(4rem, 10vw, 10rem) clamp(2rem, 5vw, 5rem);
+    gap: clamp(4rem, 12vh, 8rem);
+    padding: 12vh clamp(2rem, 5vw, 5rem);
   }
 
   .ab-vm-step {
-    min-height: 76vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+  }
+
+  .ab-vm-step-card {
+    display: flex;
+    flex-direction: column;
     gap: var(--space-s);
   }
 
@@ -414,12 +449,12 @@ const values = [
     letter-spacing: -0.02em;
   }
 
-  .ab-vm-copy p {
+  .ab-vm-step-card p {
     max-width: 32rem;
     color: var(--ink-soft);
   }
 
-  .ab-vm-copy blockquote {
+  .ab-vm-step-card blockquote {
     max-width: 25rem;
     margin: var(--space-m) 0 0;
     padding-left: var(--space-s);
@@ -432,23 +467,37 @@ const values = [
   }
 
   @media (max-width: 56rem) {
+    .ab-vm {
+      padding: 0 0 var(--space-2xl);
+    }
     .ab-vm-story {
       grid-template-columns: 1fr;
+      gap: 0;
       min-height: auto;
+      padding-bottom: 0;
     }
-
     .ab-vm-stack {
       position: relative;
       top: auto;
       min-height: 60vh;
     }
-
-    .ab-vm-card {
-      height: 58vh;
+    .ab-vm-pin {
+      position: relative;
+      top: auto;
+      height: 60vh;
     }
-
+    .ab-vm-card {
+      transform: none;
+    }
     .ab-vm-copy {
       padding: var(--space-l);
+    }
+    .ab-vm-step {
+      min-height: auto;
+      padding-block: var(--space-l);
+    }
+    .ab-vm-step-card {
+      gap: var(--space-s);
     }
   }
 
