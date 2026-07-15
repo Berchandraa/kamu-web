@@ -553,6 +553,14 @@ const lookbook = [
   }
 
   /* ================= WORK ================= */
+  /* Explicit base bg (matches the page + lookbook so there's no seam) and
+     bottom padding so the "See All Projects" button sits fully inside this
+     section with breathing room below it — not on the section boundary. */
+  .work {
+    background: var(--bg);
+    padding-bottom: clamp(4rem, 8vw, 6.5rem);
+  }
+
   .work-head {
     align-items: end;
     margin-bottom: var(--space-l);
@@ -822,8 +830,9 @@ const lookbook = [
   }
 
   /* ================= LOOKBOOK ================= */
+  /* Same base bg as .work (and .philosophy below) — no seam on either edge. */
   .lookbook {
-    background: var(--c-bone);
+    background: var(--bg);
     color: var(--ink);
     padding-top: clamp(4.5rem, 8vw, 7rem);
   }

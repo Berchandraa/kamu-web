@@ -4,10 +4,10 @@
  *
  * The KAMU K mark builds itself: the three geometric shapes draw on as
  * hairline strokes (stroke-dashoffset), then quietly fill with ink —
- * a nod to the logo's basic-shape construction. A thin progress line +
- * understated counter track real asset loading underneath. When loading
- * and the draw both settle, a brief beat, then the bone curtain lifts to
- * hand off to the hero (fires `kamu:ready`).
+ * a nod to the logo's basic-shape construction. A quiet thin progress
+ * line tracks real asset loading underneath. When loading and the draw
+ * both settle, a brief beat, then the bone curtain lifts to hand off to
+ * the hero (fires `kamu:ready`).
  *
  * Bone ground, ink mark. Calm throughout (~3s feel). prefers-reduced-
  * motion skips the draw and simply fades. Once-per-session lock is
@@ -47,7 +47,6 @@
 
     <div class="preloader-progress" id="preloader-progress">
       <div class="preloader-bar"><span class="preloader-bar-fill" id="preloader-bar-fill"></span></div>
-      <span class="preloader-count" id="preloader-count">00</span>
     </div>
   </div>
 </div>
@@ -85,14 +84,10 @@
     vector-effect: non-scaling-stroke;
   }
 
-  /* Progress — thin line + small counter, ink palette only */
+  /* Progress — a single quiet thin line, ink on bone. No counter. */
   .preloader-progress {
     width: clamp(7.5rem, 16vw, 11rem);
     margin-top: clamp(2.25rem, 4vw, 3rem);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.85rem;
     opacity: 0;
   }
 
@@ -111,17 +106,6 @@
     transform: scaleX(0);
     transform-origin: left;
     will-change: transform;
-  }
-
-  .preloader-count {
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: var(--fs-label);
-    letter-spacing: 0.28em;
-    /* leading-tracking visual balance for the trailing space */
-    text-indent: 0.28em;
-    color: color-mix(in srgb, var(--ink) 52%, transparent);
-    font-variant-numeric: tabular-nums;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -144,7 +128,6 @@
   const mark = document.getElementById('preloader-mark');
   const progress = document.getElementById('preloader-progress');
   const barFill = document.getElementById('preloader-bar-fill');
-  const counter = document.getElementById('preloader-count');
 
   const finish = () => {
     preloader?.remove();
@@ -248,7 +231,6 @@
       if (done) return;
       done = true;
       cancelAnimationFrame(raf);
-      counter && (counter.textContent = '100');
       barFill && (barFill.style.transform = 'scaleX(1)');
       gsap
         .timeline({ onComplete: finish, delay: 0.45 })
@@ -275,7 +257,6 @@
 
       shown += (target - shown) * 0.12;
       const pct = Math.round(shown * 100);
-      if (counter) counter.textContent = String(pct).padStart(2, '0');
       if (barFill) barFill.style.transform = `scaleX(${shown.toFixed(4)})`;
 
       if (canComplete && pct >= 99) {
