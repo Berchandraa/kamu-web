@@ -30,7 +30,7 @@ const lines = invite.split('\n');
 ---
 
 <section class="cta">
-  <div class="cta-panel">
+  <div class="cta-panel" data-surface="dark">
   <div class="cta-media" data-parallax>
     <img src={image} alt="" loading="lazy" />
   </div>
@@ -51,11 +51,11 @@ const lines = invite.split('\n');
     <p class="cta-note" data-reveal data-reveal-delay="0.1">{note}</p>
 
     <div class="cta-actions" data-reveal data-reveal-delay="0.2">
-      <a href={href} class="cta-btn">
+      <a href={href} class="btn btn--secondary">
         {action}
-        <span class="cta-btn-plus" aria-hidden="true">+</span>
+        <span class="btn-plus" aria-hidden="true">+</span>
       </a>
-      <a href="mailto:hello@kamuconcepts.com" class="cta-mail">hello@kamuconcepts.com</a>
+      <a href="mailto:hello@kamuconcepts.com" class="link">hello@kamuconcepts.com</a>
     </div>
   </div>
   </div>
@@ -151,71 +151,8 @@ const lines = invite.split('\n');
     flex-wrap: wrap;
   }
 
-  /* The one terracotta accent on the page: this button's hover */
-  .cta-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: var(--fs-label);
-    letter-spacing: var(--ls-label);
-    text-transform: uppercase;
-    padding: 1.1em 2.2em;
-    border: 1px solid color-mix(in srgb, var(--c-bone) 60%, transparent);
-    border-radius: 999px;
-    transition:
-      background-color var(--dur-base) var(--ease-out),
-      border-color var(--dur-base) var(--ease-out),
-      color var(--dur-base) var(--ease-out);
-  }
-
-  .cta-btn-plus {
-    font-size: 1.15em;
-    line-height: 1;
-    transition: transform var(--dur-base) var(--ease-out);
-  }
-
-  .cta-btn:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--c-bone);
-  }
-
-  .cta-btn:hover .cta-btn-plus {
-    transform: rotate(90deg);
-  }
-
-  .cta-mail {
-    position: relative;
-    font-family: var(--font-serif);
-    font-size: var(--fs-caption);
-    color: color-mix(in srgb, var(--c-bone) 78%, transparent);
-    padding-bottom: 0.3em;
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-
-  .cta-mail::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background: currentColor;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform var(--dur-base) var(--ease-out);
-  }
-
-  .cta-mail:hover {
-    color: var(--c-bone);
-  }
-
-  .cta-mail:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
-  }
+  /* Button = shared .btn.btn--secondary, mail = shared .link.
+     .cta-panel is data-surface='dark', so both adapt to bone/sand. */
 
   @media (max-width: 56rem) {
     .cta-actions {

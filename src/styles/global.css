@@ -2,6 +2,7 @@
    KAMU Concepts — Global styles
    ============================================================ */
 @import './tokens.css';
+@import './buttons.css';
 
 /* ----- Reset ----- */
 *,
@@ -209,28 +210,9 @@ ol {
   padding-inline: var(--gutter);
 }
 
-/* Underlined text link */
-.text-link {
-  position: relative;
-  width: fit-content;
-  padding-bottom: 0.4em;
-}
-
-.text-link::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 1px;
-  background: currentColor;
-  transform-origin: left;
-  transition: transform var(--dur-base) var(--ease-out);
-}
-
-.text-link:hover::after {
-  transform: scaleX(0.4);
-}
+/* NB: the former global `.text-link` now lives in buttons.css as `.link`
+   (the single Tier-3 text link). All prior `.text-link` usages were
+   migrated to `.link`. */
 
 /* Two-part small labels — tone contrast + gap instead of "—" / "·".
    <span class="duo"><span>Kamu Concepts</span><span class="duo-sub">Portfolio</span></span> */

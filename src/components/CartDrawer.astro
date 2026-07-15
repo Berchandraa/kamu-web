@@ -23,7 +23,7 @@
         <span class="duo-num bag-count" id="bag-count">0</span>
       </span>
     </p>
-    <button class="label bag-close" id="bag-close">Close</button>
+    <button class="label bag-close link" id="bag-close">Close</button>
   </header>
 
   <div class="bag-lines" id="bag-lines">
@@ -32,7 +32,7 @@
 
   <div class="bag-empty" id="bag-empty" hidden>
     <p class="quote bag-empty-line">Your bag is empty.</p>
-    <a href="/shop/" class="text-link label">Browse the collection</a>
+    <a href="/shop/" class="link label">Browse the collection</a>
   </div>
 
   <footer class="bag-foot" id="bag-foot">
@@ -40,7 +40,7 @@
       <span class="label">Subtotal</span>
       <span class="bag-subtotal-val" id="bag-subtotal">Rp 0</span>
     </div>
-    <button class="bag-checkout" disabled>Checkout</button>
+    <button class="btn btn--primary btn--block" disabled>Checkout</button>
     <p class="caption bag-note">
       Shipping &amp; taxes calculated at checkout.
       Checkout connects to Shopify at launch.
@@ -103,14 +103,7 @@
     border-bottom: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
   }
 
-  .bag-close {
-    color: var(--ink-soft);
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-
-  .bag-close:hover {
-    color: var(--ink);
-  }
+  /* .bag-close is a shared .link (underline + hover from buttons.css) */
 
   /* ----- lines ----- */
   .bag-lines {
@@ -153,20 +146,14 @@
     margin-top: 0.375rem;
   }
 
+  /* Remove — shared .link owns the underline + hover; local rule keeps the
+     serif type, muted rest colour and spacing only. */
   .bag-lines :global(.bag-line-remove) {
     font-family: var(--font-serif);
     font-size: 0.8125rem;
     letter-spacing: 0.02em;
     color: var(--ink-soft);
     margin-top: 0.625rem;
-    width: fit-content;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-
-  .bag-lines :global(.bag-line-remove:hover) {
-    color: var(--accent);
   }
 
   /* qty stepper */
@@ -234,20 +221,8 @@
     font-size: 1.125rem;
   }
 
-  .bag-checkout {
-    width: 100%;
-    font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: var(--fs-label);
-    letter-spacing: var(--ls-label);
-    text-transform: uppercase;
-    padding: 1.2em;
-    background: var(--ink);
-    color: var(--c-bone);
-    border-radius: 999px;
-    opacity: 0.45;
-    cursor: not-allowed;
-  }
+  /* Checkout is a shared .btn.btn--primary.btn--block (disabled).
+     Disabled dimming comes from buttons.css. */
 
   .bag-note {
     margin-top: 0.875rem;
@@ -296,7 +271,7 @@
           <div>
             <p class="bag-line-name">${l.name}</p>
             <p class="bag-line-price">${formatIDR(l.amount)}</p>
-            <button class="bag-line-remove" data-remove="${l.id}">Remove</button>
+            <button class="bag-line-remove link" data-remove="${l.id}">Remove</button>
           </div>
           <div class="bag-qty">
             <button data-dec="${l.id}" aria-label="Decrease quantity">&minus;</button>

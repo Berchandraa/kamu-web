@@ -83,4 +83,19 @@
   /* ----- Misc ----- */
   --nav-h: 5.5rem;
   --nav-h-condensed: 3.75rem;
+
+  /* ----- Buttons — single source of truth for the 3-tier system -----
+     One size, one motion, one outline weight. Consumed by buttons.css.
+     Mobile heights stay >= 48px (min 44px tap target). */
+  --btn-h: 3.25rem;                                   /* desktop control height (52px) */
+  --btn-h-mobile: 3rem;                               /* mobile control height (48px) */
+  --btn-pad-x: 2.4rem;
+  --btn-pad-x-mobile: 1.9rem;
+  --btn-radius: 999px;
+  --btn-weight: 500;
+  --btn-outline: color-mix(in srgb, var(--ink) 35%, transparent);      /* the ONE secondary border weight */
+  --btn-outline-dark: color-mix(in srgb, var(--c-bone) 32%, transparent);/* same, on dark surfaces */
+  /* Motion — reuse the site's slow decelerate; power2-equivalent easing */
+  --btn-dur: var(--dur-base);      /* 0.8s */
+  --btn-ease: var(--ease-out);     /* cubic-bezier(0.22, 1, 0.36, 1) */
 }

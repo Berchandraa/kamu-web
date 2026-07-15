@@ -80,7 +80,7 @@ const accordion = [
         {
           shots.map((s, i) => (
             <button
-              class={`pd-thumb ${i === 0 ? 'is-active' : ''}`}
+              class={`pd-thumb icon-link ${i === 0 ? 'is-active' : ''}`}
               data-file={s.file}
               aria-label={`View image ${i + 1}`}
             >
@@ -100,7 +100,7 @@ const accordion = [
     <!-- info -->
     <div class="pd-info">
       <nav class="label pd-crumb duo" data-reveal aria-label="Breadcrumb">
-        <a href="/shop/">Shop</a>
+        <a href="/shop/" class="link">Shop</a>
         <span class="duo-sub">{catLabel}</span>
       </nav>
 
@@ -110,7 +110,7 @@ const accordion = [
       <p class="pd-desc" data-reveal data-reveal-delay="0.15">{firstSentence}</p>
 
       <button
-        class="pd-add"
+        class="pd-add btn btn--primary btn--block"
         id="pd-add"
         data-id={p.slug}
         data-name={p.name}
@@ -128,9 +128,9 @@ const accordion = [
         {
           accordion.map((a) => (
             <details class="pd-acc-item">
-              <summary class="pd-acc-head">
+              <summary class="pd-acc-head acc-head">
                 <span class="pd-acc-key">{a.key}</span>
-                <span class="pd-acc-icon" aria-hidden="true">+</span>
+                <span class="pd-acc-icon acc-icon" aria-hidden="true">+</span>
               </summary>
               <div class="pd-acc-body">
                 <p>{a.body}</p>
@@ -146,7 +146,7 @@ const accordion = [
   <section class="pd-related">
     <header class="pd-related-head grid-12">
       <h2 class="h2 pd-related-title" data-reveal="line">You may also like</h2>
-      <a href="/shop/" class="text-link label pd-related-all" data-reveal>
+      <a href="/shop/" class="link label pd-related-all" data-reveal>
         Shop all pieces
       </a>
     </header>
@@ -229,14 +229,6 @@ const accordion = [
     color: var(--ink);
   }
 
-  .pd-crumb a {
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-
-  .pd-crumb a:hover {
-    color: var(--accent);
-  }
-
   /* product name in Lora serif, large */
   .pd-name {
     font-family: var(--font-serif);
@@ -258,23 +250,11 @@ const accordion = [
   }
 
   /* ----- add to bag ----- */
+  /* skin owned by .btn.btn--primary.btn--block; keep only the overlay
+     positioning context + rhythm above the accordion */
   .pd-add {
     position: relative;
-    width: 100%;
-    font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: var(--fs-label);
-    letter-spacing: var(--ls-label);
-    text-transform: uppercase;
-    padding: 1.3em;
-    background: var(--ink);
-    color: var(--c-bone);
     margin-top: var(--space-2xs);
-    transition: background-color var(--dur-base) var(--ease-out);
-  }
-
-  .pd-add:hover {
-    background: var(--accent);
   }
 
   .pd-add-added {
@@ -283,6 +263,7 @@ const accordion = [
     display: grid;
     place-items: center;
     background: var(--accent);
+    border-radius: inherit;
     opacity: 0;
     transition: opacity var(--dur-fast) var(--ease-out);
   }
@@ -304,20 +285,8 @@ const accordion = [
     border-bottom: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
   }
 
-  .pd-acc-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-s);
-    padding-block: 1.1rem;
-    cursor: pointer;
-    list-style: none;
-  }
-
-  .pd-acc-head::-webkit-details-marker {
-    display: none;
-  }
-
+  /* head/icon skin (layout, marker reset, hover, rotate) owned by
+     .acc-head / .acc-icon in buttons.css */
   .pd-acc-key {
     font-family: var(--font-sans);
     font-weight: 500;
@@ -325,22 +294,6 @@ const accordion = [
     letter-spacing: var(--ls-label);
     text-transform: uppercase;
     transition: color var(--dur-fast) var(--ease-out);
-  }
-
-  .pd-acc-head:hover .pd-acc-key {
-    color: var(--accent);
-  }
-
-  .pd-acc-icon {
-    font-family: var(--font-sans);
-    font-weight: 300;
-    font-size: 1.125rem;
-    line-height: 1;
-    transition: transform var(--dur-base) var(--ease-out);
-  }
-
-  .pd-acc-item[open] .pd-acc-icon {
-    transform: rotate(45deg);
   }
 
   .pd-acc-body {

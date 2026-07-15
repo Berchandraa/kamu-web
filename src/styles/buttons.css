@@ -1,0 +1,311 @@
+/* ============================================================
+   KAMU Concepts — Shared button & control system
+   ------------------------------------------------------------
+   ONE implementation for every interactive control. No page or
+   component may re-style a button locally — compose these classes.
+
+   Tiers
+     .btn.btn--primary     solid ink pill  → terracotta on hover   (Tier 1)
+     .btn.btn--secondary   outline pill    → terracotta line+text  (Tier 2)
+     .link                 text link       → scaleX underline      (Tier 3)
+
+   Categories (consistent, not forced into a tier)
+     .filter               listing filter control (composes .link)
+     .acc-head / .acc-icon accordion summary toggle
+     .icon-btn             circular icon control (cart, carousel)
+     .icon-link            inline icon link (social, thumbs)
+
+   Surface-aware hover — the single rule for the whole site:
+     light / bone surface  → hover TERRACOTTA (var(--accent))
+     dark  / ink  surface  → hover SAND       (var(--accent-soft))
+   Mark any dark section with  data-surface="dark"  and every control
+   inside it flips automatically. Terracotta reads too dark on ink;
+   sand is the on-dark accent.
+   ============================================================ */
+
+/* ---------- Shared focus ring (keyboard only) ---------- */
+.btn:focus-visible,
+.link:focus-visible,
+.filter:focus-visible,
+.acc-head:focus-visible,
+.icon-btn:focus-visible,
+.icon-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+[data-surface='dark'] .btn:focus-visible,
+[data-surface='dark'] .link:focus-visible,
+[data-surface='dark'] .filter:focus-visible,
+[data-surface='dark'] .acc-head:focus-visible,
+[data-surface='dark'] .icon-btn:focus-visible,
+[data-surface='dark'] .icon-link:focus-visible {
+  outline-color: var(--accent-soft);
+}
+/* pills keep their round shape for the focus ring */
+.btn:focus-visible,
+.icon-btn:focus-visible { border-radius: var(--btn-radius); }
+
+/* ============================================================
+   TIERS 1 & 2 — Pill buttons
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  height: var(--btn-h);
+  padding-inline: var(--btn-pad-x);
+  font-family: var(--font-sans);
+  font-weight: var(--btn-weight);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: var(--btn-radius);
+  cursor: pointer;
+  transition:
+    background-color var(--btn-dur) var(--btn-ease),
+    border-color var(--btn-dur) var(--btn-ease),
+    color var(--btn-dur) var(--btn-ease),
+    transform var(--btn-dur) var(--btn-ease);
+}
+
+/* full-width variant — cart checkout, add-to-bag */
+.btn--block { width: 100%; }
+
+/* small rotating "+" glyph used by some CTAs (was .cta-btn-plus etc.) */
+.btn-plus {
+  font-size: 1.15em;
+  line-height: 1;
+  transition: transform var(--btn-dur) var(--btn-ease);
+}
+.btn:hover .btn-plus { transform: rotate(90deg); }
+
+/* ----- Tier 1: PRIMARY (solid) ----- */
+.btn--primary {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--c-bone);
+}
+.btn--primary:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--c-bone);
+}
+/* on dark: invert to bone fill, hover to sand (ink-on-ink would vanish) */
+[data-surface='dark'] .btn--primary {
+  background: var(--c-bone);
+  border-color: var(--c-bone);
+  color: var(--ink);
+}
+[data-surface='dark'] .btn--primary:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent-soft);
+  color: var(--ink);
+}
+
+/* ----- Tier 2: SECONDARY (outline) — ONE border weight, ONE hover ----- */
+.btn--secondary {
+  background: transparent;
+  border-color: var(--btn-outline);
+  color: var(--ink);
+}
+.btn--secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+[data-surface='dark'] .btn--secondary {
+  border-color: var(--btn-outline-dark);
+  color: var(--c-bone);
+}
+[data-surface='dark'] .btn--secondary:hover {
+  border-color: var(--accent-soft);
+  color: var(--accent-soft);
+}
+
+/* disabled — used by the (pre-launch) checkout button */
+.btn[disabled],
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.btn[disabled]:hover,
+.btn:disabled:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--c-bone);
+}
+[data-surface='dark'] .btn--primary[disabled]:hover {
+  background: var(--c-bone);
+  border-color: var(--c-bone);
+  color: var(--ink);
+}
+
+@media (max-width: 40rem) {
+  .btn {
+    height: var(--btn-h-mobile);
+    padding-inline: var(--btn-pad-x-mobile);
+  }
+}
+
+/* ============================================================
+   TIER 3 — Text link (the one scaleX underline)
+   ============================================================ */
+.link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  width: fit-content;
+  padding-bottom: 0.15em;
+  color: inherit;
+  transition: color var(--dur-fast) var(--btn-ease);
+}
+.link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--btn-dur) var(--btn-ease);
+}
+.link:hover,
+.link:focus-visible { color: var(--accent); }
+.link:hover::after,
+.link.is-current::after,
+.link[aria-current='page']::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+/* on dark surfaces: warm to sand, not terracotta */
+[data-surface='dark'] .link:hover,
+[data-surface='dark'] .link:focus-visible { color: var(--accent-soft); }
+
+/* ============================================================
+   FILTERS — one treatment for Projects + Shop (text + underline)
+   ============================================================ */
+.filter {
+  font-family: var(--font-sans);
+  font-weight: var(--btn-weight);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.filter:hover { color: var(--ink); }
+.filter.is-active { color: var(--ink); }
+.filter[data-surface],
+[data-surface='dark'] .filter:hover,
+[data-surface='dark'] .filter.is-active { color: var(--c-bone); }
+/* small count that some shop filters carry */
+.filter-n {
+  font-family: var(--font-serif);
+  font-size: 0.85em;
+  opacity: 0.55;
+  margin-left: 0.5em;
+}
+
+/* ============================================================
+   ACCORDION — one summary toggle (Projects/Product/About/Careers)
+   ============================================================ */
+.acc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  width: 100%;
+  padding-block: 1.1rem;
+  text-align: left;
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  list-style: none;
+  transition: color var(--dur-fast) var(--btn-ease);
+}
+.acc-head::-webkit-details-marker { display: none; }
+.acc-head:hover { color: var(--accent); }
+[data-surface='dark'] .acc-head:hover { color: var(--accent-soft); }
+
+.acc-icon {
+  flex: none;
+  margin-left: auto;
+  font-weight: 300;
+  line-height: 1;
+  transition: transform var(--btn-dur) var(--btn-ease);
+}
+/* rotate "+" → "×" when open (native <details> or aria-expanded button) */
+[open] > .acc-head .acc-icon,
+.acc-head[aria-expanded='true'] .acc-icon {
+  transform: rotate(45deg);
+}
+
+/* ============================================================
+   ICON BUTTONS
+   ============================================================ */
+/* circular control — nav cart, carousel arrows */
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: 1px solid var(--btn-outline);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  /* lift uses the `translate` property (not `transform`) so it composes
+     with any positioning transform on the element (e.g. carousel arrows
+     centred with transform: translateY(-50%)). */
+  transition:
+    background-color var(--btn-dur) var(--btn-ease),
+    border-color var(--btn-dur) var(--btn-ease),
+    color var(--btn-dur) var(--btn-ease),
+    translate var(--btn-dur) var(--btn-ease);
+}
+.icon-btn:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--c-bone);
+  translate: 0 -0.15rem;
+}
+[data-surface='dark'] .icon-btn {
+  border-color: var(--btn-outline-dark);
+  color: var(--c-bone);
+}
+[data-surface='dark'] .icon-btn:hover {
+  background: var(--c-bone);
+  border-color: var(--c-bone);
+  color: var(--ink);
+}
+
+/* inline icon link — social glyphs, gallery thumbs (no chrome) */
+.icon-link {
+  display: grid;
+  place-items: center;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--btn-ease),
+    opacity var(--dur-fast) var(--btn-ease),
+    translate var(--dur-fast) var(--btn-ease);
+}
+.icon-link:hover {
+  color: var(--accent);
+  translate: 0 -0.08rem;
+}
+[data-surface='dark'] .icon-link:hover { color: var(--accent-soft); }
+/* mobile: guarantee a 44px tap target for inline icon links */
+@media (max-width: 40rem) {
+  .icon-link { min-width: 2.75rem; min-height: 2.75rem; }
+}

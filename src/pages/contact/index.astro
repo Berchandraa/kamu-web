@@ -47,9 +47,9 @@ const demo =
         <div class="ct-row">
           <p class="label ct-key">Direct</p>
           <p class="ct-val">
-            <a href="mailto:hello@kamuconcepts.com">hello@kamuconcepts.com</a>
+            <a href="mailto:hello@kamuconcepts.com" class="link">hello@kamuconcepts.com</a>
             <br />
-            <a href="https://wa.me/6282338888971">+62 823 3888 8971</a>
+            <a href="https://wa.me/6282338888971" class="link">+62 823 3888 8971</a>
           </p>
         </div>
         <div class="ct-row">
@@ -59,7 +59,7 @@ const demo =
         <div class="ct-row">
           <p class="label ct-key">Catalog</p>
           <p class="ct-val">
-            <a href="/assets/kamu-catalog.pdf" class="ct-link" download>Download the catalog</a>
+            <a href="/assets/kamu-catalog.pdf" class="link" download>Download the catalog</a>
           </p>
         </div>
         <div class="ct-row">
@@ -110,7 +110,7 @@ const demo =
           </div>
 
           <div class="ct-actions">
-            <button type="submit" class="ct-send">Send Enquiry</button>
+            <button type="submit" class="btn btn--primary">Send Enquiry</button>
             <p class="caption ct-privacy">
               The form is visual only for this static preview.
             </p>
@@ -192,19 +192,6 @@ const demo =
     line-height: 1.7;
   }
 
-  .ct-val a {
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-
-  .ct-val a:hover {
-    color: var(--accent);
-  }
-
-  .ct-link {
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
-  }
-
   .ct-social {
     display: flex;
     align-items: center;
@@ -267,23 +254,6 @@ const demo =
     justify-content: space-between;
     gap: var(--space-s);
     flex-wrap: wrap;
-  }
-
-  .ct-send {
-    font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: var(--fs-label);
-    letter-spacing: var(--ls-label);
-    text-transform: uppercase;
-    padding: 1.2em 3.2em;
-    background: var(--ink);
-    color: var(--c-bone);
-    border-radius: 999px;
-    transition: background-color var(--dur-base) var(--ease-out);
-  }
-
-  .ct-send:hover {
-    background: var(--accent);
   }
 
   .ct-privacy {

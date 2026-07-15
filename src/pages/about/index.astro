@@ -137,7 +137,7 @@ const values = [
   </section>
 
   <!-- ============ VALUES — dark band ============ -->
-  <section class="ab-values">
+  <section class="ab-values" data-surface="dark">
     <div class="ab-values-inner">
       <h2 class="ab-values-title" data-reveal="line">What we hold onto</h2>
 
@@ -146,8 +146,9 @@ const values = [
           values.map((v, i) => (
             <li class="ab-value" data-reveal data-reveal-delay={String(i * 0.08)}>
               <span class="ab-value-n">{v.n}</span>
-              <button class="ab-value-toggle" type="button" aria-expanded="false">
+              <button class="ab-value-toggle acc-head" type="button" aria-expanded="false">
                 <span class="ab-value-name">{v.name}</span>
+                <span class="acc-icon" aria-hidden="true">+</span>
               </button>
               <div class="ab-value-desc"><p>{v.desc}</p></div>
             </li>
@@ -297,46 +298,16 @@ const values = [
     transition: color var(--dur-base) var(--ease-out);
   }
 
-  .ab-value-toggle {
-    display: block;
-    width: 100%;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: inherit;
-    text-align: left;
-    transition: transform var(--dur-base) var(--ease-out);
-  }
-
   .ab-value-name {
     font-family: var(--font-sans);
     font-weight: 500;
     font-size: clamp(1.5rem, 3.2vw, 2.5rem);
     line-height: 1.1;
     letter-spacing: -0.01em;
-    color: var(--c-bone);
     text-wrap: balance;
+    /* color inherits from the .acc-head button so the shared accordion
+       hover (bone → accent-soft on the dark surface) reaches the title. */
     transition: color var(--dur-base) var(--ease-out);
-  }
-
-  /* Hover: the row nudges right, the name warms to the on-dark accent
-     tone, and the index brightens. Terracotta reads too dark on the
-     ink band, so the sand accent (accent-soft) carries the hover here. */
-  .ab-value:hover .ab-value-toggle {
-    transform: translateX(0.5rem);
-  }
-
-  .ab-value:hover .ab-value-name {
-    color: var(--accent-soft);
-  }
-
-  .ab-value:hover .ab-value-n {
-    color: var(--c-bone);
-  }
-
-  .ab-value-toggle:focus-visible {
-    outline: 1px solid color-mix(in srgb, var(--c-bone) 60%, transparent);
-    outline-offset: 0.35rem;
   }
 
   /* Accordion body: animate open/close by transitioning the grid row
@@ -578,17 +549,12 @@ const values = [
     text-wrap: balance;
   }
 
-  .ab-studio-link {
-    grid-column: 2 / 6;
-  }
-
   @media (max-width: 56rem) {
     .ab-studio-image {
       height: 100svh;
     }
 
-    .ab-studio-quote,
-    .ab-studio-link {
+    .ab-studio-quote {
       grid-column: 1 / -1;
     }
   }

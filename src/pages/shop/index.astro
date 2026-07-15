@@ -35,13 +35,13 @@ const labelFor = (slug: string) =>
   <!-- ============ FILTERS ============ -->
   <div class="sh-bar" data-reveal>
     <nav class="sh-filters" aria-label="Product categories">
-      <button class="sh-filter is-active" data-filter="all" aria-pressed="true">
-        All<span class="sh-filter-n">{products.length}</span>
+      <button class="filter is-active" data-filter="all" aria-pressed="true">
+        All<span class="filter-n">{products.length}</span>
       </button>
       {
         categories.map((c) => (
-          <button class="sh-filter" data-filter={c.slug} aria-pressed="false">
-            {c.label}<span class="sh-filter-n">{countFor(c.slug)}</span>
+          <button class="filter" data-filter={c.slug} aria-pressed="false">
+            {c.label}<span class="filter-n">{countFor(c.slug)}</span>
           </button>
         ))
       }
@@ -96,44 +96,7 @@ const labelFor = (slug: string) =>
   .sh-filters {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.625rem;
-  }
-
-  /* pill chips — fully legible, active state unmistakable */
-  .sh-filter {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.625em;
-    font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: var(--fs-label);
-    letter-spacing: var(--ls-label);
-    text-transform: uppercase;
-    color: var(--ink);
-    padding: 0.8em 1.5em;
-    border: 1px solid color-mix(in srgb, var(--ink) 35%, transparent);
-    border-radius: 999px;
-    transition:
-      background-color var(--dur-base) var(--ease-out),
-      border-color var(--dur-base) var(--ease-out),
-      color var(--dur-base) var(--ease-out);
-  }
-
-  .sh-filter-n {
-    font-family: var(--font-serif);
-    font-size: 0.85em;
-    letter-spacing: 0;
-    opacity: 0.55;
-  }
-
-  .sh-filter:hover {
-    border-color: var(--ink);
-  }
-
-  .sh-filter.is-active {
-    background: var(--ink);
-    border-color: var(--ink);
-    color: var(--c-bone);
+    gap: clamp(1.5rem, 3vw, 3rem);
   }
 
   .sh-showing {
@@ -255,7 +218,7 @@ const labelFor = (slug: string) =>
   import { gsap } from 'gsap';
 
   // Category filter — calm fade out, re-stagger in, live count
-  const filters = document.querySelectorAll<HTMLButtonElement>('.sh-filter');
+  const filters = document.querySelectorAll<HTMLButtonElement>('.filter');
   const cards = document.querySelectorAll<HTMLElement>('.sh-card');
   const count = document.getElementById('sh-count');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
