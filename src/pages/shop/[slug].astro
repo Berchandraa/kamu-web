@@ -68,7 +68,7 @@ const accordion = [
   <section class="pd grid-12">
     <!-- gallery -->
     <div class="pd-gallery">
-      <div class="media frame-3x4 pd-main" data-reveal="media">
+      <div class="media frame-1x1 pd-main" data-reveal="media">
         <img
           id="pd-main-img"
           src={shots[0].demo}
@@ -160,7 +160,7 @@ const accordion = [
             data-reveal
             data-reveal-delay={String(i * 0.08)}
           >
-            <Placeholder name={r.file} ratio="3x4" demo={r.demo} alt={r.name} />
+            <Placeholder name={r.file} ratio="1x1" demo={r.demo} alt={r.name} />
             <div class="pd-card-caption">
               <h3 class="pd-card-name">{r.name}</h3>
               <p class="caption">{r.price}</p>
