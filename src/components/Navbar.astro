@@ -23,34 +23,59 @@ const current = Astro.url.pathname;
 const isCurrent = (href: string) => current.startsWith(href.split('#')[0]);
 const isProjectDetail = current.startsWith('/projects/') && current !== '/projects/';
 
-// SHOP mega-menu (Sawdust model) — three calm columns
-const shopMega = [
+// SHOP mega-menu — By Collection
+const shopByCollection = [
+  { label: 'Victoria Collection', href: '/shop/' },
+  { label: 'Isabelle Collection', href: '/shop/' },
+  { label: 'Agatha Collection', href: '/shop/' },
+  { label: 'Kiki Collection', href: '/shop/' },
+];
+
+// SHOP mega-menu — By Area
+const shopByArea = [
+  { label: 'Indoor', href: '/shop/' },
+  { label: 'Outdoor', href: '/shop/' },
+];
+
+// SHOP mega-menu — Interactive By Type Hover Categories
+const shopByTypeCategories = [
   {
-    key: 'By Collection',
-    links: [
-      { label: 'Victoria Collection', href: '/shop/' },
-      { label: 'Isabelle Collection', href: '/shop/' },
-      { label: 'Agatha Collection', href: '/shop/' },
-      { label: 'Kiki Collection', href: '/shop/' },
-    ],
-  },
-  {
-    key: 'By Area',
-    links: [
-      { label: 'Indoor', href: '/shop/' },
-      { label: 'Outdoor', href: '/shop/' },
-    ],
-  },
-  {
-    key: 'By Type',
-    links: [
+    id: 'table',
+    label: 'Table',
+    items: [
+      { label: 'Dining Table', href: '/shop/' },
       { label: 'Coffee Table', href: '/shop/' },
       { label: 'Side Table', href: '/shop/' },
-      { label: 'Bar Chair', href: '/shop/' },
-      { label: 'Artwork', href: '/shop/' },
       { label: 'Console', href: '/shop/' },
+    ],
+  },
+  {
+    id: 'chair',
+    label: 'Chair',
+    items: [
+      { label: 'Chair', href: '/shop/' },
+      { label: 'Lounge Chair', href: '/shop/' },
+      { label: 'Bar Stool', href: '/shop/' },
       { label: 'Bench', href: '/shop/' },
-      { label: 'Wardrobe', href: '/shop/' },
+    ],
+  },
+  {
+    id: 'wardrobe',
+    label: 'Wardrobe',
+    href: '/shop/',
+    items: [],
+  },
+  {
+    id: 'accessories',
+    label: 'Accessories',
+    items: [
+      { label: 'Artwork', href: '/shop/' },
+      { label: 'Pendant Lamp', href: '/shop/' },
+      { label: 'Dog bowl', href: '/shop/' },
+      { label: 'Dog bed', href: '/shop/' },
+      { label: 'Incense stick', href: '/shop/' },
+      { label: 'Reed diffuser', href: '/shop/' },
+      { label: 'Scented Candle', href: '/shop/' },
     ],
   },
 ];
@@ -118,16 +143,65 @@ const shopMega = [
   <!-- ============ SHOP mega-menu ============ -->
   <div class="nav-mega" id="nav-mega" aria-hidden="true">
     <div class="nav-mega-inner">
-      {
-        shopMega.map((col) => (
-          <div class="nav-mega-col">
-            <span class="nav-mega-key label">{col.key}</span>
-            {col.links.map((l) => (
-              <a href={l.href} class="nav-mega-link">{l.label}</a>
-            ))}
+      <!-- Column 1: By Collection -->
+      <div class="nav-mega-col">
+        <span class="nav-mega-key label">By Collection</span>
+        <div class="nav-mega-links">
+          {shopByCollection.map((l) => (
+            <a href={l.href} class="nav-mega-link">{l.label}</a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Column 2: By Area -->
+      <div class="nav-mega-col">
+        <span class="nav-mega-key label">By Area</span>
+        <div class="nav-mega-links">
+          {shopByArea.map((l) => (
+            <a href={l.href} class="nav-mega-link">{l.label}</a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Column 3: By Type Categories (Hover Triggers) -->
+      <div class="nav-mega-col">
+        <span class="nav-mega-key label">By Type</span>
+        <div class="nav-mega-tabs">
+          {shopByTypeCategories.map((cat, i) => (
+            <button
+              type="button"
+              class={`nav-mega-tab ${i === 0 ? 'is-active' : ''}`}
+              data-type-tab={cat.id}
+            >
+              <span class="nav-mega-tab-dot" aria-hidden="true"></span>
+              <span>{cat.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Column 4: Dynamic Category Sub-Items Panel -->
+      <div class="nav-mega-col nav-mega-col-panel">
+        {shopByTypeCategories.map((cat, i) => (
+          <div
+            class={`nav-mega-panel ${i === 0 ? 'is-active' : ''}`}
+            data-type-panel={cat.id}
+          >
+            <span class="nav-mega-key label">{cat.label}</span>
+            {cat.items && cat.items.length > 0 ? (
+              <div class="nav-mega-links">
+                {cat.items.map((item) => (
+                  <a href={item.href} class="nav-mega-link">{item.label}</a>
+                ))}
+              </div>
+            ) : (
+              <div class="nav-mega-links">
+                <a href={cat.href || '/shop/'} class="nav-mega-link">View All {cat.label}</a>
+              </div>
+            )}
           </div>
-        ))
-      }
+        ))}
+      </div>
     </div>
   </div>
 </header>
@@ -170,10 +244,7 @@ const shopMega = [
     color: var(--c-bone);
   }
 
-  /* Scrolled: clean full-width spread on a SOLID bone bar, ink text —
-     same layout as the static top nav, just grounded on opaque bone.
-     (Solid, not translucent: a see-through bar let the hero's curved
-     forms bleed up over the links and read as a stray arc.) */
+  /* Scrolled: clean full-width spread on a SOLID bone bar, ink text */
   .nav.is-condensed {
     height: var(--nav-h-condensed);
     color: var(--ink);
@@ -240,7 +311,7 @@ const shopMega = [
     transform-origin: left;
   }
 
-  /* ----- SHOP mega-menu (Sawdust model) ----- */
+  /* ----- SHOP mega-menu ----- */
   .nav-mega {
     position: absolute;
     top: 100%;
@@ -278,9 +349,9 @@ const shopMega = [
 
   .nav-mega-inner {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--space-l);
-    max-width: 60rem;
+    max-width: 68rem;
     padding: var(--space-l) var(--gutter) var(--space-xl);
   }
 
@@ -294,6 +365,13 @@ const shopMega = [
     color: var(--ink-soft);
     letter-spacing: 0.06em;
     margin-bottom: 0.55rem;
+    text-transform: uppercase;
+  }
+
+  .nav-mega-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
   }
 
   .nav-mega-link {
@@ -324,6 +402,78 @@ const shopMega = [
     transform-origin: left;
   }
 
+  /* ----- By Type Interactive Hover Tabs & Panels ----- */
+  .nav-mega-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .nav-mega-tab {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 0.9375rem;
+    letter-spacing: 0.01em;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .nav-mega-tab-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0;
+    transform: scale(0);
+    transition:
+      opacity var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out);
+  }
+
+  .nav-mega-tab:hover,
+  .nav-mega-tab.is-active {
+    color: var(--ink);
+  }
+
+  .nav-mega-tab.is-active .nav-mega-tab-dot {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .nav-mega-col-panel {
+    position: relative;
+  }
+
+  .nav-mega-panel {
+    display: none;
+    flex-direction: column;
+    gap: 0.95rem;
+  }
+
+  .nav-mega-panel.is-active {
+    display: flex;
+    animation: fadeIn var(--dur-fast) var(--ease-out);
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateX(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
   /* ----- Centre brand ----- */
   .nav-brand {
     display: flex;
@@ -332,9 +482,6 @@ const shopMega = [
     justify-self: center;
   }
 
-  /* Real KAMU CONCEPTS lockup (asset-1.svg), recoloured via mask so it
-     follows the bar's currentColor — bone over the dark hero, ink on the
-     scrolled bone bar — with no per-state filter hacks. */
   .nav-logo {
     display: block;
     height: 2.25rem;
@@ -659,6 +806,21 @@ const shopMega = [
       if (!mega.contains(t) && !trigger.contains(t)) closeMega(true);
     });
     toggle?.addEventListener('click', () => closeMega(true));
+
+    // ----- By Type Interactive Hover Tabs -----
+    const typeTabs = document.querySelectorAll<HTMLButtonElement>('[data-type-tab]');
+    const typePanels = document.querySelectorAll<HTMLElement>('[data-type-panel]');
+
+    typeTabs.forEach((tab) => {
+      const activate = () => {
+        const id = tab.dataset.typeTab;
+        typeTabs.forEach((t) => t.classList.toggle('is-active', t === tab));
+        typePanels.forEach((p) => p.classList.toggle('is-active', p.dataset.typePanel === id));
+      };
+
+      tab.addEventListener('mouseenter', activate);
+      tab.addEventListener('focus', activate);
+    });
   }
 
   // ----- Cart Logic -----
