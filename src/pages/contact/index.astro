@@ -4,7 +4,7 @@ import Placeholder from '../../components/Placeholder.astro';
 import SocialLinks from '../../components/SocialLinks.astro';
 
 const demo =
-  'https://images.unsplash.com/photo-1540574163026-643ea20ade25?q=80&w=1600&auto=format&fit=crop';
+  'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1600&auto=format&fit=crop';
 ---
 
 <Base
@@ -59,7 +59,7 @@ const demo =
         <div class="ct-row">
           <p class="label ct-key">Catalog</p>
           <p class="ct-val">
-            <a href="/assets/kamu-catalog.pdf" class="ct-link" download>Download the catalog</a>
+            <button type="button" class="ct-link ct-catalog-btn" id="open-catalog-modal">Download the catalog</button>
           </p>
         </div>
         <div class="ct-row">
@@ -119,7 +119,125 @@ const demo =
       </section>
     </div>
   </section>
+
+  <!-- Catalog Request Modal -->
+  <div class="catalog-modal-backdrop" id="catalog-modal" aria-hidden="true">
+    <div class="catalog-modal-card" role="dialog" aria-modal="true" aria-labelledby="cat-modal-title">
+      <button type="button" class="catalog-modal-close" id="close-catalog-modal" aria-label="Close modal">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      
+      <div class="catalog-modal-header">
+        <p class="label duo-sub">KAMU Concepts</p>
+        <h2 id="cat-modal-title" class="catalog-modal-title">Request Catalog</h2>
+        <p class="catalog-modal-sub">Please complete the form below to download our full 2026 interior product catalog.</p>
+      </div>
+
+      <form class="catalog-modal-form" id="catalog-download-form">
+        <div class="ct-fld">
+          <label class="label ct-fld-label" for="cat-name">
+            <span class="duo"><span class="duo-num">01</span><span>Full Name</span></span>
+          </label>
+          <input type="text" id="cat-name" name="name" autocomplete="name" placeholder="Your name" required />
+        </div>
+
+        <div class="ct-fld">
+          <label class="label ct-fld-label" for="cat-email">
+            <span class="duo"><span class="duo-num">02</span><span>Email Address</span></span>
+          </label>
+          <input type="email" id="cat-email" name="email" autocomplete="email" placeholder="name@domain.com" required />
+        </div>
+
+        <div class="ct-fld">
+          <label class="label ct-fld-label" for="cat-company">
+            <span class="duo"><span class="duo-num">03</span><span>Company / Studio (Optional)</span></span>
+          </label>
+          <input type="text" id="cat-company" name="company" placeholder="e.g. Design Studio" />
+        </div>
+
+        <div class="catalog-modal-actions">
+          <button type="submit" class="ct-send catalog-submit-btn">Download Catalog PDF</button>
+        </div>
+      </form>
+
+      <div class="catalog-success-msg" id="catalog-success" style="display: none;">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--accent); margin-bottom: 1rem;">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <h3>Thank You!</h3>
+        <p>Your catalog download has started automatically.</p>
+      </div>
+    </div>
+  </div>
 </Base>
+
+<script>
+  function setupCatalogModal() {
+    const openBtn = document.getElementById('open-catalog-modal');
+    const closeBtn = document.getElementById('close-catalog-modal');
+    const modal = document.getElementById('catalog-modal');
+    const form = document.getElementById('catalog-download-form') as HTMLFormElement | null;
+    const successMsg = document.getElementById('catalog-success');
+
+    if (!openBtn || !modal) return;
+
+    function openModal() {
+      modal?.setAttribute('aria-hidden', 'false');
+      modal?.classList.add('is-active');
+      document.body.style.overflow = 'hidden';
+      if (form) {
+        form.style.display = 'flex';
+        form.reset();
+      }
+      if (successMsg) successMsg.style.display = 'none';
+    }
+
+    function closeModal() {
+      modal?.setAttribute('aria-hidden', 'true');
+      modal?.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn?.addEventListener('click', closeModal);
+
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal?.classList.contains('is-active')) {
+        closeModal();
+      }
+    });
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Trigger PDF download
+      const link = document.createElement('a');
+      link.href = '/assets/kamu-catalog.pdf';
+      link.download = 'KAMU-Concepts-Catalog.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Show success
+      form.style.display = 'none';
+      if (successMsg) successMsg.style.display = 'block';
+
+      setTimeout(() => {
+        closeModal();
+      }, 3500);
+    });
+  }
+
+  setupCatalogModal();
+  document.addEventListener('astro:page-load', setupCatalogModal);
+</script>
 
 <style>
   .ct {
@@ -268,6 +386,119 @@ const demo =
   .ct-privacy {
     max-width: 16rem;
     text-align: right;
+  }
+
+  /* Catalog Request Modal Styles */
+  .ct-catalog-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .catalog-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-m);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-base) var(--ease-out);
+  }
+
+  .catalog-modal-backdrop.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .catalog-modal-card {
+    position: relative;
+    background: var(--c-bone, #f7f9fa);
+    border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+    border-radius: 1.5rem;
+    padding: clamp(2rem, 5vw, 3rem);
+    width: 100%;
+    max-width: 32rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    transform: translateY(1.5rem) scale(0.98);
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .catalog-modal-backdrop.is-active .catalog-modal-card {
+    transform: translateY(0) scale(1);
+  }
+
+  .catalog-modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: color-mix(in srgb, var(--ink) 6%, transparent);
+    border: none;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--ink);
+    transition: background-color var(--dur-fast) var(--ease-out);
+  }
+
+  .catalog-modal-close:hover {
+    background: color-mix(in srgb, var(--ink) 14%, transparent);
+  }
+
+  .catalog-modal-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-block: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .catalog-modal-sub {
+    font-size: 0.9375rem;
+    color: var(--ink-soft);
+    margin-bottom: 1.5rem;
+  }
+
+  .catalog-modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .catalog-modal-actions {
+    margin-top: 1rem;
+  }
+
+  .catalog-submit-btn {
+    width: 100%;
+  }
+
+  .catalog-success-msg {
+    text-align: center;
+    padding-block: 2rem 1rem;
+  }
+
+  .catalog-success-msg h3 {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .catalog-success-msg p {
+    color: var(--ink-soft);
+    font-size: 0.9375rem;
   }
 
   @media (max-width: 56rem) {
