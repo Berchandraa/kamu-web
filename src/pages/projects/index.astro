@@ -160,7 +160,7 @@ const filters = [
   .pj-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.5rem;
+    gap: clamp(1rem, 2.5vw, 2rem);
     padding-inline: var(--gutter);
     margin-top: var(--space-l);
   }
@@ -177,13 +177,15 @@ const filters = [
     position: relative;
     background: var(--bg-alt);
     overflow: hidden;
-    border-radius: 0;
-    transition: border-radius var(--dur-base) var(--ease-out);
   }
 
-  .pj-card:hover .pj-media,
-  .pj-card:focus-visible .pj-media {
-    border-radius: 999px 999px 0 0;
+  .pj-media img {
+    transition: transform 0.5s var(--ease-out);
+  }
+
+  .pj-card:hover .pj-media img,
+  .pj-card:focus-visible .pj-media img {
+    transform: scale(1.05);
   }
 
   .pj-media::after {
