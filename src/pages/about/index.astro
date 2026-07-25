@@ -14,23 +14,23 @@ const u = (id: string, w = 1800) =>
 const values = [
   {
     n: '01',
-    name: 'Creativity & Innovation',
-    desc: 'We shape each brief with fresh thinking, thoughtful problem solving, and a clear sense of how the space should feel.',
+    name: 'Thoughtful Design',
+    desc: 'Every project begins with understanding how people live. We design with intention, creating spaces that feel personal, balanced, and naturally connected to everyday life.',
   },
   {
     n: '02',
-    name: 'Quality & Precision',
-    desc: 'Every proportion, material junction, and finish is considered so the final space feels calm, durable, and resolved.',
+    name: 'Honest Craftsmanship',
+    desc: 'From material selection to the smallest finishing detail, every decision is made with care—creating interiors that endure beautifully over time.',
   },
   {
     n: '03',
-    name: 'Client-Centric Approach',
-    desc: 'We begin with the way our clients live, then translate their routines, taste, and aspirations into a personal design language.',
+    name: 'Human-Centered Living',
+    desc: 'Rather than designing around trends, we design around people. Every home reflects the routines, aspirations, and individuality of those who live within it.',
   },
   {
     n: '04',
-    name: 'Sustainability & Ethical Sourcing',
-    desc: 'We prefer honest materials, responsible sourcing, and long-lasting pieces that age with the home rather than chase trends.',
+    name: 'Natural Materials',
+    desc: 'We believe lasting spaces begin with honest materials, responsible sourcing, and timeless craftsmanship that grows more beautiful with age.',
   },
 ];
 ---
@@ -45,7 +45,7 @@ const values = [
       <span class="duo"><span>About</span><span class="duo-sub">KAMU Concepts</span></span>
     </p>
     <h1 class="page-title" data-reveal="line">
-      Your home should<br />feel like an exhale
+      HOME SHOULD<br />FEEL LIKE YOU.
     </h1>
   </header>
 
@@ -63,22 +63,14 @@ const values = [
   <section class="ab-story grid-12">
     <p class="label ab-story-label" data-reveal>Brand Story</p>
     <p class="ab-story-lead" data-reveal="line">
-      KAMU Concepts was created from a deep appreciation for craftsmanship,
-      natural materials and thoughtful living.
+      KAMU Concepts was created from a deep appreciation for craftsmanship, natural materials and thoughtful living.
     </p>
     <div class="ab-story-body" data-reveal data-reveal-delay="0.15">
       <p>
-        Rooted in timeless design and handcrafted detail, the brand combines
-        locally made products with a modern, refined aesthetic. Each piece is
-        carefully designed to bring warmth, texture and balance into
-        contemporary spaces. Inspired by organic forms, earthy tones, and the
-        beauty of slow interiors, KAMU Concepts embraces the harmony between
-        traditional craftsmanship and modern living.
+        Rooted in timeless design and handcrafted detail, the brand combines locally made products with a modern, refined aesthetic. Each piece is carefully designed to bring warmth, texture and balance into contemporary spaces.
       </p>
       <p>
-        More than a furniture brand, KAMU Concepts represents a lifestyle
-        centered around intentional spaces — spaces that feel calm, lived-in
-        and effortlessly inviting.
+        Inspired by organic forms, earthy tones, and the beauty of slow interiors, KAMU Concepts embraces the harmony between traditional craftsmanship and modern living.
       </p>
     </div>
   </section>
@@ -98,30 +90,20 @@ const values = [
         <div class="ab-vm-step" data-vm-step="belief">
           <p class="label ab-vm-label">Our Belief</p>
           <h2 class="ab-vm-title">
-            At Kamu Concepts, we believe that a well-designed space is never just
-            about aesthetics. It&rsquo;s a reflection of the people who live in it.
+            We believe meaningful spaces begin with understanding the people who live in them.
           </h2>
           <p>
-            This belief has shaped our vision from the very beginning, to become a
-            leading interior design studio recognized for timeless, modern, and
-            luxury aesthetics, built on an unwavering commitment to quality and
-            attention to detail.
+            Every home tells a different story. That's why we begin every project by listening, understanding how you live, gather, work, and unwind. From there, we shape interiors through thoughtful design, natural materials, and craftsmanship that stands the test of time.
           </p>
-          <blockquote>True luxury lives in the details often left unnoticed.</blockquote>
+          <blockquote>Great design is felt long before it's noticed.</blockquote>
         </div>
         <div class="ab-vm-step" data-vm-step="work">
           <p class="label ab-vm-label">How We Work</p>
           <h2 class="ab-vm-title">
-            We don&rsquo;t believe in one-size-fits-all design.
+            Every project begins with listening before designing.
           </h2>
           <p>
-            Our mission is to craft innovative and personalized interior solutions
-            that speak to each client&rsquo;s unique lifestyle and aspirations, spaces
-            that don&rsquo;t just look beautiful, but feel like home.
-          </p>
-          <p>
-            It&rsquo;s this dedication to understanding people first, and design second,
-            that continues to guide everything we create at Kamu Concepts.
+            We don't believe in one-size-fits-all interiors because no two people live the same way. Every project is shaped through collaboration, thoughtful planning, and careful material selection to create spaces that feel authentic to the people who call them home.
           </p>
         </div>
       </div>
@@ -138,10 +120,15 @@ const values = [
           values.map((v, i) => (
             <li class="ab-value" data-reveal data-reveal-delay={String(i * 0.08)}>
               <span class="ab-value-n">{v.n}</span>
-              <button class="ab-value-toggle" type="button" aria-expanded="false">
-                <span class="ab-value-name">{v.name}</span>
-              </button>
-              <p class="ab-value-desc">{v.desc}</p>
+              <div class="ab-value-content">
+                <button class="ab-value-toggle" type="button" aria-expanded="false">
+                  <span class="ab-value-name">{v.name}</span>
+                  <span class="ab-value-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="ab-value-wrapper">
+                  <p class="ab-value-desc">{v.desc}</p>
+                </div>
+              </div>
             </li>
           ))
         }
@@ -257,6 +244,57 @@ const values = [
   }
 
   /* Each value is a full-width row: index + name, generous breathing
+  }
+
+  .ab-story-lead {
+    grid-column: 1 / 9;
+    font-family: var(--font-serif);
+    font-size: clamp(1.375rem, 2.4vw, 2rem);
+    line-height: var(--lh-body);
+  }
+
+  .ab-story-body {
+    grid-column: 1 / 7;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 56rem) {
+    .ab-story-label,
+    .ab-story-lead {
+      grid-column: 1 / -1;
+    }
+
+    .ab-story-body {
+      grid-column: 2 / -1;
+    }
+  }
+
+  /* ================= VALUES — dark editorial list ================= */
+  .ab-values {
+    background: var(--ink);
+    color: var(--c-bone);
+    padding-block: var(--space-2xl);
+  }
+
+  .ab-values-inner {
+    padding-inline: var(--gutter);
+  }
+
+  .ab-values-title {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(1.375rem, 2.4vw, 2rem);
+    line-height: var(--lh-body);
+    letter-spacing: 0;
+    color: var(--c-bone);
+    margin-bottom: var(--space-xl);
+    max-width: 26ch;
+  }
+
+  /* Each value is a full-width row: index + name, generous breathing
      room, separated by hairline rules. Names only, per the guidelines. */
   .ab-values-list {
     border-top: 1px solid color-mix(in srgb, var(--c-bone) 16%, transparent);
@@ -279,24 +317,52 @@ const values = [
     color: var(--accent-soft);
   }
 
+  .ab-value-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
   .ab-value-toggle {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
     padding: 0;
     border: 0;
     background: transparent;
     color: inherit;
     text-align: left;
+    cursor: pointer;
   }
 
   .ab-value-name {
     font-family: var(--font-sans);
     font-weight: 500;
     font-size: clamp(1.5rem, 3.2vw, 2.5rem);
-    line-height: 1.1;
+    line-height: 1.15;
     letter-spacing: -0.01em;
     color: var(--c-bone);
     text-wrap: balance;
+    transition: color var(--dur-base) var(--ease-out);
+  }
+
+  .ab-value-toggle:hover .ab-value-name {
+    color: color-mix(in srgb, var(--c-bone) 75%, transparent);
+  }
+
+  .ab-value-icon {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    color: var(--c-bone);
+    transition: transform var(--dur-base) var(--ease-out);
+    margin-left: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .ab-value.is-open .ab-value-icon {
+    transform: rotate(45deg);
   }
 
   .ab-value-toggle:focus-visible {
@@ -304,21 +370,31 @@ const values = [
     outline-offset: 0.35rem;
   }
 
+  .ab-value-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--dur-base) var(--ease-out);
+  }
+
+  .ab-value.is-open .ab-value-wrapper {
+    grid-template-rows: 1fr;
+  }
+
   .ab-value-desc {
-    grid-column: 2;
+    overflow: hidden;
     max-width: 38rem;
-    margin-top: var(--space-s);
-    color: color-mix(in srgb, var(--c-bone) 70%, transparent);
-    display: none;
+    color: color-mix(in srgb, var(--c-bone) 75%, transparent);
+    font-size: clamp(0.95rem, 1.25vw, 1.15rem);
+    line-height: 1.6;
+    padding-top: var(--space-s);
     opacity: 0;
-    transform: translateY(0.4rem);
+    transform: translateY(-0.25rem);
     transition:
       opacity var(--dur-base) var(--ease-out),
       transform var(--dur-base) var(--ease-out);
   }
 
   .ab-value.is-open .ab-value-desc {
-    display: block;
     opacity: 1;
     transform: translateY(0);
   }
@@ -328,10 +404,6 @@ const values = [
       grid-template-columns: 2.5rem 1fr;
       gap: var(--space-s);
     }
-
-    .ab-value-desc {
-      grid-column: 2;
-    }
   }
 
   /* ================= VISION / MISSION ================= */
@@ -339,7 +411,6 @@ const values = [
     background: var(--bg);
     padding: 0 var(--gutter) var(--space-2xl);
   }
-
   .ab-vm-story {
     display: grid;
     grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
