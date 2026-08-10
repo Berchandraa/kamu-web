@@ -1,0 +1,17 @@
+# Local build output and deployment metadata
+dist/
+.astro/
+.vercel/
+node_modules/
+
+# Local diagnostics and scratch files
+*.log
+*.tmp
+*.csv
+*.txt
+
+# Product assets not referenced by the current catalog
+public/assets/products/product-collection-04/
+public/assets/products/kamu-collection/
+public/assets/products/collection-450/*
+!public/assets/products/collection-450/Rectangle 28.png
