@@ -130,7 +130,7 @@ export const projects: Project[] = [
     scopeLabel: 'Interior & Styling',
     scope: 'KAMU Concepts',
     file: 'project-02.jpg',
-    demo: laviSavi[0],
+    demo: local('lavi-savi/12-shot-41.jpg'),
     thumbnail: local('lavi-savi/12-shot-41.jpg'),
     logo: local('lavi-savi/logo.png'),
     intro: 'Lavi & Savi represents our belief that meaningful design begins with how a space should make people feel. Every interior was carefully composed to balance warmth, simplicity and craftsmanship, creating an environment that invites guests to slow down and reconnect.',
