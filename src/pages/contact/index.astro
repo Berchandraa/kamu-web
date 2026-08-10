@@ -72,10 +72,10 @@ const demo =
 
       <section class="ct-enquiry" data-reveal data-reveal-delay="0.2">
         <div class="ct-enquiry-copy">
-          <p class="label">Project Enquiry</p>
+          <p class="label">Tell Us Your Story</p>
           <p>
-            Tell the studio what you are planning, where it is, and what kind of
-            support you need.
+            Every project is different because every client lives differently. Share
+            your plans, and we'll create a space that feels uniquely yours.
           </p>
         </div>
 
@@ -110,7 +110,7 @@ const demo =
           </div>
 
           <div class="ct-actions">
-            <button type="submit" class="ct-send">Send Enquiry</button>
+            <button type="submit" class="btn btn--primary ct-send">Send Enquiry</button>
             <p class="caption ct-privacy">
               The form is visual only for this static preview.
             </p>
@@ -159,7 +159,7 @@ const demo =
         </div>
 
         <div class="catalog-modal-actions">
-          <button type="submit" class="ct-send catalog-submit-btn">Download Catalog PDF</button>
+          <button type="submit" class="btn btn--primary ct-send catalog-submit-btn">Download Catalog PDF</button>
         </div>
       </form>
 
@@ -248,6 +248,9 @@ const demo =
   .ct-side {
     grid-column: 1 / 6;
     margin-top: clamp(3rem, 8vh, 6rem);
+    align-self: start;
+    position: sticky;
+    top: calc(var(--nav-h-condensed) + var(--space-l));
   }
 
   .ct-main {
@@ -509,6 +512,8 @@ const demo =
 
     .ct-side {
       margin-top: 0;
+      position: static;
+      top: auto;
     }
   }
 

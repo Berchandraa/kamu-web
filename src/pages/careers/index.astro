@@ -113,7 +113,7 @@ const roles = [
         <textarea id="cr-message" name="message" rows="4"></textarea>
       </div>
 
-      <button type="submit" class="cr-send">Send application</button>
+      <button type="submit" class="btn btn--primary cr-send">Send application</button>
     </form>
   </section>
 </Base>
@@ -121,7 +121,7 @@ const roles = [
 <style>
   /* ================= ROLES ================= */
   .cr-roles {
-    padding-block: var(--space-l) var(--space-2xl);
+    padding-block: clamp(3rem, 7vw, 6rem) clamp(4rem, 8vw, 8rem);
     row-gap: var(--space-m);
   }
 
@@ -147,7 +147,7 @@ const roles = [
     display: flex;
     align-items: baseline;
     gap: var(--space-s);
-    padding-block: var(--space-s);
+    padding-block: clamp(1rem, 2.2vw, 1.5rem);
     cursor: pointer;
     list-style: none;
   }
@@ -207,11 +207,15 @@ const roles = [
     .cr-role-meta {
       display: none;
     }
+
+    .cr-roles {
+      padding-block: 3rem 5rem;
+    }
   }
 
   /* ================= APPLY ================= */
   .cr-apply {
-    padding-bottom: var(--space-xl);
+    padding-bottom: clamp(4rem, 8vw, 8rem);
     row-gap: var(--space-l);
   }
 
@@ -290,6 +294,8 @@ const roles = [
     letter-spacing: var(--ls-label);
     text-transform: uppercase;
     padding: 1em 3em;
+    background: var(--ink);
+    color: var(--c-bone);
     border: 1px solid var(--ink);
     border-radius: 999px;
     transition:
@@ -308,6 +314,10 @@ const roles = [
     .cr-apply-head,
     .cr-form {
       grid-column: 1 / -1;
+    }
+
+    .cr-apply {
+      padding-bottom: 5rem;
     }
   }
 

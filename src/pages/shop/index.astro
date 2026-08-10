@@ -1,56 +1,61 @@
 ---
 /**
  * Shop — product catalog.
- * Sawdust-clean but contemporary: pill filters with counts,
- * live result counter, ruled caption rows, quiet hover states.
- * Uniform grid stays (the orderly counterpoint to Projects).
+ * Single-row category filter (Tables, Chairs, …).
+ * Cards max 450 px × 450 px, transparent background.
  */
 import Base from '../../layouts/Base.astro';
 import Placeholder from '../../components/Placeholder.astro';
-import { products, categories } from '../../data/products';
+import { products } from '../../data/products';
 
-const countFor = (slug: string) =>
-  products.filter((p) => p.category === slug).length;
+const filterGroups = [
+  { key: 'all', label: 'All', categories: [] },
+  { key: 'tables', label: 'Tables', categories: ['dining-table', 'coffee-table', 'side-table'] },
+  { key: 'chairs', label: 'Chairs', categories: ['dining-chair', 'bar-chair'] },
+  { key: 'seating', label: 'Seating', categories: ['lounge-chair', 'bench'] },
+  { key: 'storage', label: 'Storage', categories: ['console', 'wardrobe'] },
+  { key: 'lighting-decor', label: 'Lighting & Decor', categories: ['pendant-lamp', 'artwork'] },
+] as const;
 
-const labelFor = (slug: string) =>
-  categories.find((c) => c.slug === slug)?.label ?? '';
+const groupFor = (category: string) =>
+  filterGroups.find((group) => group.categories.includes(category as never))?.key ?? 'all';
+
+const countGroup = (key: string) =>
+  key === 'all' ? products.length : products.filter((p) => groupFor(p.category) === key).length;
+
+const labelFor = (category: string) =>
+  filterGroups.find((group) => group.categories.includes(category as never))?.label ?? 'Collection';
+
 ---
 
 <Base
   title="Shop"
   description="Furniture and lighting by KAMU Concepts — handcrafted pieces for slow living, made in Bali."
 >
-  <!-- ============ HEADER ============ -->
-  <header class="page-head">
-    <p class="label page-eyebrow" data-reveal>
+  <!-- ============ COLLECTION HEADER ============ -->
+  <header class="sh-page-head">
+    <p class="label sh-page-eyebrow" data-reveal>
       <span class="duo"><span>by KAMU</span><span class="duo-sub">The Collection</span></span>
     </p>
-    <h1 class="page-title" data-reveal="line">Shop</h1>
-    <p class="page-intro" data-reveal data-reveal-delay="0.15">
-      Handcrafted furniture and lighting, made in Bali. Designed slowly,
-      built to last.
+    <h1 class="sh-page-title" data-reveal="line">Shop</h1>
+    <p class="sh-page-intro" data-reveal data-reveal-delay="0.15">
+      Handcrafted furniture and lighting, made in Bali. Designed slowly, built to last.
     </p>
   </header>
 
   <!-- ============ FILTERS ============ -->
   <div class="sh-bar" data-reveal>
     <nav class="sh-filters" aria-label="Product categories">
-      <button class="sh-filter is-active" data-filter="all" aria-pressed="true">
-        All<span class="sh-filter-n">{products.length}</span>
-      </button>
       {
-        categories.map((c) => (
-          <button class="sh-filter" data-filter={c.slug} aria-pressed="false">
-            {c.label}<span class="sh-filter-n">{countFor(c.slug)}</span>
+        filterGroups.map((group, i) => (
+          <button class={`sh-filter${i === 0 ? ' is-active' : ''}`} data-cat={group.key} aria-pressed={i === 0 ? 'true' : 'false'}>
+            {group.label}<span class="sh-filter-n">{countGroup(group.key)}</span>
           </button>
         ))
       }
     </nav>
     <p class="label sh-showing">
-      <span class="duo">
-        <span>Showing</span>
-        <span class="duo-num" id="sh-count">{products.length}</span>
-      </span>
+      <span class="duo"><span>Showing</span><span class="duo-num" id="sh-count">{products.length}</span></span>
     </p>
   </div>
 
@@ -61,13 +66,14 @@ const labelFor = (slug: string) =>
         <a
           href={`/shop/${p.slug}/`}
           class="sh-card"
+          aria-label={p.name}
           data-category={p.category}
+          data-group={groupFor(p.category)}
           data-reveal
-          data-reveal-delay={String((i % 3) * 0.1)}
+          data-reveal-delay={String((i % 4) * 0.08)}
         >
           <div class="sh-media">
             <Placeholder name={p.file} ratio="1x1" demo={p.demo} alt={p.name} />
-            <span class="sh-view label" aria-hidden="true">View Piece</span>
           </div>
           <div class="sh-caption">
             <div class="sh-caption-main">
@@ -83,7 +89,38 @@ const labelFor = (slug: string) =>
 </Base>
 
 <style>
-  /* ================= FILTER BAR ================= */
+  /* ================= PAGE HEADER + FILTER BAR ================= */
+  .sh-page-head {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: var(--space-s);
+    row-gap: var(--space-m);
+    padding-inline: var(--gutter);
+    padding-top: calc(var(--nav-h) + var(--space-2xl));
+    padding-bottom: var(--space-xl);
+    background: var(--bg-alt);
+  }
+
+  .sh-page-eyebrow,
+  .sh-page-title,
+  .sh-page-intro {
+    grid-column: 1 / 7;
+  }
+
+  .sh-page-title {
+    grid-column: 1 / 12;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: var(--fs-display);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-tight);
+    text-transform: uppercase;
+  }
+
+  .sh-page-intro {
+    color: var(--ink-soft);
+  }
+
   .sh-bar {
     display: flex;
     align-items: center;
@@ -96,27 +133,17 @@ const labelFor = (slug: string) =>
   .sh-filters {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.625rem;
+    gap: clamp(1.5rem, 3vw, 3rem);
   }
 
-  /* pill chips — fully legible, active state unmistakable */
   .sh-filter {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.625em;
     font-family: var(--font-sans);
-    font-weight: 500;
+    font-weight: 400;
     font-size: var(--fs-label);
     letter-spacing: var(--ls-label);
     text-transform: uppercase;
-    color: var(--ink);
-    padding: 0.8em 1.5em;
-    border: 1px solid color-mix(in srgb, var(--ink) 35%, transparent);
-    border-radius: 999px;
-    transition:
-      background-color var(--dur-base) var(--ease-out),
-      border-color var(--dur-base) var(--ease-out),
-      color var(--dur-base) var(--ease-out);
+    color: var(--ink-soft);
+    cursor: pointer;
   }
 
   .sh-filter-n {
@@ -124,29 +151,21 @@ const labelFor = (slug: string) =>
     font-size: 0.85em;
     letter-spacing: 0;
     opacity: 0.55;
+    margin-left: 0.5em;
   }
 
-  .sh-filter:hover {
-    border-color: var(--ink);
+  .sh-filter:hover,
+  .sh-filter.is-active {
+    color: var(--ink);
   }
 
   .sh-filter.is-active {
-    background: var(--ink);
-    border-color: var(--ink);
-    color: var(--c-bone);
+    font-weight: 500;
   }
 
   .sh-showing {
     color: var(--ink);
     white-space: nowrap;
-  }
-
-  @media (max-width: 56rem) {
-    .sh-bar {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-s);
-    }
   }
 
   /* ================= GRID ================= */
@@ -164,44 +183,37 @@ const labelFor = (slug: string) =>
 
   .sh-media {
     position: relative;
+    width: min(450px, 100%);
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin-inline: auto;
   }
 
   .sh-card :global(.media) {
-    background: var(--bg-alt);
+    aspect-ratio: 1 / 1;
+    background: transparent;
+    overflow: hidden;
   }
 
-  .sh-card :global(img) {
-    transition: transform var(--dur-slow) var(--ease-out);
+  .sh-card :global(.media img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain !important;
+    object-position: center;
+    transition: transform var(--dur-slow) var(--ease-out), opacity var(--dur-slow) var(--ease-out);
+  }
+
+  .sh-card {
+    min-width: 0;
   }
 
   .sh-card:hover :global(img) {
-    transform: scale(1.04);
-  }
-
-  /* hover affordance — quiet pill rises in the frame */
-  .sh-view {
-    position: absolute;
-    right: 0.875rem;
-    bottom: 0.875rem;
-    z-index: 2;
-    padding: 0.7em 1.3em;
-    background: var(--c-bone);
-    color: var(--ink);
-    border-radius: 999px;
-    opacity: 0;
-    transform: translateY(0.5rem);
-    transition:
-      opacity var(--dur-base) var(--ease-out),
-      transform var(--dur-base) var(--ease-out);
-    pointer-events: none;
-  }
-
-  .sh-card:hover .sh-view {
+    transform: none;
     opacity: 1;
-    transform: translateY(0);
   }
 
-  /* ruled caption row: name + category left, price right */
   .sh-caption {
     display: flex;
     align-items: baseline;
@@ -214,7 +226,7 @@ const labelFor = (slug: string) =>
 
   .sh-name {
     font-family: var(--font-sans);
-    font-weight: 500;
+    font-weight: 400;
     font-size: var(--fs-label);
     letter-spacing: var(--ls-label);
     text-transform: uppercase;
@@ -231,15 +243,21 @@ const labelFor = (slug: string) =>
   }
 
   .sh-price {
-    font-family: var(--font-serif);
-    font-size: 0.9375rem;
-    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: var(--fs-label);
+    color: var(--ink-soft);
     white-space: nowrap;
   }
 
-  @media (max-width: 64rem) {
+  @media (max-width: 80rem) {
     .sh-grid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 56rem) {
+    .sh-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
@@ -248,58 +266,73 @@ const labelFor = (slug: string) =>
       grid-template-columns: 1fr;
       row-gap: var(--space-l);
     }
+
+    .sh-page-eyebrow,
+    .sh-page-title,
+    .sh-page-intro {
+      grid-column: 1 / -1;
+    }
+
+    .sh-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-s);
+    }
   }
 </style>
 
 <script>
   import { gsap } from 'gsap';
 
-  // Category filter — calm fade out, re-stagger in, live count
-  const filters = document.querySelectorAll<HTMLButtonElement>('.sh-filter');
+  // Category-only filter
+  const catBtns = document.querySelectorAll<HTMLButtonElement>('[data-cat]');
   const cards = document.querySelectorAll<HTMLElement>('.sh-card');
+  const grid = document.getElementById('sh-grid');
   const count = document.getElementById('sh-count');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  filters.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.filter;
+  let activeCat = 'all';
 
-      filters.forEach((b) => {
+  function applyFilter() {
+    const shown: HTMLElement[] = [];
+    cards.forEach((card) => {
+      const show = activeCat === 'all' || card.dataset.group === activeCat;
+      card.hidden = !show;
+      if (show) shown.push(card);
+    });
+    if (count) count.textContent = String(shown.length);
+    if (!reduced) {
+      gsap.fromTo(
+        shown,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.06, ease: 'power3.out', overwrite: true }
+      );
+    } else {
+      shown.forEach((c) => ((c.style.opacity = '1'), (c.style.transform = 'none')));
+    }
+  }
+
+  catBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      activeCat = btn.dataset.cat ?? 'all';
+      catBtns.forEach((b) => {
         const active = b === btn;
         b.classList.toggle('is-active', active);
         b.setAttribute('aria-pressed', String(active));
       });
-
-      const apply = () => {
-        const shown: HTMLElement[] = [];
-        cards.forEach((card) => {
-          const show = target === 'all' || card.dataset.category === target;
-          card.hidden = !show;
-          if (show) shown.push(card);
-        });
-        if (count) count.textContent = String(shown.length);
-        if (!reduced) {
-          gsap.fromTo(
-            shown,
-            { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: 0.8, stagger: 0.06, ease: 'power3.out', overwrite: true }
-          );
-        } else {
-          shown.forEach((c) => ((c.style.opacity = '1'), (c.style.transform = 'none')));
-        }
-      };
-
       if (!reduced) {
         gsap.to(cards, {
           opacity: 0,
           duration: 0.3,
           ease: 'power2.in',
           overwrite: true,
-          onComplete: apply,
+          onComplete: applyFilter,
         });
       } else {
-        apply();
+        applyFilter();
       }
     });
   });
+
+  applyFilter();
 </script>

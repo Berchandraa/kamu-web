@@ -222,61 +222,12 @@ const values = [
   }
 
   /* ================= VALUES — dark editorial list ================= */
-  .ab-values {
-    background: var(--ink);
-    color: var(--c-bone);
-    padding-block: var(--space-2xl);
-  }
-
-  .ab-values-inner {
-    padding-inline: var(--gutter);
-  }
-
-  .ab-values-title {
-    font-family: var(--font-serif);
-    font-weight: 400;
-    font-size: clamp(1.375rem, 2.4vw, 2rem);
-    line-height: var(--lh-body);
-    letter-spacing: 0;
-    color: var(--c-bone);
-    margin-bottom: var(--space-xl);
-    max-width: 26ch;
-  }
-
-  /* Each value is a full-width row: index + name, generous breathing
-  }
-
-  .ab-story-lead {
-    grid-column: 1 / 9;
-    font-family: var(--font-serif);
-    font-size: clamp(1.375rem, 2.4vw, 2rem);
-    line-height: var(--lh-body);
-  }
-
-  .ab-story-body {
-    grid-column: 1 / 7;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-s);
-    color: var(--ink-soft);
-  }
-
-  @media (max-width: 56rem) {
-    .ab-story-label,
-    .ab-story-lead {
-      grid-column: 1 / -1;
-    }
-
-    .ab-story-body {
-      grid-column: 2 / -1;
-    }
-  }
-
   /* ================= VALUES — dark editorial list ================= */
   .ab-values {
     background: var(--ink);
     color: var(--c-bone);
-    padding-block: var(--space-2xl);
+    min-height: 100svh;
+    padding-block: clamp(4rem, 9vw, 8rem);
   }
 
   .ab-values-inner {
@@ -290,7 +241,7 @@ const values = [
     line-height: var(--lh-body);
     letter-spacing: 0;
     color: var(--c-bone);
-    margin-bottom: var(--space-xl);
+    margin-bottom: clamp(2.25rem, 5vw, 4.5rem);
     max-width: 26ch;
   }
 
@@ -305,7 +256,7 @@ const values = [
     grid-template-columns: 4rem minmax(0, 1fr);
     align-items: baseline;
     gap: clamp(1.5rem, 4vw, 4rem);
-    padding-block: clamp(1.75rem, 3.5vw, 3rem);
+    padding-block: clamp(1.35rem, 2.6vw, 2.5rem);
     border-bottom: 1px solid color-mix(in srgb, var(--c-bone) 16%, transparent);
   }
 
@@ -400,9 +351,37 @@ const values = [
   }
 
   @media (max-width: 40rem) {
+    .ab-values {
+      min-height: 0;
+      padding-block: 4rem;
+    }
+
+    .ab-values-title {
+      font-size: clamp(1.5rem, 6vw, 2rem);
+      margin-bottom: 2.5rem;
+    }
+
     .ab-value {
       grid-template-columns: 2.5rem 1fr;
       gap: var(--space-s);
+    }
+
+    .ab-value-name {
+      font-size: clamp(1.25rem, 6vw, 1.75rem);
+    }
+  }
+
+  @media (min-width: 40.01rem) and (max-height: 800px) {
+    .ab-values {
+      padding-block: clamp(3rem, 7vh, 5rem);
+    }
+
+    .ab-values-title {
+      margin-bottom: clamp(1.75rem, 4vh, 3rem);
+    }
+
+    .ab-value {
+      padding-block: clamp(1rem, 2.2vh, 1.75rem);
     }
   }
 
@@ -531,7 +510,7 @@ const values = [
   }
 
   .ab-studio-image {
-    height: 100svh;
+    height: clamp(18rem, 72svh, 46rem);
     overflow: hidden;
   }
 
@@ -543,7 +522,7 @@ const values = [
   }
 
   .ab-studio-foot {
-    padding-block: var(--space-2xl) 0;
+    padding-block: clamp(3.5rem, 7vw, 7rem) 0;
     row-gap: var(--space-m);
   }
 
@@ -551,9 +530,9 @@ const values = [
      gives it structure instead of floating it loosely in the middle. */
   .ab-studio-quote {
     grid-column: 2 / 11;
-    padding-top: var(--space-l);
+    padding-top: clamp(1.5rem, 3vw, 3rem);
     border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
-    font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+    font-size: clamp(1.35rem, 2.8vw, 2.25rem);
     line-height: var(--lh-body);
     color: var(--ink);
     text-wrap: balance;
@@ -565,7 +544,11 @@ const values = [
 
   @media (max-width: 56rem) {
     .ab-studio-image {
-      height: 100svh;
+      height: clamp(16rem, 58svh, 32rem);
+    }
+
+    .ab-studio-foot {
+      padding-top: 3.5rem;
     }
 
     .ab-studio-quote,

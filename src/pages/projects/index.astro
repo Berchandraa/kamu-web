@@ -30,8 +30,8 @@ const filters = [
     </p>
     <h1 class="pj-title" data-reveal="line">All Projects</h1>
     <p class="pj-intro" data-reveal data-reveal-delay="0.1">
-      A growing portfolio of hospitality, residential and workspace interiors
-      across Bali. Each begins with how a space should feel.
+      From private homes to hospitality destinations, every project begins
+      with understanding how a space should feel, not just how it should look.
     </p>
 
     <!-- ============ FILTER BAR ============ -->
@@ -52,30 +52,32 @@ const filters = [
   </header>
 
   <!-- ============ MASONRY GRID ============ -->
-  <div class="pj-grid" id="pj-grid">
-    {
-      projects.map((p) => (
-        <a
-          href={`/projects/${p.slug}/`}
-          class="pj-card"
-          data-type={p.type.toLowerCase()}
-          data-reveal="media"
-        >
-          <div class="media frame-2x3 pj-media">
-            <img src={p.gallery[1] ?? p.demo} alt={p.name} loading="lazy" />
-            <div class="pj-hover-content">
-              <h2 class="pj-name">{p.name}</h2>
-              <p class="caption pj-loc duo">
-                <span>{p.location}</span><span class="duo-sub">{p.type}</span>
-              </p>
+  <section class="pj-projects" aria-label="Project collection">
+    <div class="pj-grid" id="pj-grid">
+      {
+        projects.map((p) => (
+          <a
+            href={`/projects/${p.slug}/`}
+            class="pj-card"
+            data-type={p.type.toLowerCase()}
+            data-reveal="media"
+          >
+            <div class="media pj-media">
+              <img src={p.demo} alt={p.name} loading="lazy" />
+              <div class="pj-hover-content">
+                <h2 class="pj-name">{p.name}</h2>
+                <p class="caption pj-loc duo">
+                  <span>{p.location}</span><span class="duo-sub">{p.type}</span>
+                </p>
+              </div>
             </div>
-          </div>
-        </a>
-      ))
-    }
-  </div>
+          </a>
+        ))
+      }
+    </div>
 
-  <p class="pj-empty caption" id="pj-empty" hidden>No projects in this category yet.</p>
+    <p class="pj-empty caption" id="pj-empty" hidden>No projects in this category yet.</p>
+  </section>
 
   <CTA />
 </Base>
@@ -157,16 +159,45 @@ const filters = [
   }
 
   /* ================= PROJECT GRID ================= */
+  .pj-projects {
+    height: 100svh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: var(--space-l);
+  }
+
   .pj-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp(1rem, 2.5vw, 2rem);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: repeat(50, minmax(0, 1fr));
+    height: calc(100svh - (2 * var(--space-l)));
+    grid-auto-flow: dense;
+    column-gap: clamp(0.6rem, 1vw, 1rem);
+    row-gap: 0;
     padding-inline: var(--gutter);
-    margin-top: var(--space-l);
+    margin-top: 0;
   }
 
   .pj-card {
     display: block;
+  }
+
+  .pj-card:nth-child(4n + 1) {
+    grid-row: span 50;
+  }
+
+  .pj-card:nth-child(4n + 2) {
+    grid-row: span 34;
+  }
+
+  .pj-card:nth-child(4n + 3) {
+    grid-row: span 43;
+  }
+
+  .pj-card:nth-child(4n) {
+    grid-row: span 38;
   }
 
   .pj-card.is-hidden {
@@ -175,17 +206,23 @@ const filters = [
 
   .pj-media {
     position: relative;
+    height: 100%;
     background: var(--bg-alt);
     overflow: hidden;
+    border-radius: 0;
+    transition: border-radius 0.45s var(--ease-out);
   }
 
   .pj-media img {
-    transition: transform 0.5s var(--ease-out);
+    object-fit: cover;
+    object-position: center;
+    transition: opacity 0.45s var(--ease-out);
   }
 
-  .pj-card:hover .pj-media img,
-  .pj-card:focus-visible .pj-media img {
-    transform: scale(1.05);
+  .pj-card:hover .pj-media,
+  .pj-card:focus-visible .pj-media {
+    border-radius: 999px 999px 0 0;
+    transition-duration: 4s;
   }
 
   .pj-media::after {
@@ -196,12 +233,13 @@ const filters = [
     background: rgb(0 0 0 / 0.65);
     opacity: 0;
     pointer-events: none;
-    transition: opacity var(--dur-base) var(--ease-out);
+    transition: opacity 0.45s var(--ease-out);
   }
 
   .pj-card:hover .pj-media::after,
   .pj-card:focus-visible .pj-media::after {
     opacity: 1;
+    transition-duration: 4s;
   }
 
   /* ----- hover content ----- */
@@ -217,29 +255,37 @@ const filters = [
     gap: var(--space-xs);
     padding: var(--space-m);
     padding-bottom: var(--space-l);
-    opacity: 0;
-    transform: translateY(1rem);
-    transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out);
     pointer-events: none;
+    background: linear-gradient(180deg, transparent 52%, rgb(0 0 0 / 0.52));
   }
 
   .pj-card:hover .pj-hover-content,
   .pj-card:focus-visible .pj-hover-content {
     opacity: 1;
     transform: translateY(0);
+    transition-duration: 4s;
   }
 
   .pj-name {
     font-family: var(--font-sans);
     font-weight: 500;
-    font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+    font-size: clamp(1rem, 1.8vw, 1.5rem);
     letter-spacing: 0.02em;
     color: var(--c-bone);
+    max-width: 100%;
+    overflow-wrap: anywhere;
   }
 
   .pj-loc {
     color: color-mix(in srgb, var(--c-bone) 85%, transparent);
-    white-space: nowrap;
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .pj-empty {
@@ -252,15 +298,115 @@ const filters = [
     .pj-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    .pj-hover-content {
+      padding: var(--space-s);
+      padding-bottom: var(--space-m);
+    }
   }
 
   @media (max-width: 40rem) {
-    .pj-grid {
-      grid-template-columns: 1fr;
+    .pj-head {
+      padding-top: calc(var(--nav-h) + 3rem);
+      padding-bottom: 2.5rem;
     }
 
-    .pj-cap {
-      padding-bottom: var(--space-l);
+    .pj-title {
+      font-size: clamp(2.75rem, 15vw, 4.5rem);
+      overflow-wrap: anywhere;
+    }
+
+    .pj-intro {
+      max-width: 100%;
+      margin-top: 1.25rem;
+    }
+
+    .pj-filters {
+      flex-wrap: nowrap;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      padding-bottom: 0.75rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .pj-filters::-webkit-scrollbar {
+      display: none;
+    }
+
+    .pj-filter {
+      flex: 0 0 auto;
+    }
+
+    .pj-projects {
+      height: auto;
+      min-height: 0;
+      padding-block: 1rem 4rem;
+    }
+
+    .pj-grid {
+      grid-template-columns: 1fr;
+      height: auto;
+      grid-template-rows: none;
+      grid-auto-rows: auto;
+      gap: 3rem;
+      padding-inline: var(--gutter);
+    }
+
+    .pj-card:nth-child(n) {
+      grid-row: auto;
+      min-width: 0;
+      padding-bottom: 6rem;
+    }
+
+    .pj-media {
+      height: clamp(16rem, 58svh, 28rem);
+      aspect-ratio: 4 / 3;
+      width: 100%;
+      overflow: visible;
+    }
+
+    .pj-media::after {
+      opacity: 0;
+    }
+
+    .pj-hover-content {
+      inset: auto 0 auto;
+      top: 100%;
+      min-height: 0;
+      align-items: flex-start;
+      text-align: left;
+      gap: 0.35rem;
+      padding: 1rem 0 0;
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+      color: var(--ink);
+      background: transparent;
+    }
+
+    .pj-name {
+      font-size: clamp(1.1rem, 5vw, 1.5rem);
+      color: var(--ink);
+      max-width: 100%;
+      overflow-wrap: anywhere;
+    }
+
+    .pj-loc {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 0.2rem;
+      width: 100%;
+      line-height: 1.3;
+      white-space: normal;
+      color: var(--ink-soft);
+      overflow-wrap: anywhere;
+    }
+
+    .pj-loc > span {
+      max-width: 100%;
     }
   }
 </style>

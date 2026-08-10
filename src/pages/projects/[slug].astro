@@ -1,4 +1,4 @@
-﻿---
+---
 /**
  * Project Details â€” one route per project, generated from
  * src/data/projects.ts. Bureau model: image-led, asymmetric
@@ -25,7 +25,7 @@ const { project: p, next } = Astro.props;
   <section class="hero" data-nav-invert>
     <div class="hero-media">
       <img
-        src={p.demo}
+        src={p.hero ?? p.demo}
         alt={p.name}
       />
     </div>
@@ -64,7 +64,7 @@ const { project: p, next } = Astro.props;
       <p class="meta-val">{p.type}</p>
     </div>
     <div class="meta-item">
-      <p class="label meta-key">Scope</p>
+      <p class="label meta-key">{p.scopeLabel ?? 'Scope'}</p>
       <p class="meta-val">{p.scope}</p>
     </div>
   </section>

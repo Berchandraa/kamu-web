@@ -25,12 +25,12 @@ export function getStaticPaths() {
 
 const { product: p, related } = Astro.props;
 const catLabel = categories.find((c) => c.slug === p.category)?.label;
-const base = p.file.replace('.jpg', '');
-const shots = [
-  { file: p.file, demo: p.demo },
-  { file: `${base}-alt-01.jpg`, demo: p.alts[0] },
-  { file: `${base}-alt-02.jpg`, demo: p.alts[1] },
-];
+const allShots = [p.demo, ...(p.alts || [])];
+const uniqueShots = Array.from(new Set(allShots)).filter(Boolean);
+const shots = uniqueShots.map((url, idx) => ({
+  file: `${p.file.replace(/\.[^.]+$/, '')}-alt-${idx}`,
+  demo: url,
+}));
 
 // short intro = first sentence; full desc lives in the accordion
 const firstSentence = p.desc.split(/(?<=\.)\s/)[0];
@@ -38,14 +38,20 @@ const firstSentence = p.desc.split(/(?<=\.)\s/)[0];
 const care: Record<string, string> = {
   'dining-table':
     'Wipe with a soft, damp cloth and dry immediately. Re-oil the surface once a year with a natural hard-wax oil. Keep out of prolonged direct sun; use trivets under hot dishes.',
+  'coffee-table': 'Wipe with a soft, damp cloth and dry immediately. Use coasters and avoid prolonged contact with moisture or heat.',
+  'side-table': 'Wipe with a soft, damp cloth and dry immediately. Use coasters and avoid prolonged contact with moisture or heat.',
   'dining-chair':
     'Dust with a dry cloth. Tighten joinery gently once a year. For woven seats, vacuum on low; for upholstery, blot spills immediately with an absorbent cloth.',
+  'bar-chair': 'Dust with a dry cloth. Tighten joinery gently once a year. Clean woven details with a soft brush.',
   'lounge-chair':
     'Vacuum upholstery on low monthly and blot spills immediately. Rotate loose cushions regularly. Keep woven and timber parts out of prolonged direct sun.',
-  cabinets:
+  bench: 'Dust timber with a dry cloth. For upholstery, blot spills immediately and avoid prolonged direct sun.',
+  console: 'Wipe with a soft, damp cloth along the grain. Re-oil annually and use coasters on stone or timber surfaces.',
+  wardrobe:
     'Wipe with a soft, damp cloth along the grain. Re-oil annually. Brass hardware will patina naturally — polish only if you prefer it bright.',
-  pendants:
+  'pendant-lamp':
     'Dust with a dry cloth with the power off. Maximum 8W LED (E27). Have installation carried out by a qualified electrician.',
+  artwork: 'Dust gently with a dry, soft cloth. Keep the piece away from prolonged direct sun and moisture.',
 };
 
 const accordion = [
@@ -55,10 +61,6 @@ const accordion = [
   },
   { key: 'Dimensions', body: p.dims },
   { key: 'Materials', body: p.materials },
-  {
-    key: 'Designers',
-    body: 'Designed by the KAMU studio in Umalas, Bali, and produced in partnership with family workshops across the island.',
-  },
   { key: 'Product Care', body: care[p.category] },
 ];
 ---
@@ -76,25 +78,21 @@ const accordion = [
         />
       </div>
 
-      <div class="pd-thumbs" data-reveal data-reveal-delay="0.2">
-        {
-          shots.map((s, i) => (
-            <button
-              class={`pd-thumb ${i === 0 ? 'is-active' : ''}`}
-              data-file={s.file}
-              aria-label={`View image ${i + 1}`}
-            >
-              <span class="media frame-1x1">
-                <img
-                  src={s.demo}
-                  alt=""
-                  loading="lazy"
-                />
-              </span>
-            </button>
-          ))
-        }
-      </div>
+      {shots.length > 1 && (
+        <div class="pd-thumbs">
+          {
+            shots.map((s, i) => (
+              <button
+                class={`pd-thumb ${i === 0 ? 'is-active' : ''}`}
+                data-file={s.file}
+                aria-label={`View ${i + 1} of ${shots.length}`}
+              >
+                <img class="pd-thumb-img" src={s.demo} alt="" loading="eager" />
+              </button>
+            ))
+          }
+        </div>
+      )}
     </div>
 
     <!-- info -->
@@ -106,11 +104,12 @@ const accordion = [
 
       <h1 class="pd-name" data-reveal="line">{p.name}</h1>
       <p class="pd-price" data-reveal data-reveal-delay="0.1">{p.price}</p>
+      <p class="pd-price-note" data-reveal data-reveal-delay="0.12">Preview price only</p>
 
       <p class="pd-desc" data-reveal data-reveal-delay="0.15">{firstSentence}</p>
 
       <button
-        class="pd-add"
+        class="btn btn--primary pd-add"
         id="pd-add"
         data-id={p.slug}
         data-name={p.name}
@@ -183,34 +182,60 @@ const accordion = [
     grid-column: 1 / 8;
   }
 
-  .pd-main :global(img) {
-    transition: opacity var(--dur-fast) var(--ease-out);
+  .pd-main.media {
+    aspect-ratio: 1 / 1;
+    background: transparent;
+    overflow: hidden;
   }
 
-  .pd-main.media,
-  .pd-thumb .media {
-    background: var(--bg-alt);
+  .pd-main :global(img),
+  #pd-main-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transition: opacity var(--dur-fast) var(--ease-out);
   }
 
   .pd-thumbs {
     display: flex;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
   }
 
   .pd-thumb {
-    width: clamp(4rem, 7vw, 6rem);
-    opacity: 0.55;
-    transition: opacity var(--dur-fast) var(--ease-out);
+    width: clamp(4.5rem, 8vw, 6.5rem);
+    aspect-ratio: 1 / 1;
+    opacity: 0.65;
+    border: 1.5px solid color-mix(in srgb, var(--ink) 25%, transparent);
+    border-radius: 6px;
+    padding: 0.25rem;
+    cursor: pointer;
+    background: transparent;
+    transition: opacity var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
   }
 
-  .pd-thumb .media {
+  .pd-thumb-img {
     display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
   }
 
-  .pd-thumb.is-active,
   .pd-thumb:hover {
+    opacity: 0.9;
+    border-color: color-mix(in srgb, var(--ink) 60%, transparent);
+    transform: translateY(-2px);
+  }
+
+  .pd-thumb.is-active {
     opacity: 1;
+    border-color: var(--ink);
+    box-shadow: 0 0 0 1px var(--ink);
   }
 
   /* ----- info column ----- */
@@ -252,6 +277,14 @@ const accordion = [
     color: var(--ink);
   }
 
+  .pd-price-note {
+    margin-top: -0.5rem;
+    color: var(--ink-soft);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
   .pd-desc {
     color: var(--ink-soft);
     max-width: 30rem;
@@ -267,14 +300,20 @@ const accordion = [
     letter-spacing: var(--ls-label);
     text-transform: uppercase;
     padding: 1.3em;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
     background: var(--ink);
     color: var(--c-bone);
     margin-top: var(--space-2xs);
-    transition: background-color var(--dur-base) var(--ease-out);
+    transition:
+      background-color var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out);
   }
 
   .pd-add:hover {
     background: var(--accent);
+    border-color: var(--accent);
   }
 
   .pd-add-added {
@@ -283,6 +322,7 @@ const accordion = [
     display: grid;
     place-items: center;
     background: var(--accent);
+    border-radius: inherit;
     opacity: 0;
     transition: opacity var(--dur-fast) var(--ease-out);
   }
@@ -403,7 +443,17 @@ const accordion = [
   }
 
   .pd-card :global(.media) {
-    background: var(--bg-alt);
+    width: 450px;
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    background: transparent;
+    overflow: hidden;
+  }
+
+  .pd-card :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   .pd-card :global(img) {

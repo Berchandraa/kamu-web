@@ -14,28 +14,16 @@ import Placeholder from '../components/Placeholder.astro';
 import { projects as allProjects } from '../data/projects';
 import { products as allProducts } from '../data/products';
 
-const projectBySlug = (slug: string) => allProjects.find((project) => project.slug === slug)!;
-const projects = [
-  projectBySlug('yucca-villas-studio'),
-  projectBySlug('villa-kamal'),
-  projectBySlug('villa-bocce'),
-];
+const projects = allProjects.slice(0, 3);
 
 const homeProjectImages = [
   '/assets/home/selected-project-01.jpg',
   '/assets/home/selected-project-02.jpg',
   '/assets/home/selected-project-03.jpg',
 ];
-const homePieceImages = [
-  '/assets/home/furniture-01.jpg',
-  '/assets/home/furniture-05.jpg',
-  '/assets/home/furniture-03.jpg',
-  '/assets/home/furniture-04.jpg',
-  '/assets/home/furniture-02.jpg',
-];
-const pieces = allProducts
-  .slice(0, 5)
-  .map((product, i) => ({ ...product, demo: homePieceImages[i] ?? product.demo }));
+
+const pieces = allProducts.slice(0, 4);
+
 const lookbook = [
   {
     label: '01 / Luxury Lounge Chair',
@@ -148,19 +136,47 @@ const lookbook = [
       </p>
     </header>
 
-    <!-- Feature: edge to edge -->
-    <a href={`/projects/${projects[0].slug}/`} class="feature" data-parallax>
-      <img
-        src={homeProjectImages[0]}
-        alt={projects[0].name}
-      />
-      <div class="feature-caption">
-        <h3 class="h2">{projects[0].name}</h3>
-        <p class="label feature-meta duo">
-          <span>{projects[0].location}</span><span class="duo-sub">{projects[0].type}</span>
-        </p>
+    <!-- Feature: auto-advancing, editorial project showcase -->
+    <div class="feature" data-parallax data-project-slider>
+      {
+        projects.map((project, i) => (
+          <a
+            href={`/projects/${project.slug}/`}
+            class={`feature-slide ${i === 0 ? 'is-active' : ''}`}
+            aria-hidden={i === 0 ? 'false' : 'true'}
+            data-project-slide
+          >
+            <img src={homeProjectImages[i]} alt={project.name} loading={i === 0 ? 'eager' : 'lazy'} />
+            <div class="feature-caption">
+              <h3 class="h2">{project.name}</h3>
+              <p class="label feature-meta duo">
+                <span>{project.location}</span><span class="duo-sub">{project.type}</span>
+              </p>
+            </div>
+          </a>
+        ))
+      }
+
+      <button class="feature-arrow feature-prev" type="button" data-project-prev aria-label="Previous selected project">
+        ‹
+      </button>
+      <button class="feature-arrow feature-next" type="button" data-project-next aria-label="Next selected project">
+        ›
+      </button>
+
+      <div class="feature-dots" aria-label="Selected projects">
+        {
+          projects.map((_, i) => (
+            <button
+              class={`feature-dot ${i === 0 ? 'is-active' : ''}`}
+              type="button"
+              data-project-dot={i}
+              aria-label={`Show selected project ${i + 1}`}
+            />
+          ))
+        }
       </div>
-    </a>
+    </div>
 
     <div class="work-all grid-12">
       <a href="/projects/" class="work-button label" data-reveal>See All Projects</a>
@@ -249,7 +265,6 @@ const lookbook = [
             <Placeholder name={p.file} ratio="1x1" demo={p.demo} alt={p.name} />
             <div class="collection-caption">
               <h3 class="collection-name">{p.name}</h3>
-              <p class="caption collection-price">{p.price}</p>
             </div>
           </a>
         ))
@@ -257,7 +272,7 @@ const lookbook = [
     </div>
 
     <div class="collection-foot" data-reveal>
-      <a href="/shop/" class="collection-cta">Shop Now</a>
+      <a href="/shop/" class="btn btn--secondary collection-cta">Shop Now</a>
     </div>
   </section>
 </Base>
@@ -363,7 +378,30 @@ const lookbook = [
     }
 
     .hero-text {
-      max-width: 92%;
+      left: var(--gutter);
+      right: var(--gutter);
+      bottom: max(2rem, env(safe-area-inset-bottom));
+      max-width: none;
+    }
+
+    .hero-eyebrow {
+      margin-bottom: 1.25rem;
+      font-size: clamp(0.75rem, 3vw, 0.95rem);
+    }
+
+    .hero-eyebrow .duo {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      width: 100%;
+      white-space: normal;
+    }
+
+    .hero-headline {
+      max-width: 10ch;
+      font-size: clamp(2.55rem, 11vw, 4rem);
+      line-height: 0.98;
+      overflow-wrap: anywhere;
     }
   }
 
@@ -420,7 +458,7 @@ const lookbook = [
   .studio-panel {
     display: grid;
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-    min-height: min(58rem, 92svh);
+    min-height: 100svh;
     margin-bottom: var(--space-xl);
     background: var(--bg-alt);
   }
@@ -575,13 +613,26 @@ const lookbook = [
   /* Feature — true full bleed, tall */
   .feature {
     position: relative;
-    display: block;
     width: 100%;
-    height: min(92svh, 60rem);
+    height: min(100svh, 60rem);
     overflow: hidden;
   }
 
-  .feature img {
+  .feature-slide {
+    position: absolute;
+    inset: 0;
+    display: block;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-slow) var(--ease-out);
+  }
+
+  .feature-slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .feature-slide img {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -597,7 +648,7 @@ const lookbook = [
     color: var(--c-bone);
   }
 
-  .feature::after {
+  .feature-slide::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -615,6 +666,57 @@ const lookbook = [
   .feature-meta {
     margin-top: 0.5rem;
     opacity: 0.8;
+  }
+
+  .feature-arrow,
+  .feature-dot {
+    position: absolute;
+    z-index: 3;
+    border: 1px solid color-mix(in srgb, var(--c-bone) 60%, transparent);
+    background: color-mix(in srgb, var(--c-black) 18%, transparent);
+    color: var(--c-bone);
+  }
+
+  .feature-arrow {
+    top: 50%;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    font-size: 2rem;
+    line-height: 1;
+    transform: translateY(-50%);
+    transition: background-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  }
+
+  .feature-arrow:hover {
+    background: color-mix(in srgb, var(--c-bone) 22%, transparent);
+  }
+
+  .feature-prev { left: var(--gutter); }
+  .feature-next { right: var(--gutter); }
+
+  .feature-dots {
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    bottom: var(--space-m);
+    display: flex;
+    gap: 0.45rem;
+    transform: translateX(-50%);
+  }
+
+  .feature-dot {
+    position: relative;
+    width: 0.55rem;
+    height: 0.55rem;
+    padding: 0;
+    border-radius: 50%;
+    opacity: 0.65;
+  }
+
+  .feature-dot.is-active {
+    background: var(--c-bone);
+    opacity: 1;
   }
 
   .work-all {
@@ -730,66 +832,53 @@ const lookbook = [
     font-weight: 400;
   }
 
-  /* Sliding row — drag or scroll sideways, next card peeks */
+  /* Product grid mirrors shop: 450px media, transparent, uncropped. */
   .collection-row {
-    display: flex;
-    gap: clamp(1.5rem, 3vw, 3rem);
-    overflow-x: auto;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: var(--space-m);
+    row-gap: var(--space-xl);
     padding-inline: var(--gutter);
-    padding-bottom: var(--space-s);
-    scroll-snap-type: x proximity;
-    scrollbar-width: none;
-    cursor: grab;
-    -webkit-overflow-scrolling: touch;
   }
 
-  .collection-row::-webkit-scrollbar {
-    display: none;
-  }
-
-  .collection-row.is-dragging {
-    cursor: grabbing;
-    scroll-snap-type: none;
-  }
-
-  .collection-row.is-dragging .collection-card {
-    pointer-events: none;
-  }
 
   .collection-card {
-    flex: 0 0 min(450px, 80vw);
-    width: min(450px, 80vw);
-    scroll-snap-align: start;
+    min-width: 0;
     user-select: none;
   }
 
-  .collection-card :global(.media) {
-    background: var(--bg-alt);
+  .collection-card :global(.media),
+  .collection-card :global(.ph) {
+    width: min(450px, 100%);
+    max-width: 100%;
+    margin-inline: auto;
+    background: transparent !important;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
   }
 
   .collection-card :global(img) {
-    transition: transform var(--dur-slow) var(--ease-out);
-  }
-
-  .collection-card:hover :global(img) {
-    transform: scale(1.04);
+    width: 100%;
+    height: 100%;
+    object-fit: contain !important;
+    object-position: center;
+    transition: opacity var(--dur-slow) var(--ease-out);
   }
 
   .collection-caption {
-    text-align: center;
-    padding-top: var(--space-s);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-s);
+    margin-top: 0.75rem;
   }
 
   .collection-name {
     font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: 0.8125rem;
-    letter-spacing: 0.12em;
+    font-weight: 400;
+    font-size: var(--fs-label);
+    letter-spacing: var(--ls-label);
     text-transform: uppercase;
-  }
-
-  .collection-price {
-    margin-top: 0.4rem;
   }
 
   .collection-foot {
@@ -798,30 +887,22 @@ const lookbook = [
     margin-top: var(--space-l);
   }
 
-  .collection-cta {
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: 0.6875rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    padding: 1em 2.6em;
-    border: 1px solid var(--ink);
-    border-radius: 999px;
-    transition:
-      background-color var(--dur-base) var(--ease-out),
-      border-color var(--dur-base) var(--ease-out),
-      color var(--dur-base) var(--ease-out);
-  }
-
-  .collection-cta:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--c-bone);
+  @media (max-width: 80rem) {
+    .collection-row {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 
   @media (max-width: 56rem) {
-    .collection-card {
-      flex-basis: 72vw;
+    .collection-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .collection-row {
+      grid-template-columns: 1fr;
+      row-gap: var(--space-l);
     }
   }
 
@@ -829,18 +910,19 @@ const lookbook = [
   .lookbook {
     background: var(--c-bone);
     color: var(--ink);
-    padding-top: clamp(4.5rem, 8vw, 7rem);
+    min-height: 100svh;
+    padding-top: clamp(3.5rem, 6vw, 5.5rem);
   }
 
   .lookbook-head {
     padding-inline: var(--gutter);
-    margin-bottom: clamp(3rem, 6vw, 5rem);
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
     text-align: center;
   }
 
   .lookbook-title {
     font-family: var(--font-serif);
-    font-size: clamp(2.25rem, 4.5vw, 3.75rem);
+    font-size: clamp(2rem, 4vw, 3.25rem);
     font-weight: 400;
     line-height: 0.95;
     letter-spacing: 0.04em;
@@ -856,7 +938,7 @@ const lookbook = [
 
   .lookbook-stage {
     position: relative;
-    height: clamp(28rem, 55vw, 43rem);
+    height: clamp(22rem, 50svh, 38rem);
     overflow: hidden;
     background: var(--c-black);
   }
@@ -958,12 +1040,12 @@ const lookbook = [
 
   @media (max-width: 48rem) {
     .lookbook-head {
-      margin-bottom: 2.75rem;
+      margin-bottom: 2rem;
     }
 
     .lookbook-stage {
-      height: 68vh;
-      min-height: 30rem;
+      height: clamp(20rem, 58svh, 30rem);
+      min-height: 0;
     }
   }
 
@@ -1010,37 +1092,6 @@ const lookbook = [
     window.addEventListener('kamu:ready', intro, { once: true });
   }
 
-  // Collection row — drag to scroll sideways
-  const row = document.getElementById('collection-row');
-  if (row) {
-    let startX = 0;
-    let startScroll = 0;
-    let dragging = false;
-
-    row.addEventListener('pointerdown', (e) => {
-      dragging = true;
-      startX = e.clientX;
-      startScroll = row.scrollLeft;
-      row.setPointerCapture(e.pointerId);
-    });
-
-    row.addEventListener('pointermove', (e) => {
-      if (!dragging) return;
-      const dx = e.clientX - startX;
-      // only enter drag mode after a small threshold so clicks still work
-      if (Math.abs(dx) > 6) row.classList.add('is-dragging');
-      row.scrollLeft = startScroll - dx;
-    });
-
-    const endDrag = () => {
-      dragging = false;
-      row.classList.remove('is-dragging');
-    };
-
-    row.addEventListener('pointerup', endDrag);
-    row.addEventListener('pointercancel', endDrag);
-  }
-
   const lookbookSlides = [...document.querySelectorAll<HTMLElement>('.lookbook-slide')];
   const lookbookDots = [...document.querySelectorAll<HTMLButtonElement>('.lookbook-dot')];
   let lookbookIndex = 0;
@@ -1071,5 +1122,66 @@ const lookbook = [
   lookbookDots.forEach((dot, i) => {
     dot.addEventListener('click', () => setLookbook(i));
   });
+
+  const projectSlider = document.querySelector<HTMLElement>('[data-project-slider]');
+  const projectSlides = [...document.querySelectorAll<HTMLElement>('[data-project-slide]')];
+  const projectDots = [...document.querySelectorAll<HTMLButtonElement>('[data-project-dot]')];
+  let projectIndex = 0;
+  let projectTimer: number | undefined;
+
+  const setProject = (next: number) => {
+    if (!projectSlides.length) return;
+    projectIndex = (next + projectSlides.length) % projectSlides.length;
+
+    projectSlides.forEach((slide, i) => {
+      const active = i === projectIndex;
+      slide.classList.toggle('is-active', active);
+      slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+    });
+
+    projectDots.forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === projectIndex);
+    });
+  };
+
+  const stopProjectAutoPlay = () => {
+    if (projectTimer !== undefined) window.clearInterval(projectTimer);
+    projectTimer = undefined;
+  };
+
+  const startProjectAutoPlay = () => {
+    stopProjectAutoPlay();
+    if (projectSlides.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    projectTimer = window.setInterval(() => setProject(projectIndex + 1), 6500);
+  };
+
+  document.querySelector<HTMLButtonElement>('[data-project-prev]')?.addEventListener('click', () => {
+    setProject(projectIndex - 1);
+    startProjectAutoPlay();
+  });
+
+  document.querySelector<HTMLButtonElement>('[data-project-next]')?.addEventListener('click', () => {
+    setProject(projectIndex + 1);
+    startProjectAutoPlay();
+  });
+
+  projectDots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      setProject(i);
+      startProjectAutoPlay();
+    });
+  });
+
+  projectSlider?.addEventListener('mouseenter', stopProjectAutoPlay);
+  projectSlider?.addEventListener('mouseleave', startProjectAutoPlay);
+  projectSlider?.addEventListener('focusin', stopProjectAutoPlay);
+  projectSlider?.addEventListener('focusout', (event) => {
+    if (!projectSlider.contains(event.relatedTarget as Node | null)) startProjectAutoPlay();
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopProjectAutoPlay();
+    else startProjectAutoPlay();
+  });
+  startProjectAutoPlay();
 </script>
 

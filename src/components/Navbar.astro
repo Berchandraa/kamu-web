@@ -117,7 +117,7 @@ const shopByTypeCategories = [
           </a>
         ))
       }
-      <button class="nav-cart" type="button" aria-label="Open cart">
+      <button class="icon-btn nav-cart" type="button" aria-label="Open cart">
         <svg class="nav-cart-icon" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M4 5h2l2.2 10.2a2 2 0 0 0 2 1.6h6.9a2 2 0 0 0 1.9-1.4L20.5 9H7.1" />
           <path d="M10 20h.01" />
@@ -542,29 +542,10 @@ const shopByTypeCategories = [
     width: 2.75rem;
     aspect-ratio: 1;
     place-items: center;
-    border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+    border: 1px solid var(--btn-outline);
     border-radius: 50%;
-    color: currentColor;
     background: transparent;
-    transition:
-      transform var(--dur-base) var(--ease-out),
-      background-color var(--dur-base) var(--ease-out),
-      color var(--dur-base) var(--ease-out),
-      border-color var(--dur-base) var(--ease-out);
     margin-left: 1rem;
-  }
-
-  .nav-cart:hover {
-    transform: translateY(-0.15rem);
-    background: var(--ink);
-    color: var(--c-bone);
-    border-color: var(--ink);
-  }
-
-  .nav.is-inverted .nav-cart:hover {
-    background: var(--c-bone);
-    color: var(--ink);
-    border-color: var(--c-bone);
   }
 
   .nav-cart-icon {
@@ -579,18 +560,12 @@ const shopByTypeCategories = [
 
   .nav-cart-n {
     position: absolute;
-    top: -0.2rem;
-    right: -0.2rem;
-    display: grid;
-    min-width: 1rem;
-    height: 1rem;
-    place-items: center;
-    padding-inline: 0.2rem;
-    border-radius: 999px;
-    background: var(--accent);
-    color: var(--c-bone);
-    font-family: var(--font-serif);
-    font-size: 0.65rem;
+    top: -0.15rem;
+    right: -0.1rem;
+    color: currentColor;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.62rem;
     line-height: 1;
   }
 
