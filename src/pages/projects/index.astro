@@ -133,18 +133,31 @@ const filters = [
   .pj-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-template-rows: none;
-    height: auto;
+    grid-template-rows: repeat(50, minmax(0, 1fr));
+    height: calc(100svh - (2 * var(--space-l)));
+    grid-auto-flow: dense;
     column-gap: clamp(0.6rem, 1vw, 1rem);
-    row-gap: var(--space-l);
+    row-gap: 0;
     padding-inline: var(--gutter);
     margin-top: 0;
   }
 
   .pj-card {
     display: block;
-    aspect-ratio: 2 / 3;
-    min-width: 0;
+  }
+
+  /* Yucca Villa and Lavi & Savi share the same visual height. */
+  .pj-card:nth-child(4n + 1),
+  .pj-card:nth-child(4n + 3) {
+    grid-row: span 43;
+  }
+
+  .pj-card:nth-child(4n + 2) {
+    grid-row: span 34;
+  }
+
+  .pj-card:nth-child(4n) {
+    grid-row: span 38;
   }
 
   .pj-card.is-hidden {
@@ -154,7 +167,6 @@ const filters = [
   .pj-media {
     position: relative;
     height: 100%;
-    aspect-ratio: 2 / 3;
     background: var(--bg-alt);
     overflow: hidden;
     border-radius: 0;
@@ -305,12 +317,11 @@ const filters = [
       grid-row: auto;
       min-width: 0;
       padding-bottom: 6rem;
-      aspect-ratio: auto;
     }
 
     .pj-media {
-      height: auto;
-      aspect-ratio: 2 / 3;
+      height: clamp(16rem, 58svh, 28rem);
+      aspect-ratio: 4 / 3;
       width: 100%;
       overflow: visible;
     }
