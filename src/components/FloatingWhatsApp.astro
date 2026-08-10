@@ -51,6 +51,13 @@
     color: white;
   }
 
+  /* Branded FAB sits outside the ink/bone tier system, but still needs a
+     keyboard focus ring consistent with the shared controls. */
+  .floating-whatsapp:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+
   .floating-wa-icon {
     width: 1.7rem;
     height: 1.7rem;

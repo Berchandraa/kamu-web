@@ -23,7 +23,7 @@ import Base from '../../layouts/Base.astro';
         Tell the studio what you are planning, where it is, and what kind of
         support you need.
       </p>
-      <a href="/contact/" class="lt-contact">Need studio details? Contact</a>
+      <a href="/contact/" class="link lt-contact">Need studio details? Contact</a>
     </div>
 
     <form class="lt-form" action="#" method="post">
@@ -57,7 +57,7 @@ import Base from '../../layouts/Base.astro';
       </div>
 
       <div class="lt-actions" data-reveal data-reveal-delay="0.3">
-        <button type="submit" class="lt-send">Send Enquiry</button>
+        <button type="submit" class="btn btn--primary">Send Enquiry</button>
         <p class="caption lt-privacy">
           The form is visual only for this static preview.
         </p>
@@ -87,10 +87,7 @@ import Base from '../../layouts/Base.astro';
   }
 
   .lt-contact {
-    display: inline-flex;
     margin-top: var(--space-m);
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
   }
 
   .lt-form {
@@ -155,23 +152,6 @@ import Base from '../../layouts/Base.astro';
     gap: var(--space-s);
     flex-wrap: wrap;
     margin-top: var(--space-2xs);
-  }
-
-  .lt-send {
-    font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: var(--fs-label);
-    letter-spacing: var(--ls-label);
-    text-transform: uppercase;
-    padding: 1.2em 3.2em;
-    background: var(--ink);
-    color: var(--c-bone);
-    border-radius: 999px;
-    transition: background-color var(--dur-base) var(--ease-out);
-  }
-
-  .lt-send:hover {
-    background: var(--accent);
   }
 
   .lt-privacy {

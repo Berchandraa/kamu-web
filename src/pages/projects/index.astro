@@ -39,7 +39,7 @@ const filters = [
       {
         filters.map((f, i) => (
           <button
-            class={`pj-filter${i === 0 ? ' is-active' : ''}`}
+            class={`filter${i === 0 ? ' is-active' : ''}`}
             data-filter={f.key}
             role="tab"
             aria-selected={i === 0 ? 'true' : 'false'}
@@ -118,44 +118,6 @@ const filters = [
     margin-top: var(--space-l);
     padding-bottom: var(--space-s);
     border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
-  }
-
-  .pj-filter {
-    position: relative;
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: var(--fs-label);
-    letter-spacing: var(--ls-label);
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    padding-bottom: 0.4rem;
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-
-  .pj-filter::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background: var(--ink);
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform var(--dur-base) var(--ease-out);
-  }
-
-  .pj-filter:hover {
-    color: var(--ink);
-  }
-
-  .pj-filter.is-active {
-    color: var(--ink);
-  }
-
-  .pj-filter.is-active::after {
-    transform: scaleX(1);
-    transform-origin: left;
   }
 
   /* ================= PROJECT GRID ================= */
@@ -418,20 +380,12 @@ const filters = [
   .nav:not(.is-condensed) {
     color: var(--ink);
   }
-
-  .nav:not(.is-condensed) .nav-link {
-    opacity: 1;
-  }
-
-  .nav:not(.is-condensed) .nav-cta {
-    border-color: color-mix(in srgb, var(--ink) 78%, transparent);
-  }
 </style>
 
 <script>
   const grid = document.getElementById('pj-grid');
   const empty = document.getElementById('pj-empty');
-  const filters = document.querySelectorAll<HTMLButtonElement>('.pj-filter');
+  const filters = document.querySelectorAll<HTMLButtonElement>('.filter');
   const cards = Array.from(document.querySelectorAll<HTMLElement>('.pj-card'));
 
   filters.forEach((btn) => {
